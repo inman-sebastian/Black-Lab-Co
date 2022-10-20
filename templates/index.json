@@ -27,62 +27,10 @@
             "btn_border_color": "#333e48",
             "btn_bg_color": "#333e48"
           }
-        },
-        "1551027504217-1": {
-          "type": "image",
-          "settings": {
-            "content_color": "rgba(0,0,0,0)",
-            "position_content": true,
-            "link": "shopify:\/\/collections\/make-up",
-            "alignment": "text-left align-top",
-            "text-alignment": "center",
-            "slides_effect": "bottomtop",
-            "subheading": "",
-            "subheading_color": "#333e48",
-            "title": "",
-            "title_color": "#ffffff",
-            "title2": "",
-            "title2_color": "#ffffff",
-            "desc": "",
-            "desc_color": "#ffffff",
-            "btn_text": "",
-            "btn_link": "",
-            "btn_padding": "",
-            "btn_text_color": "#ffffff",
-            "btn_border_color": "#333e48",
-            "btn_bg_color": "#333e48"
-          }
-        },
-        "1551027735220": {
-          "type": "image",
-          "settings": {
-            "content_color": "rgba(0,0,0,0)",
-            "position_content": true,
-            "link": "shopify:\/\/collections\/spa",
-            "alignment": "text-left align-top",
-            "text-alignment": "center",
-            "slides_effect": "leftright",
-            "subheading": "",
-            "subheading_color": "#333e48",
-            "title": "",
-            "title_color": "#ffffff",
-            "title2": "",
-            "title2_color": "#ffffff",
-            "desc": "",
-            "desc_color": "#ffffff",
-            "btn_text": "",
-            "btn_link": "",
-            "btn_padding": "",
-            "btn_text_color": "#ffffff",
-            "btn_border_color": "#b01e21",
-            "btn_bg_color": "#b01e21"
-          }
         }
       },
       "block_order": [
-        "1551027504217-0",
-        "1551027504217-1",
-        "1551027735220"
+        "1551027504217-0"
       ],
       "settings": {
         "mobile_mode": false,

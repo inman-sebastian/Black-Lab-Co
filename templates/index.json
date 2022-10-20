@@ -227,7 +227,7 @@
         "title": "Follow us on Instagram",
         "subtitle": "@blacklabsoap",
         "effect": "effectTwo",
-        "popup_image": true,
+        "popup_image": false,
         "column1": 5,
         "column2": 3,
         "column3": 2,

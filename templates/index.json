@@ -100,7 +100,7 @@
       "type": "vela-productlist",
       "settings": {
         "full_with": false,
-        "color_bg": "#fafafa",
+        "color_bg": "#ffffff",
         "padding_block": "60px 0",
         "margin_block": "0 0 60px",
         "title": "Featured Products",

@@ -53,6 +53,7 @@
           "type": "item",
           "settings": {
             "title": "Candles",
+            "image": "shopify:\/\/shop_images\/collection-callout-candles.jpg",
             "link": "shopify:\/\/collections\/candles",
             "bg_style": "default",
             "bg_primary": "#6e7695",

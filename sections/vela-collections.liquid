@@ -37,7 +37,7 @@
                     <div class="rowFlex rowFlexMargin">
                         {% for block in section.blocks %}
                             <div class="col-xs-12 col-sm-4 col-md-4 mt30">
-                                <div class="boxCollection {{ block.settings.bg_style }}">
+                                <div class="boxCollection {{ block.settings.bg_style }}" style="--special-box-color-primary: {{ block.settings.bg_primary }}; --special-box-color-secondary: {{ block.settings.bg_secondary }};">
                                     <div class="boxCollectionInner">
                                         <h4 class="boxCollectionTitle clearfix text-center">
                                             <a class="velaHomeTitle" href="{{ block.settings.link }}" title="{{ block.settings.title }}">{{ block.settings.title }}</a>
@@ -147,6 +147,18 @@
                                 "label": "Special"
                             }
                         ]
+                    },
+                    {
+                        "type": "color",
+                        "id": "bg_primary",
+                        "label": "Bg Color Primary",
+                        "default": "#6e7695"
+                    },
+                    {
+                        "type": "color",
+                        "id": "bg_secondary",
+                        "label": "Bg Color Secondary",
+                        "default": "#151515"
                     }
                 ]
             }

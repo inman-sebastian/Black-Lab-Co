@@ -107,12 +107,12 @@
         "navigation": false,
         "autoplay": false,
         "autoplay_timeout": "10000",
-        "column1": 4,
+        "column1": 5,
         "column2": 4,
         "column3": 2,
         "column4": 2,
         "column5": 1,
-        "row": "2"
+        "row": "1"
       }
     },
     "1560445419701": {

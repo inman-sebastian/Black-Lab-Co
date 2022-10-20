@@ -103,25 +103,31 @@
         "1560774047866": {
           "type": "item",
           "settings": {
-            "title": "Beauty",
-            "link": "shopify:\/\/collections\/beauty",
-            "bg_style": "default"
+            "title": "Candles",
+            "link": "shopify:\/\/collections\/candles",
+            "bg_style": "default",
+            "bg_primary": "#6e7695",
+            "bg_secondary": "#151515"
           }
         },
         "1560774559446": {
           "type": "item",
           "settings": {
-            "title": "Spa",
-            "link": "shopify:\/\/collections\/spa",
-            "bg_style": "special"
+            "title": "Soaps",
+            "link": "shopify:\/\/collections\/soap",
+            "bg_style": "special",
+            "bg_primary": "#6e7695",
+            "bg_secondary": "#151515"
           }
         },
         "1560774622261": {
           "type": "item",
           "settings": {
-            "title": "Make Up",
-            "link": "shopify:\/\/collections\/make-up",
-            "bg_style": "default"
+            "title": "Scrubs",
+            "link": "shopify:\/\/collections\/sugar-scrubs",
+            "bg_style": "default",
+            "bg_primary": "#6e7695",
+            "bg_secondary": "#151515"
           }
         }
       },

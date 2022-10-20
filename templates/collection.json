@@ -21,6 +21,7 @@
           "type": "image",
           "settings": {
             "collection_handle": "sugar-scrubs",
+            "bgimage": "shopify:\/\/shop_images\/sugar-scrubs-collection-banner.jpg",
             "heading": "Sugar Scrubs"
           }
         }

@@ -63,6 +63,7 @@
           "type": "item",
           "settings": {
             "title": "Soaps",
+            "image": "shopify:\/\/shop_images\/soap-collection-image.jpg",
             "link": "shopify:\/\/collections\/soap",
             "bg_style": "special",
             "bg_primary": "#6e7695",

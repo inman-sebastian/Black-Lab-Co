@@ -96,7 +96,7 @@
     "1557072031835": {
       "type": "vela-productlist",
       "settings": {
-        "full_with": true,
+        "full_with": false,
         "color_bg": "#fafafa",
         "padding_block": "60px 0",
         "margin_block": "0 0 60px",

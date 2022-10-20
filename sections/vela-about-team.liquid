@@ -1,0 +1,82 @@
+<div class="velaAboutUs velaAboutUsTeams">
+    <div class="container">
+        <div class="velaAboutUsTeamsInner">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaAboutUsTitle text-center">
+                    {{ section.settings.title }}
+                </h3>
+            {%- endif -%}
+            {%- if section.settings.subtitle != blank -%}
+                <div class="velaPageSubTitle">
+                    {{ section.settings.subtitle }}
+                </div>
+            {%- endif -%}
+            {%- if section.blocks.size > 0 -%}
+                <div class="velaContent">
+                    <div class="rowFlex rowFlexMargin flexJustifyCenter">
+                        {% for block in section.blocks %}
+                            <div class="col-xs-6 col-md-4">
+                                <div class="aboutMember">
+                                    <div class="aboutMemberImage p-relative">
+                                        {%- if block.settings.image != blank -%}
+                                            {% include 'image-global' with image: block.settings.image  %}
+                                        {%- else -%} 
+                                            <img class="img-responsive img-full-mobile" alt="{{ shop.name }}" src="http://velatheme.com/demo_banner/netro/abouteam_{{ forloop.index }}.jpg" />
+                                        {%- endif -%}
+                                    </div>
+                                    {%- if block.settings.title != blank -%}
+                                        <div class="aboutMemberName">{{ block.settings.title }}</div>
+                                    {%- endif -%}
+                                    {%- if block.settings.position != blank -%}
+                                        <div class="aboutMemberPosition">{{ block.settings.position }}</div>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela About Teams",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "Subheading",
+                "placeholder": "Subheading"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Service Item",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Member avatar"
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Member name"
+                    },
+                    {
+                        "type": "text",
+                        "id": "position",
+                        "label": "Member position"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

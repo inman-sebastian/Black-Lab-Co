@@ -1,0 +1,124 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+	{%- capture bgColor -%}
+		background-color: {{ section.settings.color_bg }};
+	{%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+	{%- capture paddingblock -%}
+		padding: {{section.settings.padding_block}};
+	{% endcapture %}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+	{%- capture marginblock -%}
+		margin: {{section.settings.margin_block}};
+	{%- endcapture -%}
+{%- endif -%}
+<div class="faqPageWrapper vela-section" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="vela-section__inner">
+            {% if section.blocks.size > 0 %}
+                <div id="faqs-{{ section.id }}" class="panel-group">
+                    {% for block in section.blocks %}
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a 
+                                        class="collapsed"
+                                        data-toggle="collapse" 
+                                        data-parent="#faqs-{{ section.id }}" 
+                                        href="#faq-item--{{ forloop.index }}{{ section.id }}">
+                                        {{ block.settings.title }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="faq-item--{{ forloop.index }}{{ section.id }}" 
+                                class="panel-collapse collapse">
+                                <div class="faq-item--content">
+                                    {{ block.settings.content }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% schema %}
+  	{
+        "name": "Vela FAQs",
+        "class": "velaFramework",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "Ex: 0px 0px 0px 0px and use desktop only"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "placeholder": "0px 0px",
+                "default": "0 0 30px",
+                "info": "Ex: 0px 0px 30px 0px"
+            }
+		],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Add Item",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Item heading",
+                        "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "content",
+                        "label": "Item content",
+                        "default": "Vestibulum ut facilisis turpis, eget finibus dui. Suspendisse ullamcorper, lorem id vestibulum laoreet, massa nisi sollicitudin diam, id efficitur lorem ex in est. Donec ac sagittis arcu. Mauris et posuere nunc, non lacinia quam. Donec condimentum pharetra fermentum"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "Vela FAQs",
+                "category": "5. Vela Element",
+				"blocks": [
+                    {
+                        "type":"item"
+                    },
+                    {
+                        "type":"item"
+                    },
+					{
+                        "type":"item"
+                    },
+					{
+                        "type":"item"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

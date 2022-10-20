@@ -1,0 +1,204 @@
+<script id="CartTemplate" type="text/template">
+    {% raw %}
+        <form action="{% endraw %}{{ routes.cart_url }}{% raw %}" method="post" novalidate class="cart ajaxcart">
+            <div class="ajaxCartInner">
+                {{#items}}
+                <div class="ajaxCartProduct">
+                    <div class="drawerProduct ajaxCartRow" data-line="{{line}}">
+                        <div class="drawerProductImage">
+                            <a href="{{url}}"><img class="img-responsive" src="{{img}}" alt="" /></a>
+                        </div>
+                        <div class="drawerProductContent">
+                            <div class="drawerProductTitle">
+                                <a href="{{url}}">{{name}}</a>
+                                {{#if variation}}
+                                    <span>{{variation}}</span>
+                                {{/if}}
+                                {{#properties}}
+                                    {{#each this}}
+                                        {{#if this}}
+                                            <span>{{@key}}: {{this}}</span>
+                                        {{/if}}
+                                    {{/each}}
+                                {{/properties}}
+{% endraw %}
+                                {% if settings.cart_vendor_enable %}
+{% raw %}
+                                    <span>{{ vendor }}</span>
+{% endraw %}
+                                {% endif %}
+{% raw %}
+                            </div>
+                            <div class="drawerProductPrice">
+                                <div class="priceProduct">
+                                    {{{price}}}
+                                </div>
+                            </div>
+                            <div class="drawerProductQty">
+                                <div class="velaQty">
+                                    <button type="button" class="qtyAdjust velaQtyButton velaQtyMinus" data-id="{{id}}" data-qty="{{itemMinus}}" data-line="{{line}}">
+                                        <span class="txtFallback">&minus;</span>
+                                    </button>
+                                    <input type="text" name="updates[]" class="qtyNum velaQtyText" value="{{itemQty}}" min="0" data-id="{{id}}" data-line="{{line}}"  pattern="[0-9]*" />
+                                    <button type="button" class="qtyAdjust velaQtyButton velaQtyPlus" data-id="{{id}}" data-line="{{line}}" data-qty="{{itemAdd}}">
+                                        <span class="txtFallback">+</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="drawerProductDelete">
+                                <div class="cartRemoveBox">
+                                    <a href="#" class="cartRemove btnClose" onclick="return false;" data-line="{{ line }}">
+                                        {% endraw %}<span>{{ 'cart.general.remove' | t }}</span>{% raw %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/items}}
+                
+    {% endraw %}
+                {% if settings.cart_notes_enable %}
+    {% raw %}
+                    <div class="ajaxCartNote">
+                        <div class="velaCartNoteButton">
+                            <a class="btnCartNote collapsed" href="#velaCartNote" data-toggle="collapse">
+                                <i class="fa fa-times"></i>
+                                {% endraw %}{{ 'cart.general.add_note' | t }}{% raw %}
+                            </a>
+                        </div>
+                        <div id="velaCartNote" class="velaCartNoteGroup collapse">
+                            <label for="CartSpecialInstructions">{% endraw %}{{ 'cart.general.note' | t }}{% raw %}</label>
+                            <textarea name="note" class="form-control" id="CartSpecialInstructions" rows="4">{{ note }}</textarea>
+                        </div>
+                    </div>
+    {% endraw %}
+                {% endif %}
+    {% raw %}
+                <div class="drawerCartFooter">
+                    <div class="drawerAjaxFooter">
+                        <div class="drawerSubtotal">
+                            <span class="cartSubtotalHeading">{% endraw %}{{ 'cart.general.subtotal' | t }}{% raw %}</span>
+                            <span class="cartSubtotal">{{{totalPrice}}}</span>
+                        </div>
+                        <p class="drawerShipping">{% endraw %}{{ 'cart.general.shipping_at_checkout' | t }}{% raw %}</p>
+                        <div class="drawerButton">
+                            <div class="drawerButtonBox">
+                                <a class="btn btnVelaCart btnViewCart" href="{% endraw %}{{ routes.cart_url }}{% raw %}">
+                                    {% endraw %}{{ 'cart.general.viewcart' | t }}{% raw %}
+                                </a>
+                            </div>
+                            <div class="drawerButtonBox">
+                                <button type="submit" class="btn btnVelaCart btnCheckout" name="checkout">
+                                    {% endraw %}{{ 'cart.general.checkout' | t }}{% raw %}
+                                </button>
+                            </div>
+    {% endraw %}
+                            {% if additional_checkout_buttons %}
+                                <div class="drawerButtonBox">
+                                    <div class="additional_checkout_buttons">{{ content_for_additional_checkout_buttons }}</div>
+                                </div>
+                            {% endif %}
+    {% raw %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% endraw %}
+</script>
+<script id="headerCartTemplate" type="text/template">
+    <form action="{{ routes.cart_url }}" method="post" novalidate class="cart ajaxcart">
+    <div class="headerCartInner">
+        <div class="headerCartScroll">
+{% raw %}
+        {{#items}}
+            <div class="ajaxCartProduct">
+                <div class="ajaxCartRow rowFlex flexAlignCenter" data-line="{{line}}">
+                    <div class="headerCartImage">
+                        <a href="{{url}}"><img class="img-responsive" src="{{img}}" alt="" /></a>
+                    </div>
+                    <div class="headerCartContent">
+                        <div class="headerCartInfo">
+                            <a href="{{url}}" class="headerCartProductName">{{name}}</a>
+                            {{#if variation}}
+                                <div class="headerCartProductMeta">{{variation}}</div>
+                            {{/if}}
+                            {{#properties}}
+                                {{#each this}}
+                                    {{#if this}}
+                                        <div class="headerCartProductMeta">{{@key}}: {{this}}</div>
+                                    {{/if}}
+                                {{/each}}
+                            {{/properties}}
+        {% endraw %}
+                            {% if settings.cart_vendor_enable %}
+        {% raw %}
+                                <div class="headerCartProductMeta">{{ vendor }}</div>
+        {% endraw %}
+                            {% endif %}
+        {% raw %}
+                            <div class="headerCartPrice">
+                                {{{price}}} <span>x {{itemQty}}</span>
+                            </div>
+                        </div>
+                        <div class="headerCartRemoveBox">
+                            <a href="#" class="cartRemove" onclick="return false;" data-line="{{ line }}">
+                                <i class="fa fa-trash"></i> {% endraw %}<span>{{ 'cart.general.remove' | t }}</span>{% raw %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/items}}
+        </div>
+        <div class="headerCartTotal">
+            <span class="headerCartTotalTitle">{% endraw %}{{ 'cart.general.subtotal' | t }}{% raw %}</span>
+            <span class="headerCartTotalNum">{{{totalPrice}}}</span>
+        </div>
+        <div class="headerCartButton">
+            <div class="headerCartButtonBox">
+                <a class="btn btnVelaCart btnViewCart" href="{% endraw %}{{ routes.cart_url }}{% raw %}">
+        {% endraw %}
+                    {{ 'cart.general.viewcart' | t }}
+        {% raw %}
+                </a>
+            </div>
+            <div class="headerCartButtonBox">
+                <button type="submit" class="btn btnVelaCart btnCheckout" name="checkout">
+        {% endraw %}
+                    {{ 'cart.general.checkout' | t }}
+        {% raw %}
+                </button>
+            </div>
+        </div>
+{% endraw %}
+    </div>
+    </form>
+</script>
+<script id="velaAjaxQty" type="text/template">
+    {% raw %}
+        <div class="velaQty">
+            <button type="button" class="qtyAdjust velaQtyButton velaQtyMinus" data-id="{{id}}" data-qty="{{itemMinus}}">
+                <span class="txtFallback">&minus;</span>
+            </button>
+            <input type="text" class="qtyNum velaQtyText" value="{{itemQty}}" min="0" data-id="{{id}}" aria-label="quantity" pattern="[0-9]*">
+            <button type="button" class="qtyAdjust velaQtyButton velaQtyPlus" data-id="{{id}}" data-qty="{{itemAdd}}">
+                <span class="txtFallback">+</span>
+            </button>
+        </div>
+    {% endraw %}
+</script>
+<script id="velaJsQty" type="text/template">
+    {% raw %}
+        <div class="velaQty">
+            <button type="button" class="velaQtyAdjust velaQtyButton velaQtyMinus" data-id="{{id}}" data-qty="{{itemMinus}}">
+                <span class="txtFallback">&minus;</span>
+            </button>
+            <input type="text" class="velaQtyNum velaQtyText" value="{{itemQty}}" min="1" data-id="{{id}}" aria-label="quantity" pattern="[0-9]*" name="{{inputName}}" id="{{inputId}}" />
+            <button type="button" class="velaQtyAdjust velaQtyButton velaQtyPlus" data-id="{{id}}" data-qty="{{itemAdd}}">
+                <span class="txtFallback">+</span>
+            </button>
+        </div>
+    {% endraw %}
+</script>

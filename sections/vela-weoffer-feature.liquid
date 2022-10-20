@@ -1,0 +1,200 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+<div class="velaWeOfferFeature overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">    
+    <div class="velaWeOfferFeatureContent">
+        {%- if section.blocks.size > 0 -%}
+            {% for block in section.blocks %}
+                {%- if block.settings.featureposition == 'left' -%}
+                    <div class="featureBox positionLeft">
+                        {%- if block.settings.featurecolorbg != blank -%}
+                            <div class="featureBoxbg hidden-xs hidden-sm" style="background-color: {{ block.settings.featurecolorbg }};"></div>
+                        {%- endif -%}
+                        <div class="container{% if section.settings.full %}-full{% endif %}">
+                            <div class="featureBoxInner">
+                                <div class="rowFlex rowFlexMargin flexAlignCenter">
+                                    <div class="featureIcon col-xs-12 col-sm-12 col-md-7">
+                                        {%- if block.settings.featureheading != blank -%}
+                                            <h4 class="featureHeading hidden-xs hidden-sm hidden-md"><span class="text-center">{{ block.settings.featureheading }}</span></h4>
+                                        {%- endif -%}
+                                        <div class="p-relative">
+                                            
+                                            {%- if block.settings.featureicon != blank -%}
+                                                {% include 'image-global' with image: block.settings.featureicon  %}
+                                            {%- else -%}
+                                                <img class="img-responsive" src="https://via.placeholder.com/636x460.jpg" alt="" />
+                                            {%- endif -%}
+                                        </div>
+                                    </div>
+                                    <div class="featureBoxContent col-xs-12 col-sm-12 col-md-5">
+                                        <div class="featureBoxWrap">
+                                            {%- if block.settings.featuretitle != blank -%}
+                                                <h4 class="featureTitle font-weight-600 mb30"> {{ block.settings.featuretitle }}</h4>
+                                            {%- endif -%}
+                                            {%- if block.settings.featuredesc != blank -%}
+                                                <div class="featuredesc"> {{ block.settings.featuredesc }}</div>
+                                            {%- endif -%}
+                                            {%- if block.settings.featurebutton != blank -%}
+                                                <a class="btn mt30" href="{{ block.settings.featurelink}}" title="{{ block.settings.featurebutton }}">{{ block.settings.featurebutton }}</a>
+                                            {%- endif -%}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {%- else-%}
+                    <div class="featureBox positionRight">
+                        {%- if block.settings.featurecolorbg != blank -%}
+                            <div class="featureBoxbg hidden-xs hidden-sm" style="background-color: {{ block.settings.featurecolorbg }};"></div>
+                        {%- endif -%}
+                        <div class="container{% if section.settings.full %}-full{% endif %}">
+                            <div class="featureBoxInner">
+                                <div class="rowFlex rowFlexMargin flexAlignCenter">
+                                    <div class="featureBoxContent col-xs-12 col-sm-12 col-md-5 text-right">
+                                        <div class="featureBoxWrap">
+                                            {%- if block.settings.featuretitle != blank -%}
+                                                <h4 class="featureTitle font-weight-600 mb30"> {{ block.settings.featuretitle }}</h4>
+                                            {%- endif -%}
+                                            {%- if block.settings.featuredesc != blank -%}
+                                                <div class="featuredesc"> {{ block.settings.featuredesc }}</div>
+                                            {%- endif -%}
+                                            {%- if block.settings.featurebutton != blank -%}
+                                                <a class="btn mt30" href="{{ block.settings.featurelink}}" title="{{ block.settings.featurebutton }}">{{ block.settings.featurebutton }}</a>
+                                            {%- endif -%}
+                                        </div>
+                                    </div>
+                                    <div class="featureIcon col-xs-12 col-sm-12 col-md-7 text-right">
+                                        {%- if block.settings.featureheading != blank -%}
+                                            <h4 class="featureHeading hidden-xs hidden-sm hidden-md"><span class="text-center">{{ block.settings.featureheading }}</span></h4>
+                                        {%- endif -%}
+                                        <div class="p-relative">
+                                            {%- if block.settings.featureicon != blank -%}
+                                                {% include 'image-global' with image: block.settings.featureicon  %}
+                                            {%- else -%}
+                                                <img class="img-responsive" src="https://via.placeholder.com/636x460.jpg" alt="" />
+                                            {%- endif -%}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {%- endif -%}
+            {% endfor%}
+        {%- endif -%}
+    </div>
+</div>
+{% schema %}
+{
+    "name": "Vela Feature text",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable",
+            "label": "Enabel?",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "full",
+            "label": "Full width?"
+        },
+        {
+            "type": "color",
+            "id": "color_bg",
+            "label": "Background Color",
+            "default": "rgba(0,0,0,0)"
+        },
+        {
+            "type": "text",
+            "id": "padding_block",
+            "label": "Padding",
+            "placeholder": "0px 0px",
+            "info": "if background color is blank, it will be remove on the mobile"
+        },
+        {
+            "type": "text",
+            "id": "margin_block",
+            "label": "Margin",
+            "default": "0 0 30px",
+            "placeholder": "0px 0px",
+            "info": "ex: 0px 0px 0px"
+        }
+    ],
+    "blocks": 
+    [
+        {
+            "type": "item",
+            "name": "Feature Item",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "featureheading",
+                    "label": "Heading"
+                },
+                {
+                    "type": "color",
+                    "id": "featurecolorbg",
+                    "label": "Background Color",
+                    "default": "rgba(0,0,0,0)"
+                },
+                {
+                    "type": "select",
+                    "id": "featureposition",
+                    "label": "Image left",
+                    "default": "left",
+                    "options": [
+                        {
+                            "label": "Left",
+                            "value": "left"
+                        },
+                        {
+                            "label": "Right",
+                            "value": "right"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "featuretitle",
+                    "label": "title"
+                },
+                {
+                    "type": "html",
+                    "id": "featuredesc",
+                    "label": "Description"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "featureicon",
+                    "label": "Banner"
+                },
+                {
+                    "type": "text",
+                    "id": "featurebutton",
+                    "label": "Text buttom"
+                },
+                {
+                    "type": "url",
+                    "id": "featurelink",
+                    "label": "Link button"
+                }
+            ]
+        }
+        
+    ]
+}
+{% endschema %}

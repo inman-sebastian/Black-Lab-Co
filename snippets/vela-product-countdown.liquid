@@ -1,0 +1,7 @@
+{%- if product.metafields.my_fields.countdown != blank -%}
+	{% assign countdownTime = product.metafields.my_fields.countdown %} 
+	<div class="proCountdown">
+		<p class="countDownTitle">{{ 'general.countdown.title' | t }}</p>
+        <div class="velaCountdown" data-countdown="{{ countdownTime }}"></div>
+    </div>
+{%- endif -%}

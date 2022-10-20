@@ -1,0 +1,187 @@
+
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+{%- capture bgColor -%}
+    background-color: {{ section.settings.color_bg }};
+{%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+{%- capture paddingblock -%}
+    padding: {{section.settings.padding_block}};
+{%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+{%- capture marginblock -%}
+    margin: {{section.settings.margin_block}};
+{%- endcapture -%}
+{%- endif -%}
+<div class="velaAboutUsFeature overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="container{% if section.settings.full %}-full{% endif %}">
+        {%- if section.settings.title != blank -%}
+            <h3 class="velaTitle velaHomeTile text-center ">{{ section.settings.title }}</h3>
+        {%- endif -%}
+        <div class="rowFlex rowFlexMargin flexAlignCenter">
+            {%- if section.blocks.size > 0 -%}
+                <div class="col-xs-12 col-sm-12 col-md-4 colfixmd">
+                    {% for block in section.blocks %}
+                        {%- if block.settings.featureposition == 'left' -%}
+                            <div class="featureBox mb30">
+                                <div class="d-flex">
+                                    <div class="featureBoxContent text-right pull-right pr30">
+                                        {%- if block.settings.featuretitle != blank -%}
+                                            <h4 class="featureTitle text-right"> {{ block.settings.featuretitle }}</h4>
+                                        {%- endif -%}
+                                        {%- if block.settings.featuredesc != blank -%}
+                                            <div class="featuredesc"> {{ block.settings.featuredesc }}</div>
+                                        {%- endif -%}
+                                    </div>
+                                    <div class="featureIcon pull-right">
+                                        <div class="p-relative" tyle="width: 70px;">
+                                            {%- if block.settings.featureicon != blank -%}
+                                                <img class="img-responsive img-full-mobile" src="{{ block.settings.featureicon | img_url: '70x70' }}" alt="" />
+                                            {%- else -%}
+                                                <img class="img-responsive img-full-mobile" src="https://via.placeholder.com/70x70.png" alt="" />
+                                            {%- endif -%}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {%- endif -%}
+                    {% endfor%}
+                </div>
+            {%- endif -%}
+            <div class="col-xs-12 col-sm-12 col-md-3 featureBanner mt30 mb30">
+                <div class="p-relative mx-auto" style="max-width: {{ section.settings.banner.width }}px;">
+                    {%- if section.settings.banner != blank -%}
+                        {% include 'image-global' with image: section.settings.banner  %}
+                    {%- else -%}
+                        <img class="img-responsive img-full-mobile" src="https://via.placeholder.com/250x550.jpg" alt="" />
+                    {%- endif -%}
+                </div>
+            </div>
+            {%- if section.blocks.size > 0 -%}
+                <div class="col-xs-12 col-sm-12 col-md-4 colfixmd">
+                    {% for block in section.blocks %}
+                        {%- if block.settings.featureposition == 'right' -%}
+                            <div class="featureBox">
+                                <div class="d-flex">
+                                    <div class="featureIcon pull-left text-right">
+                                        {%- if block.settings.featureicon != blank -%}
+                                            <img class="img-responsive img-full-mobile" src="{{ block.settings.featureicon | img_url: '70x70' }}" alt="" />
+                                        {%- else -%}
+                                            <img class="img-responsive img-full-mobile" src="https://via.placeholder.com/70x70.png" alt="" />
+                                        {%- endif -%}
+                                    </div>
+                                    <div class="featureBoxContent pl30 pull-left">
+                                        {%- if block.settings.featuretitle != blank -%}
+                                            <h4 class="featureTitle"> {{ block.settings.featuretitle }}</h4>
+                                        {%- endif -%}
+                                        {%- if block.settings.featuredesc != blank -%}
+                                            <div class="featuredesc"> {{ block.settings.featuredesc }}</div>
+                                        {%- endif -%}
+                                    </div>
+                                </div>
+                            </div>
+                        {%- endif -%}
+                    {% endfor%}
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela About Feature text",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full",
+                "label": "Enable Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "image_picker",
+                "id": "banner",
+                "label": "Banner"
+            }
+        ],
+        "blocks": 
+        [
+            {
+                "type": "item",
+                "name": "Feature Item",
+                "settings": [
+                    {
+                        "type": "select",
+                        "id": "featureposition",
+                        "label": "Image left",
+                        "default": "left",
+                        "options": [
+                            {
+                                "label": "Left",
+                                "value": "left"
+                            },
+                            {
+                                "label": "Right",
+                                "value": "right"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "id": "featuretitle",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "html",
+                        "id": "featuredesc",
+                        "label": "Description",
+                        "default": "<div style='text-align:center;'><h2>Use HTML to format your text so it can be easily read.</h2>This text can be used to share information about your brand with customers.</div>"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "featureicon",
+                        "label": "Icon"
+                    }
+                ]
+            }
+            
+        ],
+        "presets": [
+            {
+                "name": "Vela About Feature text",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

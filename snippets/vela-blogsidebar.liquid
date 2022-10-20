@@ -1,0 +1,79 @@
+{%- if section.settings.blogsidebar_search_enable -%}
+    <div class="blogSidebar">
+        <form class="formSearchPage formSearchBlogPage" action="{{ routes.search_url }}" method="get">
+            <input type="hidden" name="view" value="blog" />
+            <input type="hidden" name="type" value="article" />
+            <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder_blog' | t }}" class="formSearchPageInput form-control" />
+            <button type="submit" class="btn formSearchPageButton">
+                <i class="fa fa-angle-right"></i>
+                <span class="searchPageButtonText">{{ 'general.search.submit' | t }}</span>
+            </button>
+        </form>
+    </div>
+{%- endif -%}
+{%- if section.settings.blogsidebar_recentarticles_enable -%}
+    {%- assign numberLimit = section.settings.blogsidebar_recentarticles_limit | plus: 0 -%}
+    <div class="blogSidebar">
+        <h4 class="titleSidebar">{{ section.settings.blogsidebar_recentarticles_title }}</h4>
+        <div class="velaContent">
+            <ul class="listSidebarBlog list-unstyled">
+                {% for article in blogs[blog.handle].articles limit:numberLimit %}
+                    <li>
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href="{{ article.url }}" title="{{ article.title }}" style="display: block; width: 100px;">
+                                    {% include 'image-global' with image: article.image %}
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
+                                <a class="titleBlogsidebar" href="{{ article.url }}" title="{{ article.title }}">
+                                    {{ article.title }}
+                                </a>
+                                
+                                <!-- <a class="btnReadMore" href="{{ article.url }}" title="{{'blogs.article.read_more'|t}}">{{'blogs.article.read_more'|t}}</a> -->
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{%- endif -%}
+
+{%- if section.settings.blogsidebar_tags_enable -%}
+    {%- assign numberLimit = section.settings.blogsidebar_tags_limit | plus: 0 -%}
+    {%- if blog.all_tags.size > 0 -%}
+        <div class="blogSidebar">
+            <h4 class="titleSidebar">{{ section.settings.blogsidebar_tags_title }}</h4>
+            <div class="velaContent">
+                <ul class="blogTagsList list-inline">
+                    {% for tag in blog.all_tags limit:numberLimit %}
+                        {%- if current_tags contains tag -%}
+                            <li>{{ tag }}</li>
+                        {%- else -%}
+                            <li>{{ tag | link_to_tag: tag }}</li>
+                        {%- endif -%}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {%- endif -%}
+{%- endif -%}
+{%- if section.settings.blog_banner_enable -%}       
+    <div class="blogSidebar blogBannerSidebar hidden-xs hidden-sm">
+        <div class="effectOne">
+            {%- if section.settings.blog_banner_link != blank -%}
+                <a href="{{ section.settings.blog_banner_link }}" title="">
+            {%- endif -%}
+                {%- if section.settings.blog_sidebar_image != blank -%}
+                    {% include 'image-global' with image: section.settings.blog_sidebar_image, max_width: wimage, max_height: himage %}
+                {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+            {%- if section.settings.blog_banner_link != blank -%}
+                </a>
+            {%- endif -%}
+        </div>
+    </div>
+{%- endif -%}

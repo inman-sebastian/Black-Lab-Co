@@ -1,0 +1,125 @@
+<section id="pageContent">
+    <div class="container">
+        <div id="velaAccount" class="velaAccountContainer">
+            <div class="velaPageAccount">
+                <h1 class="velaAccountTitle">
+                    <span>{{ 'customer.account.title' | t }}</span>
+                </h1>
+                <div class="pageAccountContent">
+                    <div class="rowFlex rowFlexMargin">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="boxAccount accountInfo">
+                                <h4 class="accountHeading">{{ 'customer.account.details' | t }}</h4>
+                                <div class="accountContent">
+                                    <h5 class="customerName">{{ customer.name }}</h5>
+                                    <div class="customerEmail">{{ customer.email }}</div>
+                                    <div class="formAccountRecover">
+                                        {% form 'recover_customer_password' %}
+                                            <div class="formContent">
+                                                {%- if form.errors -%}
+                                                    <div class="alert alert-danger">
+                                                        {{ form.errors | default_errors }}
+                                                    </div>
+                                                {%- endif -%}
+                                                <input type="hidden" name="email" value="{{ customer.email }}">
+                                                <input type="submit" class="btnRecoverPassword" value="{{ 'customer.recover_password.title' | t }}">
+                                            </div>
+                                        {% endform %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="boxAccount accountAddress">
+                                <h4 class="accountHeading">{{ 'customer.addresses.title' | t }}</h4>
+                                <div class="accountContent">
+                                    <h5 class="customerName">{{ customer.name }}</h5>
+                                    {%- if customer.default_address != nil -%}
+                                        <ul class="addressInfo list-unstyled">
+                                            {%- if customer.default_address.phone != blank -%}
+                                                <li>
+                                                    <label>{{ 'customer.addresses.phone' | t }}:</label> {{ customer.default_address.phone }}
+                                                </li>
+                                            {%- endif -%}
+                                            <li>
+                                                <label>{{ 'customer.addresses.address1' | t }}:</label> 
+                                                {{ customer.default_address.address1 }}
+                                                {% if customer.default_address.city != blank %}
+                                                    , {{ customer.default_address.city }}
+                                                {% endif %}
+                                                {% if customer.default_address.province_code != blank %}
+                                                    , {{ customer.default_address.province_code }}
+                                                {% endif %}
+                                                {% if customer.default_address.zip != blank %}
+                                                    &nbsp;{{ customer.default_address.zip | upcase }}
+                                                {% endif %}
+                                            </li>
+                                            {%- if customer.default_address.address2 != blank -%}
+                                                <li><label>{{ 'customer.addresses.address2' | t }}:</label> {{ customer.default_address.address2 }}</li>
+                                            {%- endif -%}
+                                            <li>
+                                                <label>{{ 'customer.addresses.country' | t }}:</label> {{ customer.default_address.country }}
+                                            </li>
+                                        </ul>
+                                        <div class="accountButton">
+                                            <a href="{{ routes.account_addresses_url }}">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+                                        </div>
+                                    {%- else -%}
+                                        <div class="noAccountInfo">
+                                            <p>{{ 'customer.addresses.noaddress' | t }}</p>
+                                            <div class="accountButton">
+                                                <a href="{{ routes.account_addresses_url }}">{{ 'customer.account.add_addresses' | t }}</a>
+                                            </div>
+                                        </div>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accountOrderBox">
+                        <h4 class="accountHeading">{{ 'customer.orders.title' | t }}</h4>
+                        <div class="orderBoxContent">
+                            {% paginate customer.orders by 20 %}
+                                {%- if customer.orders.size > 0 -%}
+                                    <div class="table-responsive">
+                                        <table class="table tableOrder table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ 'customer.orders.order_number' | t }}</th>
+                                                    <th>{{ 'customer.orders.date' | t }}</th>
+                                                    <th>{{ 'customer.orders.payment_status' | t }}</th>
+                                                    <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                                                    <th>{{ 'customer.orders.total' | t }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for order in customer.orders %}
+                                                    <tr>
+                                                        <td>{{ order.name | link_to: order.customer_url }}</td>
+                                                        <td>{{ order.created_at | date: format: 'month_day_year' }}</td>
+                                                        <td>{{ order.financial_status_label }}</td>
+                                                        <td>{{ order.fulfillment_status_label }}</td>
+                                                        <td>{{ order.total_price | money }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {%- else -%}
+                                    <div class="noAccountInfo">
+                                        <p>{{ 'customer.orders.none' | t }}</p>
+                                    </div>
+                                {%- endif -%}
+                                {%- if paginate.pages > 1 -%}
+                                    <div class="pagination">
+                                      {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+                                    </div>
+                                {%- endif -%}
+                            {% endpaginate %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

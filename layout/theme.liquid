@@ -1,0 +1,51 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.vela_color_primary }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {% if settings.favicon != blank %}
+        <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+        <!-- iPad icons -->
+        <link rel="apple-touch-icon-precomposed" href="{{ settings.favicon | img_url: '48x48' }}" type="image/png">
+        <link rel="nokia-touch-icon" href="{{ settings.favicon | img_url: '48x48' }}" type="image/png">
+    {% endif %}
+    {% capture seo_title %}
+        {{ page_title }}
+        {% if current_tags %}{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}{% endif %}
+        {% if current_page != 1 %}&ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+        {% unless page_title contains shop.name %}&ndash; {{ shop.name }}{% endunless %}
+    {% endcapture %}
+    <title>{{ seo_title }}</title>
+    {% if page_description %}
+        <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    {% include 'social-meta-tags' %}
+    {% include 'css-variables' %}
+    {% include 'vela-header-styles' %}
+    {% include 'vela-header-javascript' %}
+    {{ content_for_header }}
+</head>
+{%- if template contains 'customer' -%}
+    {%- assign velaBodyClass = 'template-account' -%}
+{%- endif -%}
+{%- if settings.loading_enable -%}
+    {%- assign bodyPreLoading = 'bodyPreLoading' -%}
+{%- endif -%}
+<body id="{{ page_title | handle }}" class="template-{{ template | split: '.' | first }} {{ velaBodyClass }}{% if settings.header_float_enable %} velaFloatHeader{% endif %} {{ bodyPreLoading }}">
+    {% include 'vela-template' %}
+    <div id="pageContainer" class="isMoved">
+        {% include 'vela-header-section' %}
+        <main class="mainContent" role="main">
+            {{ content_for_layout }}
+        </main>
+        {% section 'vela-footer' %}
+    </div>
+    {% include 'vela-ajaxcart' %}
+    {% include 'vela-modal' %}
+    {% include 'vela-footer-javascript' %}
+</body>
+</html>

@@ -1,0 +1,235 @@
+{%- assign nocolor = "rgba(0,0,0,0)" -%}
+<style>
+    :root {
+        {%- if section.settings.breadcrumb_bg != nocolor-%}
+            --vela-breadcrumb-bgcolor: {{ section.settings.breadcrumb_bg }};
+        {%- endif -%}
+        {%- if section.settings.breadcrumb_color_link != nocolor -%}
+            --vela-breadcrumb-linkcolor: {{ section.settings.breadcrumb_color_link }};
+        {%- endif -%}
+        {%- if section.settings.breadcrumb_color != nocolor -%}
+            --vela-breadcrumb-textcolor: {{ section.settings.breadcrumb_color }};
+        {%- endif -%}
+        {%- if section.settings.breadcrumb_color_heading != nocolor -%}
+            --vela-breadcrumb-headingcolor: {{ section.settings.breadcrumb_color_heading }};
+        {%- endif -%}
+    }
+    .velaBreadcrumbs{
+        {%- if  section.settings.breadcrumb-height != blank -%}
+            min-height: {{section.settings.breadcrumb-height}};
+        {%- endif -%}
+        {%- if section.settings.padding_block != blank -%}
+            padding: {{section.settings.padding_block}};
+        {%- endif -%}
+        {%- if section.settings.margin_block != blank -%}
+            margin: {{section.settings.margin_block}};
+        {%- endif -%}
+    }
+    {%- if section.settings.breadcrumb-mheight != blank -%}@media screen and (max-width: 767px){ .velaBreadcrumbs{ min-height: {{section.settings.breadcrumb-mheight}}; }}{% endif %}
+</style>
+{%- assign collectionYN = false -%}
+{%- assign collectionImage = "" -%}
+{%- assign colheading = "" -%}
+{%- if section.settings.image != blank -%}
+    {%- assign collectionImage = section.settings.image -%}
+{%- endif -%}
+{%- if section.settings.heading != blank -%}
+    {%- assign colheading = section.settings.heading -%}
+{%- endif -%}
+{%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks -%}
+        {%- if block.settings.collection_handle == collection.handle -%}
+            {%- assign collectionYN = true -%}
+            {% if block.settings.bgimage != blank %}
+                {%- assign collectionImage = block.settings.bgimage -%}
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+                {%- assign colheading = block.settings.heading -%}
+            {%- endif -%}
+            {%- break -%}
+        {%- endif -%}
+    {%- endfor -%}
+{%- endif -%}
+{%- if section.settings.bgimage -%}
+    {%- capture bg_image -%}
+        {%- if  collectionImage != blank -%}
+            background-image: url({{ collectionImage | img_url: 'master' }});
+        {%- else -%}
+            background-image: url('https://via.placeholder.com/1920x{{section.settings.breadcrumb-height}}');
+        {%- endif -%}
+    {%- endcapture -%}
+{%- endif -%}
+<section class="velaBreadcrumbs overflow-hidden d-flex flexAlignCenter" style="{{ bg_image }}">
+    <div class="velaBreadcrumbsInner">
+        <nav class="velaBreadcrumbWrap container">       
+            <div class="velaBreadcrumbsInnerWrap">
+                {%- if section.settings.enable_title == 'alwary'-%} 
+					{%- assign showtitle = "" -%}
+				{%- elsif section.settings.enable_title == 'desktop'-%} 
+					{%- assign showtitle = "hidden-xs" -%}
+				{%- else -%}
+					{%- assign showtitle = "hidden" -%}
+				{%- endif -%}
+                <h1 class="breadcrumbHeading  {{ showtitle }}">
+                    {%- if colheading != blank -%}
+                        {{ colheading }}
+                    {%- else -%}
+                        {{ collection.title }}
+                    {%- endif -%}
+                </h1>
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}" itemprop="item">
+                            <span itemprop="name">{{ 'general.breadcrumbs.home' | t }}</span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    {%- if current_tags -%}
+                        {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+                        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <a href="{{ url }}" title="{{ collection.title }}" itemprop="item">
+                                <span itemprop="name">{{ collection.title }}</span>
+                            </a>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                        <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <span itemprop="name">{{ current_tags | join: " + " }}</span>
+                            <meta itemprop="position" content="3" />
+                        </li>
+                    {%- else -%}
+                        <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <span itemprop="name">{{ collection.title }}</span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    {%- endif -%}
+                    
+                </ol>
+            </div>
+        </nav>
+    </div>
+</section>
+{% schema %}
+    {
+        "name": "Vela Breadcrumb",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "Ex: 0px 0px 0px 0px and use desktop only"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "placeholder": "0px 0px",
+                "default": "0 0 30px",
+                "info": "Ex: 0px 0px 30px 0px"
+            },
+            {
+                "type": "checkbox",
+                "id": "bgimage",
+                "label": "Use background image"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Background image default",
+                "info": "Default size: 1920x480 pixels"
+            },
+            {
+                "type": "text",
+                "id": "heading",
+                "label": "Heading"
+            },
+            {
+                "type": "select",
+                "id": "enable_title",
+                "label": "Show breadcrumb title",
+                "default": "none",
+                "options" : [
+                    {
+                        "label": "None",
+                        "value": "none"
+                    },
+                    {
+                        "label": "Alwary",
+                        "value": "alwary"
+                    },
+                    {
+                        "label": "Desktop only",
+                        "value": "desktop"
+                    }
+                ]
+            },
+            {
+                "type": "color",
+                "id": "breadcrumb_bg",
+                "label": "Background color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "color",
+                "id": "breadcrumb_color_heading",
+                "label": "Heading Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "color",
+                "id": "breadcrumb_color",
+                "label": "Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "color",
+                "id": "breadcrumb_color_link",
+                "label": "Color Link",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "breadcrumb-height",
+                "label": "Height",
+                "default": "300px",
+                "info": "Use for desktop ex: 300px"
+            },
+            {
+                "type": "text",
+                "id": "breadcrumb-mheight",
+                "label": "Height",
+                "default": "200px",
+                "info": "Use for mobile ex: 200px"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "image",
+                "name": "Image collection",
+                "settings": [
+                    {
+                        "type": "collection",
+                        "id": "collection_handle",
+                        "label": "Collection page"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "bgimage",
+                        "label": "Background image",
+                        "info": "It will be displayed on collection page"
+                    },
+                    {
+                        "type": "text",
+                        "id": "heading",
+                        "label": "Heading"
+                    }
+
+                ]
+            }
+        ]
+    }
+{% endschema %}

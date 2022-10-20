@@ -1,0 +1,176 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.bgimage != blank -%}
+    {%- capture bgImage -%}
+        background-image: url({{ section.settings.bgimage | img_url:'master' }});
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- assign owlColumn1 = 1 -%}
+{%- assign owlColumn2 = 1 -%}
+{%- assign owlColumn3 = 1 -%}
+{%- assign owlColumn4 = 1 -%}
+{%- assign owlColumn5 = 1 -%}
+<div class="velaTestimonials overflow-hidden vela-section" style="{{marginblock}} {{ bgColor }}{{ bgImage }}{{ paddingblock }}">
+    <div class="container{%- if section.settings.full_with -%}-full{%- endif -%}">
+        <div class="velaTestimonialsInner {% if section.settings.color_bg != 'rgba(0,0,0,0)' %}pt30 mt30{% endif %}">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaTitle velaHomeTile text-center">
+                    {{ section.settings.title }}
+                </h3>
+            {%- endif -%}
+            <div class="velaContent">
+                <div class="velaOwlRow owlCarouselPlay">
+                    <div class="owl-carousel" 
+                        data-nav="true" 
+                        data-dots="true" 
+                        data-margin="0" 
+                        data-columnone="{{ owlColumn1 }}" 
+                        data-columntwo="{{ owlColumn2 }}" 
+                        data-columnthree="{{ owlColumn3 }}" 
+                        data-columnfour="{{ owlColumn4 }}" 
+                        data-columnfive="{{ owlColumn5 }}">
+                        {% for block in section.blocks %}
+                            <div class="item text-center">
+                                <div class="testimonialItem">
+                                    <div class="testimonialContent">
+                                        <div class="testimonialAvatar">
+                                            <span>
+                                                {%- if block.settings.avatar != blank -%}
+                                                    {%- assign testi_image = block.settings.avatar -%}
+                                                    {%- assign wimage = "150" -%}
+                                                    {%- assign himage = "150" -%}
+                                                    {% include 'image-global' with image: testi_image, max_width: wimage, max_height: himage %}
+                                                {%- else -%}
+                                                    <img class="img-responsive img-circle" src="https://via.placeholder.com/150x150.jpg" >
+                                                {%- endif -%}
+                                            </span>
+                                        </div>
+                                        {%- if block.settings.name != blank -%}
+                                        <h4 class="testimonialName">{{ block.settings.name }}</h4>
+                                        {%- endif -%}
+                                        {%- if block.settings.position != blank -%}
+                                        <div class="position">{{ block.settings.position }}</div>
+                                        {%- endif -%}
+                                        <div class="testimonialStar"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                                        {%- if block.settings.review != blank -%}
+                                            <div class="testimonialReview">
+                                                {{ block.settings.review }}
+                                            </div>
+                                        {%- endif -%}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela testimonial",
+        "class": "velaFramework",
+		"max_blocks": 10,
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage",
+                "label": "Background image",
+                "info": "Default size: 1920x1080 pixels"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            }
+        ],
+		"blocks": [
+			{
+                "type": "item",
+                "name": "Testimonial Item",
+                "settings": [
+					{
+                        "type": "image_picker",
+                        "id": "avatar",
+                        "label": "Avatar"
+                    },
+                    {
+                        "type": "text",
+                        "id": "name",
+                        "label": "Customer name"
+                    },
+					{
+                        "type": "text",
+                        "id": "position",
+                        "label": "Customer position"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "review",
+                        "label": "Customer review"
+                    }
+                ]
+            }
+		],
+        "presets": [
+            {
+                "name": "Testimonials",
+                "category": "5. Vela Text",
+				"blocks": [
+                    {
+                        "type":"item"
+                    },
+                    {
+                        "type":"item"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

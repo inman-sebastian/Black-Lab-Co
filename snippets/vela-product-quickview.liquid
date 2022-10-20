@@ -1,0 +1,11 @@
+{% if settings.quickview_enable %}
+    <div class="productQuickView">
+        <a class="btn btnProduct btnProductQuickview" href="#velaQuickView" data-handle="{{ product.handle }}" title="{{ 'general.quickview.title' | t }}">
+            <span class="icon">+</span>
+          	<span>{{ 'general.quickview.title' | t }}</span>
+            <div class="hidden proShortDesc">
+                {{ shortDescription }}
+            </div>
+        </a>
+    </div>
+{% endif %}

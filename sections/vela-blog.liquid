@@ -1,0 +1,286 @@
+{%- assign owlColumn1 = section.settings.column1 | plus:0 -%}
+{%- assign owlColumn2 = section.settings.column2 | plus:0 -%}
+{%- assign owlColumn3 = section.settings.column3 | plus:0 -%}
+{%- assign owlColumn4 = section.settings.column4 | plus:0 -%}
+{%- assign owlColumn5 = section.settings.column5 | plus:0 -%}
+{%- assign blogLimit = section.settings.limit | plus:0 -%}
+{%- assign blogName = section.settings.blog_handle -%}
+{%- if section.settings.image_size != blank -%}
+    {% capture blogImageSize %}{{ section.settings.image_size }}{% endcapture %}
+    {%- assign wimage = section.settings.image_size | split: "x" | first -%}
+    {%- assign himage = section.settings.image_size | split: "x" | last -%}
+{%- else -%}
+    {%- assign bannersize = "300x300" -%}
+    {%- assign wimage = "300" -%}
+    {%- assign himage = "300" -%}
+{%- endif -%}
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+<div class="velaHomeBlogs overflow-hidden vela-section" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="velaHomeBlogsInner {% if section.settings.color_bg != 'rgba(0,0,0,0)' %} hasbg{% endif %}">
+        <div class="container{%- if section.settings.full_with -%}-full{%- endif -%}">  
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaTitle velaHomeTitle text-center">
+                    {{ section.settings.title }}
+                </h3>
+            {%- endif -%}
+            <div class="velaContent">
+                <div class="velaOwlRow owlCarouselPlay">
+                    <div class="owl-carousel" 
+                        data-nav="{{ section.settings.navigation }}" 
+                        data-loop="false" 
+                        data-autoplay="{{ section.settings.autoplay }}" 
+                        data-autoplaytimeout="{{ section.settings.autoplay_timeout }}" 
+                        data-margin="30" 
+                        data-columnone="{{ owlColumn1 }}" 
+                        data-columntwo="{{ owlColumn2 }}" 
+                        data-columnthree="{{ owlColumn3 }}" 
+                        data-columnfour="{{ owlColumn4 }}" 
+                        data-columnfive="{{ owlColumn5 }}">
+                        {% for article in blogs[blogName].articles limit:blogLimit %}
+                            {%- assign blog_image = article.image -%}
+                            {%- if section.settings.layoutstyle == 'grid' -%}
+                                <div class="velaBlogItem {{ section.settings.layoutstyle }}">
+                                    {% if section.settings.image_featured %}
+                                        {% if article.image %}
+                                            <div class="blogPostImage">
+                                                <a href="{{ article.url }}" title="{{ article.title }}">
+                                                    {% include 'image-global' with image: blog_image, max_width: wimage, max_height: himage %}
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                    <div class="blogPostContent text-center">
+                                        <h3 class="blogPostTitle"><a href="{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></h3>
+                                        
+                                        <div class="blogPostShortdesc rte mb20">
+                                            {% if article.excerpt.size > 0 %}
+                                                {{ article.excerpt }}
+                                            {% else %}
+                                                <p>{{ article.content | strip_html | truncatewords: 20 }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="groupButton clearfix">
+                                        <div class="blogPostMeta">
+                                            <span class="articlePublish"><i class="fa fa-calendar"></i> {{ article.published_at | date:'%d %B, %Y' }}</span> 
+                                            
+                                        </div>
+                                        <a class="btn" href="{{ article.url }}">{{ 'blogs.article.read_more' | t }}</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                {% assign checkRow  = forloop.index | modulo:2 %}
+                                    {% if checkRow == 1 %}
+                                        <div class="velaBlogItem {{ section.settings.layoutstyle }}">
+                                    {% endif %}
+                                        <div class="media">
+                                            {% if section.settings.image_featured %}
+                                                    {% if article.image %}
+                                                        <div class="blogPostImage pull-left">
+                                                            <a href="{{ article.url }}" title="{{ article.title }}" style="width: {{ wimage }}px; display: block;">
+                                                                {% include 'image-global' with image: blog_image, max_width: wimage, max_height: himage %}
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                            {% endif %}
+                                            <div class="blogPostContent media-body">
+                                                <h3 class="blogPostTitle"><a href="{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></h3>
+                                                <div class="blogPostMeta">
+                                                    <span class="articleAuthor">{{ 'blogs.article.author_html' | t:author:article.author }} / {{ article.published_at | date:'%d %B, %Y' }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% if checkRow == 0 or forloop.last %}
+                                        </div>
+                                    {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela blogs",
+        "class": "velaFramework",
+        "settings":[
+            {
+              "type": "header",
+              "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },      
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "blog",
+                "id": "blog_handle",
+                "label": "Blog"
+            },
+            {
+                "type": "checkbox",
+                "id": "image_featured",
+                "label": "Show featured image",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Featured image size",
+                "default": "480x",
+                "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+            },
+            {
+                "type": "select",
+                "id": "layoutstyle",
+                "label": "Layout Style",
+                "default": "grid",
+                "options":[
+                    {
+                        "value": "grid",
+                        "label": "Grid"
+                    },
+                    {
+                        "value": "list",
+                        "label": "List"
+                    }
+                ]
+            },
+            {
+                "type": "header",
+                "content": "Carousel Settings"
+            },
+            {
+                "type": "text",
+                "id": "limit",
+                "label": "Limit",
+                "default": "8"
+            },
+            {
+                "type": "checkbox",
+                "id": "navigation",
+                "label": "Show navigation",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "autoplay",
+                "label": "Auto play",
+                "default": false
+            },
+            {
+                "type": "text",
+                "id": "autoplay_timeout",
+                "label": "Autoplay timeout",
+                "placeholder": "Default: 10000(ms)",
+                "info": "Autoplay interval timeout.",
+                "default": "10000"
+            },
+            {
+                "type": "range",
+                "id": "column1",
+                "min": 1,
+                "max": 7,
+                "step": 1,
+                "label": "#Column 1",
+                "default": 6,
+                "info": "Large desktops"
+            },
+            {
+                "type": "range",
+                "id": "column2",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 2",
+                "default": 3,
+                "info": "Desktops & Tablets landscape"
+            },
+            {
+                "type": "range",
+                "id": "column3",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 3",
+                "default": 2,
+                "info": "Tablets"
+            },
+            {
+                "type": "range",
+                "id": "column4",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 4",
+                "default": 2,
+                "info": "Mobile phone landscape"
+            },
+            {
+                "type": "range",
+                "id": "column5",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 5",
+                "default": 1,
+                "info": "Mobile phone"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Blog posts",
+                "category": "3. Vela Blog",
+                "settings": {
+                    "title": "Blogs on Homepage",
+					"blog_handle": "news"
+                }
+            }
+        ]
+    }
+{% endschema %}

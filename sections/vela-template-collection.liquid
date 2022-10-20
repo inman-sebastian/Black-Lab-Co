@@ -1,0 +1,370 @@
+{%- assign intProColumns = section.settings.collection_product_columns | plus:0 -%}
+{%- assign intProPaginate = section.settings.collection_product_page | plus:0 -%}
+{%- assign strColumn = 12 | divided_by:intProColumns -%}
+{%- if intProColumns == 5 -%}
+    {% capture strGridItem %}col-xs-6 col-md-4 col-lg-2-4{% endcapture %}
+{%- else -%}
+    {% capture strGridItem %}col-xs-6 col-md-4 col-lg-{{ strColumn }}{% endcapture %}
+{%- endif -%}
+{%- unless collectionLayout -%}
+    {%- assign collectionLayout = 'grid' -%}
+{%- endunless -%}
+{%- if section.settings.product_image_size != blank -%}
+    {%- assign proImageSize = section.settings.product_image_size -%}
+{%- else -%}
+    {%- assign proImageSize = 'master' -%}
+{%- endif -%}
+{%- if section.settings.image_square -%}
+    {%- assign force_crop = true -%}    
+{%- endif -%}
+<section id="pageContent">
+    <div class="container">
+        <div class="pageCollectionInner mb20 pb-md-30">
+            <div class="rowFlex rowFlexMargin sidebar__{{ section.settings.sidebar_template }}">
+                <aside id="velaSidebar" class="filterTagFullwidthContent col-xs-12 col-sm-12 col-md-3 mb30 {% unless section.settings.sidebar_template == "sidebarnone" %}velaSidebar{% endunless %}">
+                    <div class="filterTagFullwidthClose {% unless section.settings.sidebar_template == "sidebarnone" %}hidden-xl hidden-lg hidden-md hidden-xl{% endunless %}"></div>
+                    <div class="velaSidebarInner">
+                        {% include 'collection-sidebar'%}
+                    </div>
+                </aside>
+                <div id="proListCollection" class="velaCenterColumn col-xs-12 col-sm-12 mb30 {% unless section.settings.sidebar_template == "sidebarnone" %}col-md-9{% endunless%} ">
+                    {% paginate collection.products by intProPaginate %}
+                        {%- if section.settings.collection_image or section.settings.collection_description or section.settings.collection_title -%}
+                            <div class="collBoxTop">
+                                <div class="rowFlex rowFlexMargin">
+                                    {%- if section.settings.collection_image and collection.image -%}
+                                        <div class="collImage col-xs-12 col-sm-4">
+                                            <a href="{{ collection.url }}">
+                                                {%- if collection.image -%}
+                                                    {% include 'image-global' with image: collection.image %}
+                                                {%- else -%}
+                                                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                                                {%- endif -%}
+                                            </a>
+                                        </div>
+                                    {%- endif -%}
+                                    {%- if section.settings.collection_description and collection.description != blank -%}
+                                        <div class="collDescription col-xs-12 {% if section.settings.collection_image and collection.image %}col-sm-8{% endif %}">
+                                            {%- if section.settings.collection_title -%}
+                                                <h1 class="headerCollection">{{ collection.title }}</h1>
+                                            {%- endif -%}
+                                            {%- if section.settings.collection_description -%}
+                                                <div class="rte">
+                                                    {{ collection.description }}
+                                                </div>
+                                            {%- endif -%}
+                                        </div>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        {%- endif -%}
+                        <div class="filterCollectionFullwidth">
+                            {%- if section.blocks.size > 0-%}
+                            <div class="filterTagFullwidth {% unless section.settings.sidebar_template == "sidebarnone" %}hidden-xl hidden-md hidden-lg{% endunless%}">
+                                <div class="filterTagFullwidthButton">
+                                    <i class="fa fa-sliders"></i>
+                                    <span>{{ 'collections.sidebar.filter' | t }}</span>
+                                </div>
+                            </div>
+                            {%- endif -%}
+                            <div class="collBoxSort">
+                                {% include 'collection-sorting' %}
+                            </div>
+                        </div>
+                        <div class="collBoxProducts">
+                            {% if section.settings.product_layout_style == 'list' %}
+                                {% include 'vela-collection-list' %}
+                            {% else %}
+                                {% include 'vela-collection-grid' %}
+                            {% endif %}
+                        </div>
+                        {% if paginate.pages > 1 %}
+                            <div id="collPagination" class="velaPaginationWrap clearfix">
+                                {% include 'vela-pagination' %}
+                                {% assign minPage = 1 %}
+                                {% assign maxPage = paginate.page_size | times:paginate.current_page %}
+                                {% if paginate.current_page > 1 %}
+                                    {% assign currentPage = paginate.current_page | minus:1 %}
+                                    {% assign minPage = currentPage | times: paginate.page_size %}
+                                {% endif %}
+                                {% if maxPage > paginate.items %}{% assign maxPage = paginate.items %}{% endif %}
+                                <div class="collProductCount itemPaginate pull-right hidden-xs hidden-sm">{{ 'collections.paginate.showing_html' | t: minPage:minPage, maxPage:maxPage, itemsPage:paginate.items }}</div>
+                            </div>
+                        {% endif %}
+                    {% endpaginate %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% schema %}
+    {
+        "name": "Vela Collection Page",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Collection info"
+            },
+            {
+                "type": "checkbox",
+                "id": "collection_image",
+                "label": "Show collection image"
+            },
+            {
+                "type": "checkbox",
+                "id": "collection_title",
+                "label": "Show collection Title"
+            },
+            {
+                "type": "checkbox",
+                "id": "collection_description",
+                "label": "Show collection description"
+            },
+            {
+                "type": "header",
+                "content": "Collection layout"
+            },
+            {
+                "type": "select",
+                "id": "sidebar_template",
+                "label": "Collection layout",
+                "default": "sidebarleft",
+                "options": [
+                    {
+                        "label": "Full width",
+                        "value": "sidebarnone"
+                    },
+                    {
+                        "label": "Sidebar Right",
+                        "value": "sidebarright"
+                    },
+                    {
+                        "label": "Sidebar Left",
+                        "value": "sidebarleft"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "product_layout_style",
+                "label": "Product Style",
+                "default": "grid",
+                "options": [
+                    {
+                        "label": "Grid",
+                        "value": "grid"
+                    },
+                    {
+                        "label": "List",
+                        "value": "list"
+                    }
+                ]
+            },
+            {
+                "type": "range",
+                "id": "collection_product_columns",
+                "min": 1,
+                "max": 50,
+                "step": 1,
+                "default": 4,
+                "label": "Number of products in a row"
+            },
+            {
+                "type": "range",
+                "id": "collection_product_page",
+                "min": 6,
+                "max": 50,
+                "step": 1,
+                "default": 8,
+                "label": "Number of products in a page"
+            },
+            {
+                "type": "checkbox",
+                "id": "image_square",
+                "label": "Product square",
+                "default": false
+            }
+        ],
+        "blocks": [
+            {
+                "type": "categories",
+                "name": "Sidebar Categories",
+                "settings": [
+                    {
+                        "type": "header",
+                        "content": "Sidebar Categories"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sidebar_categories_title",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "link_list",
+                        "id": "sidebar_categories_menu",
+                        "label": "Category menu",
+                        "info": "Choose menu for block. Add new menu: Admin->Navigation->Menu"
+                    }
+                ]
+            },
+            {
+                "type": "filtertag",
+                "name": "Sidebar Filter by tags",
+                "settings": [
+                    {
+                        "type": "paragraph",
+                        "content": "SIDEBAR CUSTOMIZE TAGS.[Guide create filter by tag](http:\/\/velatheme.com\/guide\/velatheme\/group_filter.html)"
+                    },
+                    {
+                        "type": "text",
+                        "id": "filter_by_tag_title",
+                        "label": "Heading"
+                    }
+                ]
+            },
+            {
+                "type": "filtervendor",
+                "name": "Sidebar Filter By Vendor",
+                "settings": [
+                    {
+                        "type": "paragraph",
+                        "content": "Sidebar Filter By Vendor.[Guide create filter by tag](http:\/\/velatheme.com\/guide\/velatheme\/group_filter.html)"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sidebar_filtervendor_title",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "sidebar_filtervendor_list",
+                        "placeholder": "Vendor1,Vendor2",
+                        "label": "Vendors list",
+                        "info": "Separate by a comma \",\""
+                    } 
+                ]
+            },
+            {
+                "type": "filtertype",
+                "name": "Sidebar Filter By Type",
+                "settings": [
+                    {
+                        "type": "paragraph",
+                        "content": "Sidebar Filter By Type.[Guide create filter by tag](http:\/\/velatheme.com\/guide\/velatheme\/group_filter.html)"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sidebar_filtertype_title",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "sidebar_filtertype_list",
+                        "placeholder": "Product Type,Product Vendor2",
+                        "label": "Product types list",
+                        "info": "Separate by a comma \",\""
+                    }
+                    
+                ]
+            },
+            {
+                "type": "productlist",
+                "name": "Sidebar Product",
+                "limit": 2,
+                "settings": [
+                    {
+                        "type": "header",
+                        "content": "Sidebar products"
+                    },
+                    {
+                        "type": "text",
+                        "id": "products_title",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "collection",
+                        "id": "collection_handle",
+                        "label": "Collection"
+                    },
+                    {
+                        "type": "range",
+                        "id": "limit",
+                        "min": 1,
+                        "max": 20,
+                        "step": 1,
+                        "label": "Limit",
+                        "default": 4
+                    }
+                ]
+            },
+            {
+                "type": "banner",
+                "name": "Sidebar Banner",
+                "limit": 2,
+                "settings": [
+                    {
+                        "type": "url",
+                        "id": "link",
+                        "label": "Image URL"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Banner image"
+                    },
+                    {
+                        "type": "select",
+                        "id": "effect",
+                        "label": "Effect",
+                        "default": "effectOne",
+                        "options": [
+                            {
+                                "value": "effectNone",
+                                "label": "None"
+                            },
+                            {
+                                "value": "effectOne",
+                                "label": "Effect One"
+                            },
+                            {
+                                "value": "effectTwo",
+                                "label": "Effect Two"
+                            },
+                            {
+                                "value": "effectThree",
+                                "label": "Effect Three"
+                            },
+                            {
+                                "value": "effectFour",
+                                "label": "Effect Four"
+                            },
+                            {
+                                "value": "effectFive",
+                                "label": "Effect Five"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "html",
+                "name": "Sidebar Custom html",
+                "limit": 2,
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "html_title",
+                        "label": "Heading",
+                        "default": "Heading"
+                    },
+                    {
+                        "type": "html",
+                        "id": "html_content",
+                        "label": "content",
+                        "default": "<h4>Use HTML to format your text so it can be easily read.</h4>This text can be used to share information about your brand with customers.</div>"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

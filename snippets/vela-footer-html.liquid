@@ -1,0 +1,29 @@
+<div class="velaFooter velaFooterContact">
+    <h4 class="velaFooterTitle">
+        {{ section.settings.footer_html_title }}
+    </h4>
+    <div class="velaContent">
+        {%- if section.settings.footer_html_content != blank -%}
+            <div class="footerContactDesc">
+                {{ section.settings.footer_html_content }}
+            </div>
+        {%- endif -%}
+        <div class="footerContactInfo">
+            {%- if section.settings.footer_html_address != blank -%}
+                <div class="footerContactLine">
+                    {{ section.settings.footer_html_address }}  
+                </div>
+            {%- endif -%}
+            {%- if section.settings.footer_html_phone != blank -%}
+                <div class="footerContactLine">
+                    {{ section.settings.footer_html_phone }}
+                </div>
+            {%- endif -%}
+            {%- if section.settings.footer_html_email != blank -%}
+                <div class="footerContactLine">
+                    <a href="mailto:{{ section.settings.footer_html_email }}">{{ section.settings.footer_html_email }}</a>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>

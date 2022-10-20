@@ -1,0 +1,110 @@
+<section id="pageContent">
+    <div class="container">
+        <div class="velaArticleWrap row mb30">
+            <div class="col-xs-12 col-sm-12 col-md-12 portfolio">
+                <article class="articleItem" itemscope itemtype="http://schema.org/Article">
+                    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="https://google.com/article"/>
+                    <meta itemprop="headline" content="{{ article.title }}">
+                    <meta itemprop="author" content="{{ article.author }}">
+                    <meta itemprop="datePublished" content="{{ article.published_at | date: '%d %b, %Y' }}">
+                    <meta itemprop="dateModified" content="{{ article.published_at | date: '%d %b, %Y' }}">
+                    <div class="hidden" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+                        <meta itemprop="url" content="http:{{ article.image | img_url: 'master' }}">
+                        <meta itemprop="width" content="1170">
+                        <meta itemprop="height" content="800">
+                    </div>
+                    <div class="hidden" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                        <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                            <meta itemprop="url" content="http:{{ 'logo.png' | file_img_url: 'master' }}">
+                        </div>
+                        <meta itemprop="name" content="{{ article.author }}">
+                    </div>
+                    {%- if article.image -%}
+                        <div class="portfolioFeaturedImage">
+                            {% include 'image-global' with image: article.image %}
+                        </div>
+                    {%- endif -%}
+                    <div class="rowFlex rowFlexMargin">
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                            <h1 class="velaArticleTitle">{{ article.title }}</h1>
+                            <div class="rte" itemprop="description">
+                            {{ article.content }}
+                            </div>
+                        </div>
+                        <div class="hidden-xs col-sm-4 col-md-3">
+                            <div class="portfolioMeta">
+                                <h5>{{ 'portfolio.article.date' | t}}</h5>
+                                <div class="portfolioPublish"> {{ article.published_at | date:'%d %B, %Y' }}</div> 
+                            </div>
+                            <div class="portfolioPostBottom clearfix">
+                                {%- if section.settings.article_tags -%}
+                                    {% include 'vela-article-tags' %}
+                                {%- endif -%}
+                                {% capture author %}<span>{{ article.author }}</span>{% endcapture %}
+                                {%- if section.settings.article_sharing -%}
+                                    <div class="articleSocialSharing">
+                                        <h5>{{ 'blogs.article.social_title' | t }}:</h5>
+                                        <div class="articleFacebookShare">
+                                            <div class="fb-share-button" 
+                                                data-href="{{ canonical_url }}" 
+                                                data-mobile_iframe= true 
+                                                data-layout="button_count">
+                                            </div>
+                                        </div>
+                                        <div class="articleTwitterShare">
+                                            <a class="twitter-share-button"
+                                                href="https://twitter.com/intent/tweet?text={{ article.title | url_escape }}&url={{ canonical_url | url_escape }}" target="_blank">
+                                                <i class="fa fa-twitter"></i> Tweet
+                                            </a>
+                                        </div>
+                                    </div>
+                                {%- endif -%}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+{% schema %}
+    {
+        "name": "Vela Blog Detail",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Blog Detail Settings"
+            },
+            {
+                "type": "checkbox",
+                "id": "article_sharing",
+                "label": "Show button share",
+                "default": true
+            },
+            
+            {
+                "type": "header",
+                "content": "Blog Sidebar Tags"
+            },
+            {
+                "type": "checkbox",
+                "id": "blogsidebar_tags_enable",
+                "label": "Enable tags list",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "blogsidebar_tags_title",
+                "label": "Block heading",
+                "default": "Articles tags"
+            },
+            {
+                "type": "text",
+                "id": "blogsidebar_tags_limit",
+                "placeholder": "Ex: 6",
+                "label": "Number of tags limit",
+                "default": "10"
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,657 @@
+[
+    {
+        "name":"theme_info",
+        "theme_name":"Black Lab Co.",
+        "theme_author":"Sebastian Inman",
+        "theme_version":"v1.0.0",
+        "theme_documentation_url":"http:\/\/velatheme.com\/guide\/velatheme\/",
+        "theme_support_url":"https:\/\/velatheme.ticksy.com\/"
+    },
+    {
+        "name":"Shop Colors",
+        "settings":[
+            {
+                "type":"header",
+                "content":"Colors"
+            },
+            {
+                "type":"color",
+                "id":"vela_color_primary",
+                "label":"Color primary",
+                "default":"#333333",
+                "info":"Used for text links, background title, title color."
+            },
+            {
+                "type":"color",
+                "id":"vela_color_secondary",
+                "label":"Color secondary",
+                "default":"#999999"
+            },
+            {
+                "type":"color",
+                "id":"vela_color_borders",
+                "label":"Borders color",
+                "default":"#e5e5e5"
+            },
+            {
+                "type":"color",
+                "id":"vela_color_background",
+                "label":"Background color",
+                "default":"#ffffff"
+            },
+            {
+                "type":"header",
+                "content":"Text Color"
+            },
+            {
+                "type":"color",
+                "id":"text_color_primary",
+                "label":"Text color primary",
+                "info":"Text color for body",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"text_color_secondary",
+                "label":"Text color secondary",
+                "info":"Text color for heading",
+                "default":"#999999"
+            },
+            {
+                "type":"color",
+                "id":"text_color_banner",
+                "label":"Text color banner",
+                "info":"Text color for banner, text on image",
+                "default":"#ffffff"
+            },
+            {
+                "type":"header",
+                "content":"Shop Button"
+            },
+            {
+                "type":"color",
+                "id":"button_one_bgcolor",
+                "label":"Background color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"button_one_bordercolor",
+                "label":"Border color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"button_one_txtcolor",
+                "label":"Text color",
+                "default":"#ffffff"
+            },
+            {
+                "type":"color",
+                "id":"button_one_bgcolor_hover",
+                "label":"Hover background color",
+                "default":"#ffffff"
+            },
+            {
+                "type":"color",
+                "id":"button_one_bordercolor_hover",
+                "label":"Hover border color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"button_one_txtcolor_hover",
+                "label":"Hover text color",
+                "default":"#333333"
+            },
+            {
+                "type":"header",
+                "content":"Shop Button Product"
+            },
+            {
+                "type":"color",
+                "id":"btnpro_bgcolor",
+                "label":"Background color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"btnpro_bordercolor",
+                "label":"Border color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"btnpro_txtcolor",
+                "label":"Text color",
+                "default":"#ffffff"
+            },
+            {
+                "type":"color",
+                "id":"btnpro_bgcolor_hover",
+                "label":"Hover background color",
+                "default":"#ffffff"
+            },
+            {
+                "type":"color",
+                "id":"btnpro_bordercolor_hover",
+                "label":"Hover border color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"btnpro_txtcolor_hover",
+                "label":"Hover text color",
+                "default":"#333333"
+            },
+            {
+                "type":"header",
+                "content":"Shop Button Addtocart"
+            },
+            {
+                "type":"color",
+                "id":"addtocart_bgcolor",
+                "label":"Background color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"addtocart_bordercolor",
+                "label":"Border color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"addtocart_txtcolor",
+                "label":"Text color",
+                "default":"#ffffff"
+            },
+            {
+                "type":"color",
+                "id":"addtocart_bgcolor_hover",
+                "label":"Hover background color",
+                "default":"#ffffff"
+            },
+            {
+                "type":"color",
+                "id":"addtocart_bordercolor_hover",
+                "label":"Hover border color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"addtocart_txtcolor_hover",
+                "label":"Hover text color",
+                "default":"#333333"
+            },
+            {
+                "type":"header",
+                "content":"Shop Layout"
+            },
+            {
+                "type":"color",
+                "id":"vela_topbar_bgcolor",
+                "label":"Topbar background color",
+                "default":"#ebebeb"
+            },
+            {
+                "type":"color",
+                "id":"vela_topbar_textcolor",
+                "label":"Topbar text color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"vela_header_bgcolor",
+                "label":"Header background color",
+                "default":"#ebebeb"
+            },
+            {
+                "type":"color",
+                "id":"vela_header_textcolor",
+                "label":"Header text color",
+                "default":"#121212"
+            },
+            {
+                "type":"color",
+                "id":"vela_footer_bgcolor",
+                "label":"Footer background color",
+                "default":"#ebebeb"
+            },
+            {
+                "type":"color",
+                "id":"vela_footer_titlecolor",
+                "label":"Footer title color",
+                "default":"#000000"
+            },
+            {
+                "type":"color",
+                "id":"vela_footer_textcolor",
+                "label":"Footer text color",
+                "default":"#000000"
+            },
+            {
+                "type":"header",
+                "content":"Shop Menu Color"
+            },
+            {
+                "type":"color",
+                "id":"velamenu_bgcolor",
+                "label":"Background color",
+                "default":"#FFFFFF"
+            },
+            {
+                "type":"color",
+                "id":"velamenu_linkcolor",
+                "label":"Menu link color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"velamenu_linkcolor_hover",
+                "label":"Menu link color hover",
+                "default":"#000000"
+            },
+            {
+                "type":"color",
+                "id":"velamenu_dropdown_bgcolor",
+                "label":"Background color dropdown",
+                "default":"#FFFFFF"
+            },
+            {
+                "type":"color",
+                "id":"velamenu_dropdown_linkcolor",
+                "label":"Dropdown menu link color",
+                "default":"#333333"
+            },
+            {
+                "type":"color",
+                "id":"velamenu_dropdown_linkcolor_hover",
+                "label":"Dropdown menu link color hover",
+                "default":"#000000"
+            }
+        ]
+    },
+    {
+        "name":"Shop Typography",
+        "settings":[
+            {
+                "type":"header",
+                "content":"Font Family",
+                "info":"Font family for body"
+            },
+            {
+                "type":"radio",
+                "id":"vela_fontfamily_style",
+                "label":"Fonts style",
+                "options":[
+                    {
+                        "value":"google_fonts",
+                        "label":"Google font"
+                    },
+                    {
+                        "value":"upload_fonts",
+                        "label":"Custom font"
+                    }
+                ],
+                "info":"[Where do I find Google Fonts?](http:\/\/www.google.com\/fonts)",
+                "default":"google_fonts"
+            },
+            {
+                "type":"text",
+                "id":"vela_fontfamily_link",
+                "label":"Google font URL"
+            },
+            {
+                "type":"text",
+                "id":"vela_fontfamily",
+                "label":"Font name",
+                "info":"Use for google font and custom font",
+                "default":"Arial"
+            },
+            {
+                "type":"header",
+                "content":"Font Family Secondary",
+                "info":"Font family for menu"
+            },
+            {
+                "type":"radio",
+                "id":"vela_fontfamily_secondary_style",
+                "label":"Fonts style",
+                "options":[
+                    {
+                        "value":"google_fonts",
+                        "label":"Google font"
+                    },
+                    {
+                        "value":"upload_fonts",
+                        "label":"Custom font"
+                    }
+                ],
+                "info":"[Where do I find Google Fonts?](http:\/\/www.google.com\/fonts)",
+                "default":"google_fonts"
+            },
+            {
+                "type":"text",
+                "id":"vela_fontfamily2_link",
+                "label":"Google font URL"
+            },
+            {
+                "type":"text",
+                "id":"vela_fontfamily_secondary",
+                "label":"Fonts name",
+                "info":"Use for google font and custom font",
+                "default":"Arial"
+            },
+            {
+                "type":"header",
+                "content":"Font Size"
+            },
+            {
+                "type":"range",
+                "id":"vela_fontsize",
+                "min":10,
+                "max":24,
+                "step":1,
+                "unit":"px",
+                "label":"Font size",
+                "default":14,
+                "info":"Font body size"
+            },
+            {
+                "type":"range",
+                "id":"vela_headingsize",
+                "min":10,
+                "max":100,
+                "step":1,
+                "unit":"px",
+                "label":"Font heading size",
+                "default":14,
+                "info":"Font heading size"
+            },
+            {
+                "type":"range",
+                "id":"velamenu_fontsize",
+                "min":10,
+                "max":24,
+                "step":1,
+                "unit":"px",
+                "label":"Menu font size",
+                "default":14,
+                "info":"Font menu"
+            },
+            {
+                "type":"range",
+                "id":"velamenu_dropdown_fontsize",
+                "min":10,
+                "max":24,
+                "step":1,
+                "unit":"px",
+                "label":"Dropdown menu font size",
+                "default":14,
+                "info":"Font dropdown menu size "
+            }
+        ]
+    },
+    {
+        "name":"Shop Features",
+        "settings":[
+            {
+                "type":"header",
+                "content":"Theme Settings"
+            },
+            {
+                "type":"image_picker",
+                "id":"favicon",
+                "label":"Favicon image",
+                "info":"Will be scaled down to 32 x 32px"
+            },
+            {
+                "type":"text",
+                "id":"social_twitter_link",
+                "label":"Twitter Link",
+                "info":"https:\/\/twitter.com\/shopify"
+            },
+            {
+                "type":"header",
+                "content":"Product Reviews"
+            },
+            {
+                "type":"checkbox",
+                "id":"product_reviews_enable",
+                "label":"Enable",
+                "info":"[View Product Review settings](\/admin\/apps\/product-reviews\/settings)"
+            },
+            {
+                "type":"header",
+                "content":"Product Box Item"
+            },
+            {
+                "type":"checkbox",
+                "id":"productgrid_swatch",
+                "label":"Show color variant"
+            },
+            {
+                "type":"checkbox",
+                "id":"productgrid_type",
+                "label":"Show product type"
+            },
+            {
+                "type":"checkbox",
+                "id":"productgrid_review",
+                "label":"Show review"
+            },
+            {
+                "type":"checkbox",
+                "id":"productgrid_shortdesc",
+                "label":"Show short description"
+            },
+            {
+                "type":"checkbox",
+                "id":"productgrid_sale",
+                "label":"Show label sale"
+            },
+            {
+                "type":"header",
+                "content":"Loading Site"
+            },
+            {
+                "type":"checkbox",
+                "id":"loading_enable",
+                "label":"Enable"
+            },
+            {
+                "type":"header",
+                "content":"Float header"
+            },
+            {
+                "type":"checkbox",
+                "id":"header_float_enable",
+                "label":"Enable"
+            },
+            {
+                "type":"header",
+                "content":"Go To Top"
+            },
+            {
+                "type":"checkbox",
+                "id":"gotop_enable",
+                "label":"Enable"
+            },
+            {
+                "type":"header",
+                "content":"Product Variants"
+            },
+            {
+                "type":"checkbox",
+                "id":"product_swatch_unvailable",
+                "label":"Show unvailable",
+                "info":"Show unavailable product variants."
+            },
+            {
+                "type":"checkbox",
+                "id":"product_swatch",
+                "label":"Enable",
+                "info":"Use swatch variants for product page and quickview."
+            },
+            {
+                "type":"header",
+                "content":"Second Product Image"
+            },
+            {
+                "type":"checkbox",
+                "id":"product_second_image",
+                "label":"Enable",
+                "info":"Show second product image when hover on product item."
+            },
+            {
+                "type":"header",
+                "content":"Filter Collection Site"
+            },
+            {
+                "type":"checkbox",
+                "id":"sidebar_filtercustag_multi",
+                "label":"Enable multiple choices",
+                "info":"User can select multiple (Size, price, color) or only one (Size, price, color)"
+            },
+            {
+                "type":"header",
+                "content":"Product Quickview",
+                "info":"Quickview will disable on Mobile, Tablet"
+            },
+            {
+                "type":"checkbox",
+                "id":"quickview_enable",
+                "label":"Enable"
+            },
+            {
+                "type":"checkbox",
+                "id":"quickview_availability",
+                "label":"Show availability"
+            },
+            {
+                "type":"checkbox",
+                "id":"quickview_vendor",
+                "label":"Show vendor"
+            },
+            {
+                "type":"checkbox",
+                "id":"quickview_protype",
+                "label":"Show product type"
+            },
+            {
+                "type":"checkbox",
+                "id":"quickview_prosku",
+                "label":"Show product SKU"
+            },
+            {
+                "type":"header",
+                "content":"Ajax Cart"
+            },
+            {
+                "type":"select",
+                "id":"ajax_cart_method",
+                "label":"Cart type",
+                "options":[
+                    {
+                        "value":"modal",
+                        "label":"Modal"
+                    },
+                    {
+                        "value":"drawer",
+                        "label":"Drawer"
+                    },
+                    {
+                        "value":"page",
+                        "label":"Page"
+                    }
+                ]
+            },
+            {
+                "type":"checkbox",
+                "id":"cart_notes_enable",
+                "label":"Show cart notes"
+            },
+            {
+                "type":"header",
+                "content":"Google map"
+            },
+            {
+                "type":"checkbox",
+                "id":"googlemap_enable",
+                "label":"Enable",
+                "default":true
+            },
+            {
+                "type":"text",
+                "id":"googlemap_key",
+                "label":"Input key for googlemap",
+                "default":"AIzaSyDqstP8RWMwkuJYsaWQ29dZFim3506MteA",
+                "info":"you can register key free [at here](https:\/\/cloud.google.com\/maps-platform\/)"
+            }
+        ]
+    },
+    {
+        "name":"Shop Newsletter Popup",
+        "settings":[
+            {
+                "type":"checkbox",
+                "id":"vela_newslettermodal_enable",
+                "label":"Enable"
+            },
+            {
+                "type":"text",
+                "id":"vela_newslettermodal_cookie",
+                "placeholder":"Times cookie",
+                "label":"Times show again",
+                "info":"The unit is minute. Ex: 10",
+                "default":"60"
+            },
+            {
+                "type":"text",
+                "id":"vela_newslettermodal_title",
+                "placeholder":"Title for block",
+                "label":"Title"
+            },
+            {
+                "type":"text",
+                "id":"vela_newslettermodal_description",
+                "placeholder":"Description for block",
+                "label":"Description"
+            },
+            {
+                "type":"text",
+                "id":"vela_newslettermodal_chk",
+                "label":"Checkbox",
+                "placeholder":"Checkbox text"
+            },
+            {
+                "type":"checkbox",
+                "id":"vela_newslettermodal_bgimage",
+                "label":"Show background image"
+            },
+            {
+                "type":"image",
+                "id":"newslettermodal.png",
+                "label":"Background image",
+                "info":"Size: 1160x605 pixel"
+            },
+            {
+                "type":"checkbox",
+                "id":"vela_newslettermodal_mailchimp",
+                "label":"Use mailChimp",
+                "default":true
+            },
+            {
+                "type":"paragraph",
+                "content":"Uncheck if You use Newsletter of Shopify. Email will be saved to shopify customer. Admin -> Customers -> Accepts Marketting. You must send invite account for customer."
+            },
+            {
+                "type":"text",
+                "id":"newsletter_formmodal_action",
+                "label":"MailChimp form action URL",
+                "info":"[Where do I find my MailChimp form action URL?](http:\/\/docs.shopify.com\/support\/configuration\/store-customization\/where-do-i-get-my-mailchimp-form-action)"
+            }
+        ]
+    }
+]

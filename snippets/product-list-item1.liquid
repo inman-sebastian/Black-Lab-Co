@@ -1,0 +1,122 @@
+{%- unless proImageSize -%}
+    {%- assign proImageSize = '800x' -%}
+{%- endunless -%}
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}
+    {%- assign on_sale = true -%}
+{%- endif -%}
+{%- assign sold_out = true -%}
+{%- if product.available -%}
+    {%- assign sold_out = false -%}
+{%- endif -%}
+{%- assign shortDescription = "" -%}
+{%- if product.metafields.my_fields.shortdescription != blank  -%}
+    {%- assign shortDescription = product.metafields.my_fields.shortdescription -%}
+{%- endif -%}
+{%- assign featured_image = product.featured_media.preview_image %}
+<div class="velaProBlock list1" data-price="{{ product.price | money_without_currency }}">
+    <div class="rowFlex rowFlexMargin">
+        <div class="col-xs-5 col-sm-5">
+            <div class="proHImage">
+                <a class="proFeaturedImage" href="{{ product.url }}">
+                    {% if featured_image.src == blank %}
+                        <img class="product-card__image img-responsive" src="{{ featured_image.src | img_url: '1024x' }}" alt="{{ featured_image.alt | escape }}">
+                    {% else %}
+                        {% include 'image-global' with image: featured_image %}
+                    {% endif %}
+                    {%- if product.images.size > 1 and settings.product_second_image -%}
+                        <span class="hidden-sm hidden-xs">
+                            <div class="p-relative">
+                                {% for image in product.images %}
+                                    {%- if forloop.first != true -%}
+                                        {% include 'image-global' with image: image %}
+                                        {% break %}
+                                    {%- endif -%}
+                                {% endfor %}
+                            </div>
+                        </span>
+                    {%- endif -%}
+                </a>
+                {%- if on_sale and settings.productgrid_sale -%}
+                    <span class="labelSale">{{ 'products.product.label_sale' | t }}</span>
+                {%- endif -%}
+                
+                {%- if settings.productgrid_swatch -%}
+                    <div class="velaSwatchCus">
+                        {% for option in product.options %}
+                            {%- if option == 'Color' or option == 'color' -%}
+                                {%- assign optionIndex = forloop.index0 -%}
+                                {%- assign valueList = '' -%}
+                                {%- assign value = '' -%}
+                                {%- if product.variants.size > 1 -%}
+                                    <ul class="velaSwatchProduct">
+                                        {% for variant in product.variants %}
+                                            {%- assign value = variant.options[optionIndex] -%}
+                                            {%- unless valueList contains value -%}
+                                                <li>
+                                                    <label style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | append: '.png' | file_url }})"></label>
+                                                    <div class="hidden">
+                                                        <a href="{% if variant.image.src != blank %}{{ variant.image.src | product_img_url:'large' }}{% else %}#{% endif %}"></a>
+                                                    </div>
+                                                </li>
+                                                {%- assign valueList = valueList | join: ',' -%}
+                                                {%- assign valueList = valueList | append: ',' | append: value -%} 
+                                                {%- assign valueList = valueList | split: ',' -%}
+                                            {%- endunless -%}
+                                        {% endfor %}
+                                    </ul>
+                                {%- endif -%}
+                            {%- endif -%}
+                        {% endfor %}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div class="proContent">
+                {%- if product.type != blank and settings.productgrid_type -%}
+                    <div class="productType">{{ product.type | link_to_type }}</div>
+                {%- endif -%}
+                <h4 class="proName">
+                    <a href="{{ product.url }}">{{ product.title }}</a>
+                </h4>
+                {%- if settings.product_reviews_enable and settings.productgrid_review -%}
+                    <div class="proReviews">
+                        <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                    </div>
+                {%- endif -%}
+                <div class="proPrice">
+                    <div class="priceProduct priceSale">{{ product.price | money }}</div>
+                    {%- if on_sale -%}
+                        <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+                    {%- endif -%}
+                </div>
+                {%- if shortDescription != blank -%}
+                    <div class="proDescription">{{ shortDescription }}</div>
+                {%- endif -%}
+                {%- assign variantCount = product.variants | size -%}
+                <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="formAddToCart">
+                    <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                    {%- if sold_out -%}
+                        <button class="btn btnProduct btnAddToCart disabled" type="submit" value="Submit" disabled>
+                            <i class="icon"></i>
+                            <span>{{ 'products.product.sold_out' | t }}</span>
+                        </button>
+                    {%- else -%}
+                        {%- if variantCount > 1 -%}
+                            <a class="btn btnProduct btnAddToCart" href="{{ product.url }}" title="{{ 'products.product.select_options' | t }}">
+                                <i class="icon"></i>
+                                <span class="select_options">{{ 'products.product.select_options' | t }}</span>
+                            </a>
+                        {%- else -%}
+                            <button class="btn btnProduct btnAddToCart" type="submit" value="Submit">
+                                <i class="icon"></i>
+                                <span>{{ 'products.product.add_to_cart' | t }}</span>
+                            </button>
+                        {%- endif -%}
+                    {%- endif -%}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

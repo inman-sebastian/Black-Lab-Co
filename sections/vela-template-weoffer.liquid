@@ -1,0 +1,108 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+<div class="velaWeOfferProduct overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="container{% if section.settings.full %}-full{% endif %}">
+        <div class="rowFlex rowFlexMargin">
+            {%- if section.blocks.size > 0 -%}
+                {% for block in section.blocks %}
+                    <div class="col-xs-12 col-sm-12 col-md-4 mb30">
+                        <div class="productBox text-center">
+                            <div class="productImage">
+                                {%- if block.settings.productimage != blank -%}
+                                    {% include 'image-global' with image: block.settings.productimage  %}
+                                {%- else -%}
+                                    <img class="img-responisve" src="https://via.placeholder.com/370x350.jpg" alt="" />
+                                {%- endif -%}
+                            </div>
+                            <div class="productBoxContent">
+                                {%- if block.settings.producttitle != blank -%}
+                                    <h4 class="productTitle"><span class="text-primary">{{ forloop.index }}.</span>{{ block.settings.producttitle }}</h4>
+                                {%- endif -%}
+                                {%- if block.settings.productdesc != blank -%}
+                                    <div class="productdesc"> {{ block.settings.productdesc }}</div>
+                                {%- endif -%}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor%}
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Feature text",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "full",
+                "label": "Full width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "default": "0 0 30px",
+                "placeholder": "0px 0px",
+                "info": "ex: 0px 0px 0px"
+            }
+        ],
+        "blocks": 
+        [
+            {
+                "type": "item",
+                "name": "Product Item",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "productimage",
+                        "label": "Image"
+                    },
+                    {
+                        "type": "text",
+                        "id": "producttitle",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "productdesc",
+                        "label": "Description"
+                    }
+                ]
+            }
+            
+        ],
+        "presets": [
+            {
+                "name": "Vela Feature text",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

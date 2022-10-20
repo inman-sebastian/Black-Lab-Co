@@ -1,0 +1,32 @@
+<div class="lookbItem" style="left:{{ percelX }}%;top:{{ percelY }}%;">
+    <div class="lookbItemButton">{{ counterItem }}</div>
+    <div class="lookbItemContent {{ displayType }}">
+        <div class="productLookBookImage">
+            <a href="{{ productLookbook.url }}">
+                <img class="img-responsive" alt="{{ productLookbook.featured_image.alt | escape }}" src="{{ productLookbook.featured_image | product_img_url:'master' }}" />
+            </a>
+        </div>
+        <div class="productLookBookContent">
+            <div class="productLookBookTitle">
+                <a href="{{ productLookbook.url }}">{{ productLookbook.title }}</a>
+            </div>
+            {% if settings.product_reviews_enable %}
+                <div class="proReviews">
+                    <span class="shopify-product-reviews-badge" data-id="{{ productLookbook.id }}"></span>
+                </div>
+            {% endif %}
+            <div class="productLookBookPrice">
+                <div class="proPrice">
+                    <div class="priceProduct priceSale">{{ productLookbook.price | money }}</div>
+                    {%- if on_sale -%}
+                        <div class="priceProduct priceCompare">{{ productLookbook.compare_at_price | money }}</div>
+                    {%- endif -%}
+                </div>
+            </div>
+            <div class="clearfix">
+                <a  class="pull-left btnLeft" href="{{ productLookbook.url }}">{{ 'general.lookbook.view_detail' | t }}</a>
+                <a  class="pull-right btnRight" href="{{ productLookbook.url }}">{{ 'general.lookbook.buy_now' | t }}</a>
+            </div>
+        </div>
+    </div>
+</div>

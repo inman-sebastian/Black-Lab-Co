@@ -1,0 +1,90 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+<div class="velaHTML overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaHTMLInner">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaHomeTitle velaTitle">
+                    {{ section.settings.title }}
+                </h3>
+            {%- endif -%}
+            <div class="velaContent">
+                <div class="rte">
+                    {{ section.settings.content }}    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela HTML",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "default": "0 0 30px",
+                "placeholder": "0px 0px",
+                "info": "ex: 0px 0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "html",
+                "id": "content",
+                "label": "HTML",
+                "default": "<div style='text-align:center;'><h2>Use HTML to format your text so it can be easily read.</h2>This text can be used to share information about your brand with customers.</div>"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Custom HTML",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

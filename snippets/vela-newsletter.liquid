@@ -1,0 +1,52 @@
+<div class="velaNewsletterFooter velaFooterMenu">
+    <div class="velaNewsletterInner clearfix">
+        {%- if newsletterTitle != blank -%}
+            <h4 class="velaFooterTitle">{{ newsletterTitle }}</h4>
+        {%- endif -%}
+        <div class="velaContent">
+            {%- if newsletterDesc != blank -%}
+                <div class="newsletterDescription">{{ newsletterDesc }}</div>
+            {%- endif -%}
+            {%- if newsletterMailchimp -%}
+                {%- assign newsletterFormAction = section.settings.newsletter_form_action  | replace: '/post?', '/post-json?' | append: '&amp;c=?' -%}
+                <form action="{{ newsletterFormAction }}" method="post" name="mc-embedded-subscribe-form" target="_blank" class="js-vela-newsletter formNewsletter clearfix">
+                    <div class="input-group">
+                        <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="EMAIL" class="js-input-newsletter form-control" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" required>
+                        <span class="input-group-btn"> 
+                            <button class="btn btnNewsletter" type="submit">
+                                <i class="fa fa-angle-right"></i>
+                                {% comment %} {{ 'general.newsletter_form.submit' | t }} {% endcomment %}
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            {%- else -%}
+                {% form 'customer' %}
+                    {%- if form.errors -%}
+                        <div class="successError alert alert-danger alert-dismissible mb10">
+                            {{ form.errors | default_errors }}
+                            <button type="button" data-dismiss="alert" aria-hidden="true" aria-label="Close" class="btnClose"><i class="ions ion-android-close"></i></button>
+                        </div>
+                    {% endif %}
+                    {%- if form.posted_successfully? -%}
+                        <div class="successMessage alert alert-success alert-dismissible">
+                            {{ 'general.newsletter_form.alertsuccess' | t }}
+                            <button type="button" data-dismiss="alert" aria-hidden="true" aria-label="Close" class="btnClose"><i class="ions ion-android-close"></i></button>
+                        </div>
+                    {%- else -%}
+                        <div class="input-group">
+                            <input class="form-control" type="email" name="contact[email]" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" required>
+                            <span class="input-group-btn"> 
+                                <button class="btn btnNewsletter" type="submit">
+                                    <i class="fa fa-angle-right"></i>
+                                    {% comment %} {{ 'general.newsletter_form.submit' | t }} {% endcomment %}
+                                </button>
+                            </span>
+                            <input type="hidden" name="action" value="0">
+                        </div>
+                    {%- endif -%}
+                {% endform %}
+            {%- endif -%}
+        </div>
+    </div>
+</div>

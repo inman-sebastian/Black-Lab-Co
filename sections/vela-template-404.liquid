@@ -1,0 +1,73 @@
+
+{%- if section.settings.bgimage != blank -%}
+    {% capture bgImage %}
+        background-image: url({{ section.settings.bgimage | img_url:'master' }});
+    {% endcapture %}
+{%- endif -%}
+<section class="page404" style="{{ bgImage }}">
+    <div class="container">
+        <div class="page404Inner text-center">
+            <div class="page404Wrap">
+                {%- if section.settings.image != blank -%}
+                    <div class="boxImage">
+                        <img class="img-responsive" alt="{{ section.settings.image.alt | default: shop.name }}" src="{{ section.settings.image | img_url: 'master' }}" />
+                    </div>
+                {%- endif -%}
+                <div class="boxText">
+                    {%- if section.settings.title != blank -%}
+                        <h3 class="page404Title">{{ section.settings.title }}</h3>
+                    {%- endif -%}
+                    {%- if section.settings.description != blank -%}
+                        <div class="page404Des">{{ section.settings.description }}</div>
+                    {%- endif -%}
+                    {%- if section.settings.btntext != blank -%}
+                        <div class="boxButton">
+                            <a class="btn bg-white btn404" href="{{ section.settings.btnlink }}">{{ section.settings.btntext }}</a>
+                        </div>
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% schema %}
+    {
+        "name": "Vela 404 Page",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "bgimage",
+                "label": "Background Image"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "404 Image",
+                "info": "Default Size: 762x219 pixels"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "404 Heading",
+                "placeholder": "Tittle of Page 404"
+            },
+            {
+                "type": "html",
+                "id": "description",
+                "label": "404 Description",
+                "placeholder": "Description of Page 404"
+            },
+            {
+                "type": "text",
+                "id": "btntext",
+                "label": "404 Button text",
+                "placeholder": "Text of Button"
+            },
+            {
+                "type": "url",
+                "id": "btnlink",
+                "label": "404 Button URL"
+            }
+        ]
+    }
+{% endschema %}

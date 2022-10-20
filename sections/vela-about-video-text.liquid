@@ -1,0 +1,147 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+{%- capture bgColor -%}
+    background-color: {{ section.settings.color_bg }};
+{%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+{%- capture paddingblock -%}
+    padding: {{section.settings.padding_block}};
+{%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+{%- capture marginblock -%}
+    margin: {{section.settings.margin_block}};
+{%- endcapture -%}
+{%- endif -%}
+<div class="velaVideoProgress overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="container{% if section.settings.full %}-full{% endif %}">
+        <div class="rowFlex flexAlignCenter noGutter">
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="videoWrapper">
+                    {%- if section.settings.video_url == blank -%}
+                        {%- assign videoURL = '//www.youtube.com/embed/_9VUPq3SxOc?rel=0&showinfo=0&vq=720' -%}
+                    {%- else -%}
+                        {%- assign videoURL = section.settings.video_url -%}
+                    {%- endif -%}
+                    {%- if section.settings.image != blank -%}
+                        <a data-fancybox href="{{ videoURL }}">
+                            <div class="videoThumb">
+                                {% include 'image-global' with image: section.settings.image  %}
+                            </div>
+                        </a>
+                    {%- endif -%}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="velaProgress">
+                    {%- if section.settings.title != blank -%}
+                        <h3 class="velaHomeTitle velaTitle">
+                            {{ section.settings.title }}
+                        </h3>
+                    {%- endif -%}
+                    {%- if section.blocks.size > 0 -%}
+                        <div class="velaContent">
+                            {% for block in section.blocks %}
+                                {%- assign progress = block.settings.progress | plus:0 -%}
+                                    <div class="clearfix font-weight-500">
+                                        <label class="pull-left">{{ block.settings.progresstitle }}</label>
+                                        <span class="pull-right">{{ progress }}%</span>
+                                    </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ progress }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Video&Progress",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full",
+                "label": "Enable Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "default": "0 0 30px",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "video_url",
+                "id": "video_url",
+                "label": "Video link",
+                "accept": ["youtube", "vimeo"]
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Video thumb"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Item Progress",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "progresstitle",
+                        "label": "Text"
+                    },
+                    {
+                        "type": "range",
+                        "id": "progress",
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "label": "progress",
+                        "default": 50,
+                        "info": "input %"
+                    }
+                ]
+
+            }
+        ],
+        "presets": [
+            {
+                "name": "Video&Progress",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

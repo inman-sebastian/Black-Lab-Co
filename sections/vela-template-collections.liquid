@@ -1,0 +1,224 @@
+<section id="pageContent">
+    <div class="container">
+        <div class="velaCollectionsWrapper">
+            {%- if section.settings.listcoll_type == 'typeone' -%}
+                {%- assign pageItems = section.settings.items_page | plus: 0 -%}
+                {% paginate collections by pageItems %}
+                    <div class="velarowFlex rowFlex">
+                        {%- for collection in collections -%}
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                <div class="velaBoxCollection">
+                                    {%- if section.settings.collection_image -%}
+                                        <div class="velaBoxCollectionImage">
+                                            <a class="d-block" href="{{ collection.url }}">
+                                                {%- if collection.image -%}
+                                                    {% include 'image-global' with image: collection.image %}
+                                                {%- else -%}
+                                                    {%- if section.settings.image_default != blank -%}
+                                                        {% include 'image-global' with image: section.settings.image_default %}
+                                                    {%- else -%}
+                                                        <img class="img-responsive img-full-mobile" alt="{{ shop.name }}" src="https://via.placeholder.com/600x400" />
+                                                    {%- endif -%}
+                                                {%- endif -%}
+                                            </a>
+                                        </div>
+                                    {%- endif -%}
+                                    <div class="velaBoxCollectionContent">
+                                        <h3 class="collectionTitle">
+                                            <a href="{{ collection.url }}" title="{{ collection.title | escape }}">{{ collection.title }}</a>
+                                        </h3>
+                                        {%- if section.settings.product_count -%}
+                                            <div class="collectionProductCount">{{ 'collections.general.products_with_count' | t: count:collection.products_count }}</div>
+                                        {%- endif -%}
+                                        {%- if collection.description != blank and section.settings.collection_desc -%}
+                                            <div class="collectionShortDesc">
+                                                {{ collection.description | strip_html | truncatewords: 20 }}
+                                            </div>
+                                        {%- endif -%}
+                                        {%- if section.settings.collection_btntext != blank -%}
+                                            <div class="collectionButtonDetail">
+                                                <a href="{{ collection.url }}" title="{{ section.settings.collection_btntext | escape }}">
+                                                    {{ section.settings.collection_btntext }}
+                                                </a>
+                                            </div>
+                                        {%- endif -%}
+                                    </div>
+                                </div>
+                            </div>
+                        {%- endfor -%}
+                    </div>
+                    {%- if paginate.pages > 1 -%}
+                        {% include 'vela-pagination' %}
+                    {%- endif -%}
+                {% endpaginate %}
+            {%- else -%}
+                {%- assign pageItems = section.settings.items_propage | plus: 0 -%}
+                {% paginate collections by pageItems %}
+                    {%- for collection in collections -%}
+                        <div class="velaCollections">
+                            {% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+                            <div class="velaBoxCollectionTop">
+                                <h3 class="headerCollection clearfix">
+                                    {{ collection_title }}
+                                    <a class="btnReadMore pull-right" href="{{ collection.url }}" title="{{ 'products.product.showall' | t }}">{{ 'products.product.showall' | t }}</a>
+                                </h3>
+                            </div>
+                            <div class="proList">
+                                <div class="velaOwlRow owlCarouselPlay">
+                                    <div class="owl-carousel"   data-nav="true" 
+                                        data-autoplay="true"
+                                        data-columnone="4" 
+                                        data-columntwo="3" 
+                                        data-columnthree="3"
+                                        data-columnfour="2">
+                                        {% for product in collection.products limit:16 %}
+                                            <div class="item">
+                                                {% include 'product-grid-item' %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {%- endfor -%}
+                    {%- if paginate.pages > 1 -%}
+                        <div class="velaPaginationWrap clearfix">
+                            {% include 'vela-pagination' %}
+                            {% assign minPage = 1 %}
+                            {% assign maxPage = paginate.page_size | times:paginate.current_page %}
+                            {% if paginate.current_page > 1 %}
+                                {% assign currentPage = paginate.current_page | minus:1 %}
+                                {% assign minPage = currentPage | times: paginate.page_size %}
+                            {% endif %}
+                            {% if maxPage > paginate.items %}{% assign maxPage = paginate.items %}{% endif %}
+                            <div class="itemPaginate pull-right">{{ 'collections.paginate.showing_html' | t: minPage:minPage, maxPage:maxPage, itemsPage:paginate.items }}</div>
+                        </div>
+                    {%- endif -%}
+                {% endpaginate %}
+            {%- endif -%}
+        </div>
+    </div>
+</section>
+{% schema %}
+    {
+        "name": "Vela List Collections",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "select",
+                "id": "listcoll_type",
+                "label": "Page template",
+                "default": "typeone",
+                "options": [
+                    {
+                        "label": "List Collections",
+                        "value": "typeone"
+                    },
+                    {
+                        "label": "List Products with Collection",
+                        "value": "typetwo"
+                    }
+                ]
+            },
+            {
+                "type": "header",
+                "content": "List Collections"
+            },
+            {
+                "type": "checkbox",
+                "id": "collection_image",
+                "label": "Show collection image",
+                "default": true
+            },
+            {
+                "type": "image_picker",
+                "id": "image_default",
+                "label": "Collection image default"
+            },
+            {
+                "type": "select",
+                "id": "items_page",
+                "label": "Number items on a page",
+                "default": "12",
+                "options": [
+                    {
+                        "label": "3",
+                        "value": "3"
+                    },
+                    {
+                        "label": "6",
+                        "value": "6"
+                    },
+                    {
+                        "label": "9",
+                        "value": "9"
+                    },
+                    {
+                        "label": "12",
+                        "value": "12"
+                    },
+                    {
+                        "label": "15",
+                        "value": "15"
+                    },
+                    {
+                        "label": "18",
+                        "value": "18"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "product_count",
+                "label": "Show product count",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "collection_desc",
+                "label": "Show short description",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "collection_btntext",
+                "label": "Collection button"
+            },
+            {
+                "type": "header",
+                "content": "List Products with Collection"
+            },
+            {
+                "type": "select",
+                "id": "items_propage",
+                "label": "Number items on a page",
+                "default": "3",
+                "options": [
+                    {
+                        "label": "2",
+                        "value": "2"
+                    },
+                    {
+                        "label": "3",
+                        "value": "3"
+                    },
+                    {
+                        "label": "4",
+                        "value": "4"
+                    },
+                    {
+                        "label": "5",
+                        "value": "5"
+                    },
+                    {
+                        "label": "6",
+                        "value": "6"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

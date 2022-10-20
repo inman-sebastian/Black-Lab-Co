@@ -1,0 +1,267 @@
+<footer id="velaFooter">
+    <div class="footerCenter">
+        <div class="container">
+            <div class="footerCenterInner">
+                <div class="rowFlex rowFlexMargin">
+                    <div class="col-xs-12 col-sm-6 col-md-3 velaBlock">
+                        {%- if section.settings.contactinfo_enable -%}
+                            <div class="vela-contactinfo velaBlock">
+                                <div class="vela-content">
+                                    <div class="contacinfo-logo clearfix">
+                                        {%- if section.settings.logofooter_size != blank -%}
+                                            {% assign wimg = section.settings.logofooter_size | split: 'x' | first  %}
+                                            {% assign himg = section.settings.logofooter_size | split: 'x' | last  %}
+                                        {%- else -%}
+                                            {% assign wimg = "132"  %}
+                                            {% assign himg = "66"  %}
+                                        {%- endif -%} 
+                                        <div class="velaFooterLogo" itemscope itemtype="http://schema.org/Organization">
+                                            <a href="/" itemprop="url" style="width: {{wimg}}px; height: {{himg}}px; display: block;">
+                                                {%- if section.settings.contactinfo_logo != blank -%}
+                                                    {% include "image-global" with image: section.settings.contactinfo_logo %}
+                                                {%- else -%}
+                                                    <img class="img-responsive" alt="{{ shop.name }}" src="https://via.placeholder.com/230x76" />
+                                                {%- endif -%}                                           
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {% if section.settings.contactinfo_desc != blank %}
+                                        <div class="contacinfo-desc contactinfo-item clearfix">
+                                            {{ section.settings.contactinfo_desc }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {%- endif -%}
+                        {%- if section.settings.social_enable -%}
+                            <div class="velaSocial">
+                                    <ul class="velaSocial list-unstyled list-inline">                       
+                                        {%- if section.settings.fb_link != blank -%}                       
+                                            <li class="velaSocialItem facebook">
+                                                <a href="{{ section.settings.fb_link }}" target="_blank" title="Facebook">
+                                                    <i class="fa fa-facebook-official"></i>
+                                                </a>
+                                            </li>
+                                        {%- endif -%}
+                                        {%- if section.settings.tw_link != blank -%}   
+                                            <li class="velaSocialItem">
+                                                <a href="{{ section.settings.tw_link }}" target="_blank" title="Twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                        {%- endif -%}
+                                        {%- if section.settings.in_link != blank -%} 
+                                            <li class="velaSocialItem linkedin">
+                                                <a href="{{ section.settings.in_link }}" target="_blank" title="Linkedin">
+                                                    <i class="fa fa-linkedin"></i>
+                                                </a>
+                                            </li>
+                                            {%- endif -%}
+                                        {%- if section.settings.it_link != blank -%} 
+                                            <li class="velaSocialItem instagram">
+                                                <a href="{{ section.settings.it_link }}" target="_blank" title="instagram">
+                                                    <i class="fa fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        {%- endif -%}
+                                    </ul>        
+                            </div>
+                        {%- endif -%}
+
+                    </div>
+                    {%- if section.settings.locate_enable -%}
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <div class="velaFooterMenu vela-locateUs velaBlock">
+                                {% if section.settings.locate_title != blank %}
+                                    <h3 class="velaFooterTitle">{{ section.settings.locate_title }}</h3>
+                                {% endif %}
+                                <div class="velaContent">
+                                    {% if section.settings.locate_desc != blank %}
+                                        <div>
+                                            {{ section.settings.locate_desc }}
+                                        </div>
+                                    {% endif %}  
+                                </div>
+                            </div>
+                        </div>
+                    {%- endif -%}
+                    {%- if section.settings.footer_menu_enable -%}
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            {%- assign menuTitle = section.settings.footer_menu_title -%}
+                            {%- assign menuHandle = section.settings.footer_menu_menu -%}
+                            {% include 'vela-footer-menu' %}
+                        </div>
+                    {%- endif -%}  
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        {%- assign newsletterTitle = section.settings.newsletter_title -%}
+                        {%- assign newsletterDesc = section.settings.newsletter_description -%}
+                        {%- assign newsletterMailchimp = section.settings.newsletter_mailchimp -%}
+                        {%- include 'vela-newsletter' -%}
+                        {%- if section.settings.copyright_enable and section.settings.footer_copyright != blank -%}
+                            <div class="velaCopyRight">
+                                {{ section.settings.footer_copyright }}
+                            </div>
+                        {%- endif -%}  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% schema %}
+    {
+        "name": "Footer",
+        "settings": [  
+            {
+                "type": "header",
+                "content": "Block Contact info"
+            },
+            {
+                "type": "checkbox",
+                "id": "contactinfo_enable",
+                "label": "Block Contact info?"
+            },
+            {
+                "type": "image_picker",
+                "id": "contactinfo_logo",
+                "label": "Logo footer"
+            },
+            {
+                "type": "text",
+                "id": "logofooter_size",
+                "label": "size",
+                "placeholder":"132x66",
+                "info": "132x66"
+            },
+            {
+                "type": "textarea",
+                "id": "contactinfo_desc",
+                "label": "Description"
+            },
+            {
+                "type": "header",
+                "content": "Block Social"
+            },
+            {
+                "type": "checkbox",
+                "id": "social_enable",
+                "label": "Enable Social",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "fb_link",
+                "label": "Facebook Link"
+            },
+            {
+                "type": "text",
+                "id": "tw_link",
+                "label": "Twitter Link"
+            },
+            {
+                "type": "text",
+                "id": "in_link",
+                "label": "linkedin Link"
+            },
+            {
+                "type": "text",
+                "id": "it_link",
+                "label": "instagram Link"
+            },
+            {
+                "type": "header",
+                "content": "Block Locate Us"
+            },
+            {
+                "type": "checkbox",
+                "id": "locate_enable",
+                "label": "Block Locate Us?"
+            },
+            {
+                "type": "text",
+                "id": "locate_title",
+                "label": "Title"
+            },
+            {
+                "type": "textarea",
+                "id": "locate_desc",
+                "label": "Description"
+            },         
+            {
+                "type": "header",
+                "content": "Links Footer"
+            },
+            {
+                "type": "checkbox",
+                "id": "footer_menu_enable",
+                "label": "Links Footer?",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "footer_menu_title",
+                "label": "Title"
+            },
+            {
+                "type": "link_list",
+                "id": "footer_menu_menu",
+                "label": "Block links",
+                "info": "Choose menu for block. Add new menu: Admin -> Navigation"
+            },
+            {
+                "type": "header",
+                "content": "Block Newsletter"
+            },
+            {
+                "type": "checkbox",
+                "id": "newsletter_enable",
+                "label": "Enable?",
+                "default": true
+            }, 
+            {
+                "type": "text",
+                "id": "newsletter_title",
+                "placeholder": "Title for Block",
+                "label": "Title"
+            },
+            {
+                "type": "textarea",
+                "id": "newsletter_description",
+                "placeholder": "Description for Block",
+                "label": "Description"
+            },
+            {
+                "type": "checkbox",
+                "id": "newsletter_mailchimp",
+                "label": "Use MailChimp",
+                "default": true
+            },
+            {
+                "type": "paragraph",
+                "content": "Uncheck if You use Newsletter of Shopify. Email will be saved to shopify customer. Admin -> Customers -> Accepts Marketting. You must send invite account for customer."
+            },
+            {
+                "type": "text",
+                "id": "newsletter_form_action",
+                "label": "MailChimp form action URL",
+                "info": "[Where do I find my MailChimp form action URL?](http:\/\/docs.shopify.com\/support\/configuration\/store-customization\/where-do-i-get-my-mailchimp-form-action)"
+            },
+            {
+                "type": "header",
+                "content": "Block Copyright"
+            },
+            {
+                "type": "checkbox",
+                "id": "copyright_enable",
+                "label": "Enable?",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "footer_copyright",
+                "label": "Copyright",
+                "placeholder": "Copyright"
+            }     
+        ]
+    }
+{% endschema %}

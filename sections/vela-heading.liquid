@@ -1,0 +1,108 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+<div class="velaHeading overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaHeadingInner ">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaHomeTitle velaTitle mb0 text-{{ section.settings.text_align}}">
+                    {{ section.settings.title }}
+                    {%- if section.settings.subtitle != blank -%}
+                        <span class="subtitle">{{ section.settings.subtitle }}</span>
+                    {%- endif -%}
+                </h3>
+            {%- endif -%}
+            
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "vela Heading",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "default": "0 0 30px",
+                "placeholder": "0px 0px",
+                "info": "ex: 0px 0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "subHeading"
+            },
+            {
+                "type": "select",
+                "id": "text_align",
+                "label": "Text Align",
+                "default": "left",
+                "options": [
+                    {
+                        "label": "Left",
+                        "value": "left"
+                    },
+                    {
+                        "label": "Center",
+                        "value": "center"
+                    },
+                    {
+                        "label": "Right",
+                        "value": "right"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "vela Heading",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

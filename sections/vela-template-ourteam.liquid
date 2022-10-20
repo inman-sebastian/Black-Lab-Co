@@ -1,0 +1,201 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+<div class="pageOurTeam overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="velaOurTeams">
+        <div class="container{% if section.settings.full_with %}-full{% endif %}">
+            <div class="velaOurTeamsInner">
+                {%- if section.settings.title != blank -%}
+                    <h3 class="velaOurTitle text-center">
+                        {{ section.settings.title }}
+                    </h3>
+                {%- endif -%}
+                {%- if section.settings.subtitle != blank -%}
+                    <div class="velaPageSubTitle">
+                        {{ section.settings.subtitle }}
+                    </div>
+                {%- endif -%}
+                {%- if section.blocks.size > 0 -%}
+                    <div class="velaContent">
+                        <div class="rowFlex rowFlexMargin">
+                            {% for block in section.blocks %}
+                                <div class="col-sp-12 col-xs-6 col-md-3">
+                                    <div class="ourMember">
+                                        <div class="ourMemberImage">
+                                            {%- if block.settings.image != blank -%}
+                                                {% include 'image-global' with image: block.settings.image  %}
+                                            {%- else -%} 
+                                                <img class="img-responsive img-full-mobile" alt="{{ shop.name }}" src="https://via.placeholder.com/370x452.jpg" />
+                                            {%- endif -%}
+                                        </div>
+                                        <div class="ourContent">
+                                            {%- if block.settings.title != blank -%}
+                                                <div class="ourMemberName">{{ block.settings.title }}</div>
+                                            {%- endif -%}
+                                            {%- if block.settings.position != blank -%}
+                                                <div class="ourMemberPosition">{{ block.settings.position }}</div>
+                                            {%- endif -%}
+                                            <div class="velaSocial">
+                                                <ul class="velaSocial list-unstyled list-inline">
+                                                    {%- if block.settings.fb_link != blank -%}                       
+                                                        <li class="velaSocialItem facebook">
+                                                            <a href="{{ block.settings.fb_link }}" target="_blank" title="Facebook">
+                                                                <i class="fa fa-facebook-official"></i>
+                                                            </a>
+                                                        </li>
+                                                    {%- endif -%}
+                                                    {%- if block.settings.tw_link != blank -%}   
+                                                        <li class="velaSocialItem">
+                                                            <a href="{{ block.settings.tw_link }}" target="_blank" title="Twitter">
+                                                                <i class="fa fa-twitter"></i>
+                                                            </a>
+                                                        </li>
+                                                    {%- endif -%}
+                                                    {%- if block.settings.in_link != blank -%} 
+                                                        <li class="velaSocialItem linkedin">
+                                                            <a href="{{ block.settings.in_link }}" target="_blank" title="Linkedin">
+                                                                <i class="fa fa-linkedin"></i>
+                                                            </a>
+                                                        </li>
+                                                     {%- endif -%}
+                                                    {%- if block.settings.it_link != blank -%} 
+                                                        <li class="velaSocialItem instagram">
+                                                            <a href="{{ block.settings.it_link }}" target="_blank" title="instagram">
+                                                                <i class="fa fa-instagram"></i>
+                                                            </a>
+                                                        </li>
+                                                     {%- endif -%}
+                                                </ul>        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {%- endif -%}
+            </div>
+            <div class="velaOurBanner">
+                <div class="p-relative">
+                    {%- if section.settings.banner != blank -%}
+                        {% include 'image-global' with image: section.settings.banner  %}
+                    {%- else -%}
+                        <img class="img-responsive img-full-mobile" alt="{{ shop.name }}" src="https://via.placeholder.com/1170x580.jpg" />
+                    {%- endif -%}
+                </div>
+                {%- if section.settings.desc != blank -%}
+                    <div class="velaOurBannerText bg_black text-white text-center">
+                        {{ section.settings.desc }}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Our Teams",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "default": "0 0 30px",
+                "placeholder": "0px 0px",
+                "info": "ex: 0px 0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "Block Banner"
+            },
+            {
+                "type": "image_picker",
+                "id": "banner",
+                "label": "Banner"
+            },
+            {
+                "type": "textarea",
+                "id": "desc",
+                "label": "Banner Content"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Our Item",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Member avatar"
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Member name"
+                    },
+                    {
+                        "type": "text",
+                        "id": "position",
+                        "label": "Member position"
+                    },
+                    {
+                        "type": "text",
+                        "id": "fb_link",
+                        "label": "Facebook Link"
+                    },
+                    {
+                        "type": "text",
+                        "id": "tw_link",
+                        "label": "Twitter Link"
+                    },
+                    {
+                        "type": "text",
+                        "id": "in_link",
+                        "label": "linkedin Link"
+                    },
+                    {
+                        "type": "text",
+                        "id": "it_link",
+                        "label": "instagram Link"
+                    }
+
+                ]
+            }
+        ]
+    }
+{% endschema %}

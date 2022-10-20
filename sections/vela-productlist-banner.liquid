@@ -1,0 +1,271 @@
+{%- assign proCollection = section.settings.collection_handle -%}
+{%- assign owlColumn1 = section.settings.column1 | plus:0 -%}
+{%- assign owlColumn2 = section.settings.column2 | plus:0 -%}
+{%- assign owlColumn3 = section.settings.column3 | plus:0 -%}
+{%- assign owlColumn4 = section.settings.column4 | plus:0 -%}
+{%- assign owlColumn5 = section.settings.column5 | plus:0 -%}
+{%- assign proRow = section.settings.row | plus:0 -%}
+{%- assign proLimit = section.settings.limit | plus:0 -%}
+{%- if section.settings.image_size != blank -%}
+    {%- assign proImageSize = section.settings.image_size -%}
+{%- else -%}
+    {%- assign proImageSize = 'master' -%}
+{%- endif -%}
+{%- assign dataloop = owlColumn1 | times: proRow  -%}
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+
+<div class="velaProductsBanner overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+   <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        
+        
+        <div class="velaContent rowFlex rowFlexMargin banner_{{ section.settings.banner_position }}">
+         	<div class="col-xs-12 col-sm-4 hidden-xs hidden-sm">
+	         	<a class="d-block" href="{% if section.settings.link != blank %}{{ section.settings.link }}{% else %}#{% endif %}" title="{{ block.settings.image.alt | default: shop.name }}">
+	                {% if section.settings.image != blank %}
+                        {% include 'image-global' with image: section.settings.image %}
+                    {% else %}
+	                    <img class="img-responsive img-full-mobile" alt="{{ shop.name }}" src="https://via.placeholder.com/905x900" />
+	                {% endif %}
+	            </a>
+           	</div>
+           	<div class="col-xs-12 col-sm-12 col-md-8">
+                {% if section.settings.title != blank %}
+                    <h3 class="velaTitle velaHomeTitle text-center">
+                        {% if section.settings.title != blank  %}
+                            <span class="title">{{ section.settings.title }}</span>
+                        {% endif %}
+                    </h3>
+                {% endif %}
+                <div class="proOwlCarousel owlCarouselPlay">
+                        <div class="owl-carousel" 
+                            data-nav="{{ section.settings.navigation }}"
+                            data-dots="true"
+                            data-loop="{% if collections[proCollection].products_count > dataloop and proLimit > dataloop %}true{% else %}false{% endif %}" 
+                            data-autoplay="{{ section.settings.autoplay }}" 
+                            data-autoplaytimeout="{{ section.settings.autoplay_timeout }}" 
+                            data-columnone="{{ owlColumn1 }}" 
+                            data-columntwo="{{ owlColumn2 }}" 
+                            data-columnthree="{{ owlColumn3 }}" 
+                            data-columnfour="{{ owlColumn4 }}" 
+                            data-columnfive="{{ owlColumn5 }}">
+                            {% for product in collections[proCollection].products limit:proLimit %}
+                                {% if proRow == 2 %}
+                                    {% assign checkRow  = forloop.index | modulo:proRow %}
+                                    {% if checkRow == 1 %}
+                                        <div class="item">
+                                    {% endif %}
+                                        {% include 'product-grid-item' %}
+                                    {% if checkRow == 0 or forloop.last %}
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="item">
+                                        {% include 'product-grid-item' %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+		            </div>
+           		</div>
+			</div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Vela Products List",
+    "class": "velaFramework",
+    "settings":[
+        {
+            "type": "header",
+            "content": "Design Section"
+         },
+         {
+            "type": "checkbox",
+            "id": "full_with",
+            "label": "Enabel Full Width?"
+         },
+         {
+            "type": "color",
+            "id": "color_bg",
+            "label": "Background Color",
+            "default": "rgba(0,0,0,0)"
+         },
+         {
+            "type": "text",
+            "id": "padding_block",
+            "label": "Padding",
+            "placeholder": "0px 0px",
+            "info": "if background color is blank, it will be remove on the mobile"
+        },
+        {
+            "type": "text",
+            "id": "margin_block",
+            "label": "Margin",
+            "default": "0 0 30px",
+            "placeholder": "0px 0px",
+            "info": "ex: 0px 0px 0px"
+        },
+        {
+            "type": "header",
+            "content": "General Settings"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "placeholder": "Title of section"
+        },
+        {
+             "type": "image_picker",
+             "id": "image",
+             "label": "Banner"
+        },
+        {
+            "type": "select",
+            "id": "banner_position",
+            "label": "Banner Position",
+            "default": "left",
+            "options": [
+                {
+                    "label": "Left",
+                    "value": "left"
+                },
+                {
+                    "label": "Right",
+                    "value": "right"
+                }
+            ]
+        },
+         {
+            "type": "url",
+            "id": "link",
+            "label": "Banner Link"
+        },
+        {
+            "type": "collection",
+            "id": "collection_handle",
+            "label": "Collection"
+        },
+        {
+            "type": "header",
+            "content": "Carousel Settings"
+        },
+        {
+            "type": "text",
+            "id": "limit",
+            "label": "Limit",
+            "default": "8"
+        },
+        {
+            "type": "checkbox",
+            "id": "navigation",
+            "label": "Show navigation",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto play",
+            "default": false
+        },
+        {
+            "type": "text",
+            "id": "autoplay_timeout",
+            "label": "Autoplay timeout",
+            "placeholder": "Default: 10000(ms)",
+            "info": "Autoplay interval timeout.",
+            "default": "10000"
+        },
+        {
+            "type": "range",
+            "id": "column1",
+            "min": 1,
+            "max": 7,
+            "step": 1,
+            "label": "#Column 1",
+            "default": 5,
+            "info": "Large desktops"
+        },
+        {
+            "type": "range",
+            "id": "column2",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label": "#Column 2",
+            "default": 3,
+            "info": "Desktops & Tablets landscape"
+        },
+        {
+            "type": "range",
+            "id": "column3",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label": "#Column 3",
+            "default": 2,
+            "info": "Tablets"
+        },
+        {
+            "type": "range",
+            "id": "column4",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label": "#Column 4",
+            "default": 2,
+            "info": "Mobile phone landscape"
+        },
+        {
+            "type": "range",
+            "id": "column5",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label": "#Column 5",
+            "default": 1,
+            "info": "Mobile phone"
+        },
+        {
+            "type": "select",
+            "id": "row",
+            "label": "Row",
+            "default": "1",
+            "options":[
+                {
+                    "value": "1",
+                    "label": "1"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Vela Products List - Banner",
+            "category": "2. Vela Product",
+            "settings": {
+                "collection_handle": "frontpage"
+            }
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,226 @@
+{%- for block in section.blocks -%}
+    {%- case block.type -%}
+        {%- when 'categories'-%}
+            {%- assign velaCategories = block.settings.sidebar_categories_menu -%}
+            <div id="velaCategories" class="velaCategoriesSidebar velaBlock">
+                {%- if block.settings.sidebar_categories_title != blank -%}
+                    <h3 class="titleSidebar">{{ block.settings.sidebar_categories_title }}</h3>
+                {%- endif -%}
+                {%- if linklists[velaCategories] != empty -%}
+                    <div class="velaContent">
+                        <ul class="sidebarListCategories list-unstyled">
+                            {% for linkItem in linklists[velaCategories].links %}
+                                {%- assign hasDropdown = false -%}
+                                {%- assign subItem = forloop.index -%}
+                                {%- if linklists[linkItem.handle] != empty -%}
+                                    {%- assign hasDropdown = true -%}
+                                {%- endif -%}
+                                <li class="sidebarCateItem{% if hasDropdown %} hasSubCategory{% endif %}{% if linkItem.active %} active{% endif %}">
+                                    <a href="{{ linkItem.url }}">{{ linkItem.title }}</a>
+                                    {%- if hasDropdown -%}
+                                        <span class="collapsed" data-toggle="collapse" data-target="#subCategory{{ forloop.index }}"></span>
+                                        <div id="subCategory{{ forloop.index }}" class="collapse">
+                                            <ul class="sidebarListCategories subListCategories list-unstyled">
+                                                {% for linkChildItem in linklists[linkItem.handle].links %}
+                                                    {%- assign hasDropdown = false -%}
+                                                    {%- if linklists[linkChildItem.handle] != empty -%}
+                                                        {%- assign hasDropdown = true -%}
+                                                    {%- endif -%}
+                                                    <li class="sidebarCateItem{% if hasDropdown %} hasSubCategory{% endif %}{% if linkItem.active %} active{% endif %}">
+                                                        <a href="{{ linkChildItem.url }}">{{ linkChildItem.title }}</a>
+                                                        {%- if hasDropdown -%}
+                                                            <span class="collapsed" data-toggle="collapse" data-target="#subCategory{{ subItem }}{{ forloop.index }}"></span>
+                                                            <div id="subCategory{{ subItem }}{{ forloop.index }}" class="collapse">
+                                                                <ul class="sidebarListCategories subListCategories list-unstyled">
+                                                                    {% for linkChildItem2 in linklists[linkChildItem.handle].links %}
+                                                                        <li class="sidebarCateItem{% if linkItem.active %} active{% endif %}">
+                                                                            <a href="{{ linkChildItem2.url }}">{{ linkChildItem2.title }}</a>
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </div>
+                                                        {%- endif -%}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {%- endif -%}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {%- endif -%}
+            </div>
+        {%- when 'filtertag' -%}
+            {%- if current_tags == blank -%}
+                {%- assign noFilter = true -%}
+            {%- else -%}
+                {%- assign noFilter = false -%}
+            {%- endif -%}
+            {%- if template.name == 'collection' and collection.all_tags.size > 0 -%}
+                {%- assign strListTags = '' -%}
+                {% for tag in collection.all_tags %}
+                    {%- if tag contains '_' -%}
+                        {% capture strListTags %}{% unless strListTags == blank  %}{{ strListTags }}|{% endunless %}{{ tag | split: '_' | first }}{% endcapture %}
+                    {%- endif -%}
+                {% endfor %}
+                {%- assign groupTags = strListTags | split: '|' | uniq -%}
+            {%- endif -%}
+            <div id="sidebarAjaxFilter" class="velaFilter velaBlock">
+                {%- if block.settings.filter_by_tag_title != blank -%}
+                    <h3 class="titleSidebar">
+                        <span>{{ block.settings.filter_by_tag_title }}</span>
+                        <a href="javascript:void(0)" class="velaClearAll{% if noFilter %} hidden{% endif %}">{{ 'collections.sidebar.clear_all' | t }}</a>
+                    </h3>
+                {%- endif -%}
+                <div class="velaContent">
+                    {% for groupTagTitle in groupTags %}
+                        {%- if groupTagTitle contains 'Size' -%}
+                            {%- assign classFilter = 'listFilterSize' -%}
+                        {%- endif -%}
+                        <div class="ajaxFilter">
+                            <h4 class="ajaxFilterTitle">
+                                <span>{{ groupTagTitle }}</span>
+                                <a href="javascript:void(0)" class="velaClear" style="display:none;">{{ 'collections.sidebar.clear' | t }}</a>
+                            </h4>
+                            <ul class="listFilter {{ classFilter }} list-unstyled">
+                                {% for tag in collection.all_tags %}
+                                    {%- assign cat = tag | split: '_' | first -%}
+                                    {%- assign catDowncase = cat | downcase -%}
+                                    {%- if cat != tag and groupTagTitle == cat -%}
+                                        {%- if catDowncase == 'color' or catDowncase == 'colour' -%}
+                                            {% capture colorImage %}{{ tag | remove_first: groupTagTitle | remove_first: '_' | handle }}.png{% endcapture %}
+                                            <li class="filterColor{% if current_tags contains tag %} active{% endif %}" data-filter="{{ tag | handle }}">
+                                                <a href="javascript:void(0)" data-toggle="tooltip" title="{{ tag | remove_first: groupTagTitle | remove_first: '_' }}">
+                                                    <img class="img-responsive img-full-mobile" alt="{{ tag | remove_first: groupTagTitle | remove_first: '_' | escape }}" src="{{ colorImage | file_img_url:'master' }}" />
+                                                </a>
+                                            </li>
+                                        {%- else -%}
+                                            {%- if current_tags contains tag -%}
+                                                <li class="active" data-filter="{{ tag | handle }}">
+                                                    {{ tag | remove_first: groupTagTitle | remove_first: '_' | link_to_remove_tag: tag }}
+                                                </li>
+                                            {%- else -%}
+                                                <li data-filter="{{ tag | handle }}">
+                                                    {{ tag | remove_first: groupTagTitle | remove_first: '_' | link_to_add_tag: tag }}
+                                                </li>
+                                            {%- endif -%}
+                                        {%- endif -%}
+                                    {%- endif -%}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {%- when 'filtervendor' -%}
+            <div class="velaFilter velaBlock">
+                <h3 class="titleSidebar">{{ block.settings.sidebar_filtervendor_title }}</h3>
+                <div class="velaContent">
+                    <ul class="listSidebar list-unstyled">
+                        {% assign itemArray = block.settings.sidebar_filtervendor_list | split:"," %}
+                        {% for itemVendor in itemArray %}
+                            {% if shop.vendors contains itemVendor %}
+                                {% if collection.current_vendor == itemVendor %}
+                                    <li class="active">
+                                        {{ itemVendor | link_to_vendor }}
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        {{ itemVendor | link_to_vendor }}
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {%- when 'filtertype' -%}
+            <div class="velaFilter velaBlock">
+                <h3 class="titleSidebar">{{ block.settings.sidebar_filtertype_title }}</h3>
+                <div class="velaContent">
+                    <ul class="listSidebar list-unstyled">
+                        {% assign itemArray = block.settings.sidebar_filtertype_list | split:"," %}
+                        {% for itemType in itemArray %}
+                            {% if shop.types contains itemType %}
+                            {% if collection.current_type == itemType %}
+                                    <li class="active">
+                                        {{ itemType | link_to_type }}
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        {{ itemType | link_to_type }}
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {%- when 'productlist'-%}
+            {%- assign proLimit = block.settings.limit | plus:0 -%}
+            <div class="velaProductsSidebar velaBlock">
+                {%- if block.settings.products_title != blank -%}
+                    <h3 class="titleSidebar">{{ block.settings.products_title }}</h3>
+                {%- endif -%}
+                <div class="velaContent pb20">
+                    {%- assign collectionSidebar = collections[block.settings.collection_handle] -%}
+                    {% for product in collectionSidebar.products limit:proLimit %}
+                        {%- assign on_sale = false -%}
+                        {%- if product.compare_at_price > product.price -%}
+                            {%- assign on_sale = true -%}
+                        {%- endif -%}
+                        <div class="productSidebar">
+                            <div class="productSidebarImage">
+                                <a class="d-block" href="{{ product.url }}">
+                                    {% if product.featured_image.src == blank %}
+                                        <img class="product-card__image img-responsive" src="{{ product.featured_image.src | img_url: '1024x' }}" alt="{{ product.featured_image.alt | escape }}">
+                                    {% else %}
+                                        {% include 'image-global' with image: product.featured_image %}
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="productSidebarContent">
+                                <h4 class="productSidebarName">
+                                    <a href="{{ product.url }}">{{ product.title }}</a>
+                                </h4>
+                                <div class="productSidebarPrice">
+                                    <div class="priceProduct priceSale">{{ product.price | money }}</div>
+                                    {%- if on_sale -%}
+                                        <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {%- when 'banner'-%}
+            <div class="velaBannerSidebar velaBlock hidden-xs hidden-sm">
+                <div class="velaContent">
+                    <div class="velaBanner">
+                        <div class="{{ block.settings.effect }}">
+                            {% if block.settings.link != blank %}<a class="d-block" href="{{ block.settings.link }}" title="{{ block.settings.image.alt | default: shop.name }}">{% endif %}
+                                {% if block.settings.image != blank %}
+                                    {% include 'image-global' with image: block.settings.image %}
+                                {% else %}
+                                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                                {% endif %}
+                            {% if block.settings.link != blank %}</a>{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%- when 'html'-%}
+            <div class="velaHtmlSidebar velaBlock">
+                {%- if block.settings.html_title != blank -%}
+                    <h4 class="titleSidebar">{{ block.settings.html_title }}</h4>
+                {%- endif -%}
+                <div class="velaContent">
+                    <div class="rte">
+                        {{ block.settings.html_content }}    
+                    </div>
+                </div>
+            </div>
+    {%- endcase -%}
+{%- endfor -%}

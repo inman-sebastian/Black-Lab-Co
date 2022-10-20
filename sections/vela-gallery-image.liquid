@@ -1,0 +1,245 @@
+{%- if section.settings.column1 == 5 -%}
+    {%- assign noowlColumn1 = "2-4"  -%}
+{%- else -%}
+    {%- assign noowlColumn1 = 12 | divided_by: section.settings.column1 | ceil  -%}
+{%- endif -%}
+{%- if section.settings.column2 == 5 -%}
+    {%- assign noowlColumn2 = "2-4"  -%}
+{%- else -%}
+    {%- assign noowlColumn2 = 12 | divided_by: section.settings.column1 | ceil  -%}
+{%- endif -%}
+{%- assign noowlColumn3 = 12 | divided_by: section.settings.column3 | ceil -%}
+{%- assign noowlColumn4 = 12 | divided_by: section.settings.column4 | ceil  -%}
+{%- assign noowlColumn5 = 12 | divided_by: section.settings.column5 | ceil -%}
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+<div class="velaGallery overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaGalleryInner">
+            <div class="headingGroup text-center">
+                {%- if section.settings.title != blank -%}
+                    <h3 class="velaTitle text-center">
+                        {{ section.settings.title }}
+                    </h3>
+                {%- endif -%}
+                {%- if section.settings.subtitle != blank -%}
+                    <span class="subTitle">{{ section.settings.subtitle }}</span>
+                {%- endif -%}
+            </div>
+            <div class="velaContent">
+                {%- if section.blocks.size > 0 -%}
+                    <div class="rowFlex rowFlexMargin {% if section.settings.noGutter %} noGutter{% endif %}">
+                        {% for block in section.blocks %}
+                            {%- if block.settings.size != blank -%}
+                                {% assign bannersize = block.settings.size %}
+                            {%- else -%}
+                                {% assign bannersize = '210x210' %}
+                            {%- endif -%}                          
+                            <div class="col-sp-{{ noowlColumn5 }} col-xs-{{ noowlColumn4 }} col-sm-{{ noowlColumn3 }} col-md-{{ noowlColumn2 }} col-lg-{{ noowlColumn1 }}">
+                                <div class="{% if section.settings.noGutter %}velaBanner{% else %}mb30 velaBanner{% endif %} {{ section.settings.effect }}">         
+                                    <a {% if section.settings.popup_image %}href="{{ block.settings.image | img_url:'master' }}" class="fancybox" data-fancybox="gallery" {% else %}href="{{ block.settings.link }}"{% endif%}  title="{{ block.settings.image.alt | default: shop.name }}">
+                                        {%- if block.settings.image != blank -%}
+                                            {% include 'image-global' with image: block.settings.image  %}
+                                        {%- else -%}
+                                            <img class="img-responsive" alt="{{ shop.name }}" src="https://via.placeholder.com/{{ bannersize }}" />
+                                        {%- endif -%}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Gallery Image",
+        "class": "velaFramework",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "checkbox",
+                "id": "noGutter",
+                "label": "No Padding",
+                "default": false
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "default": "0 0 30px",
+                "placeholder": "0px 0px",
+                "info": "ex: 0px 0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubTitle"
+            },
+            {
+                "type": "select",
+                "id": "effect",
+                "label": "Effect",
+                "default": "effectOne",
+                "options": [
+                    {
+                        "value": "effectNone",
+                        "label": "None"
+                    },
+                    {
+                        "value": "effectOne",
+                        "label": "Effect one"
+                    },
+                    {
+                        "value": "effectTwo",
+                        "label": "Effect two"
+                    },
+                    {
+                        "value": "effectThree",
+                        "label": "Effect Three"
+                    },
+                    {
+                        "value": "effectFour",
+                        "label": "Effect Four"
+                    },
+                    {
+                        "value": "effectFive",
+                        "label": "Effect Five"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "popup_image",
+                "label": "Use Popup Gallery?",
+                "default": false
+            },
+            {
+                "type": "range",
+                "id": "column1",
+                "min": 1,
+                "max": 7,
+                "step": 1,
+                "label": "#Column 1",
+                "default": 5,
+                "info": "Large desktops"
+            },
+            {
+                "type": "range",
+                "id": "column2",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 2",
+                "default": 3,
+                "info": "Desktops & Tablets landscape"
+            },
+            {
+                "type": "range",
+                "id": "column3",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 3",
+                "default": 2,
+                "info": "Tablets"
+            },
+            {
+                "type": "range",
+                "id": "column4",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 4",
+                "default": 2,
+                "info": "Mobile phone landscape"
+            },
+            {
+                "type": "range",
+                "id": "column5",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 5",
+                "default": 1,
+                "info": "Mobile phone"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Banner image",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Banner image",
+                        "info": "Recommended size banner 600x600, 800x800"
+                    },
+                    {
+                        "type": "url",
+                        "id": "link",
+                        "label": "Image URL"
+                    },
+                    {
+                        "type": "text",
+                        "id": "size",
+                        "label": "Banner size",
+                        "info": "Default is blank. you can input size banner 210x210"
+                    }
+                ]
+            }
+        ],
+		"presets": [
+            {
+                "name": "Gallery Image",
+                "category": "4. Vela Image"
+            }
+        ]
+    }
+{% endschema %}

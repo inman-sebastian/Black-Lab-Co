@@ -1,0 +1,787 @@
+
+{%- assign proImageSize = section.settings.image_size -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign shortDescription = "" -%}
+{%- if product.metafields.my_fields.shortdescription != blank  -%}
+    {%- assign shortDescription = product.metafields.my_fields.shortdescription -%}
+{%- endif -%}
+{%- assign fullDescription = product.description -%}
+<section id="pageContent">
+    <div class="container">
+        <div class="pageCollectionInner">
+            <div class="productBox" itemscope itemtype="http://schema.org/Product">
+                <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+                <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+                <div class="proBoxPrimary" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product">
+                    <div class="row">
+                        <div class="proBoxImage col-xs-12 col-md-6 mb30">
+                            <div id="proFeaturedImage" class="proFeaturedImage {% if product.media.size < 2 %}noThumbnail{% endif %}">
+                                {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+                                <div id="groupMedia" {% if featured_media.media_type == "image" %}style=" display: none" {% endif %} data-product-single-media-group>
+                                    {%- for media in product.media -%}
+                                        {% capture media_id %}FeaturedMedia-{{ section.id }}-{{ media.id }}{% endcapture %}
+                                        {% capture media_class %}product-featured-media{% endcapture %}
+                                        {% capture media_wrapper_id %}{{ media_id }}-wrapper{% endcapture %}
+                                        {% case media.media_type %}
+                                            
+                                                {% when 'external_video' %}
+                                                <div id="{{ media_wrapper_id }}"
+                                                class="product-single__media-wrapper {% unless featured_media == media %} hide{% endunless %}"
+                                                {% if media.media_type == 'video' or media.media_type == 'external_video' %} data-product-media-type-video data-enable-video-looping="true" {% endif %}
+                                                {% if media.media_type == 'model' %} data-product-media-type-model{% endif %}
+                                                {% if media.media_type == 'external_video' %} data-video-id="{{ media.external_id }}"{% endif %}
+                                                data-product-single-media-wrapper
+                                                data-media-id="{{ section.id }}-{{ media.id }}" tabindex="1"
+                                                >
+                                                        <div data-promedia= {{ media.id }} class="product-single__media" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;">
+                                                            {{ media | external_video_tag }}
+                                                        </div>
+                                                    </div>
+                                                {% when 'video' %}
+                                                <div id="{{ media_wrapper_id }}"
+                                                class="product-single__media-wrapper {% unless featured_media == media %} hide{% endunless %}"
+                                                {% if media.media_type == 'video' or media.media_type == 'external_video' %} data-product-media-type-video data-enable-video-looping="false" {% endif %}
+                                                {% if media.media_type == 'model' %} data-product-media-type-model{% endif %}
+                                                {% if media.media_type == 'external_video' %} data-video-id="{{ media.external_id }}"{% endif %}
+                                                data-product-single-media-wrapper
+                                                data-media-id="{{ section.id }}-{{ media.id }}" tabindex="1"
+                                                >
+                                                    <div data-promedia= {{ media.id }} class="product-single__media  product-single__media--{{ media.id }}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;">
+                                                        {{ media | video_tag: class: 'media-video', image_size: image_size }}
+                                                    </div>
+                                                </div>
+                                                {% when 'model' %}
+                                                <div id="{{ media_wrapper_id }}" 
+                                                class="product-single__media-wrapper {% unless featured_media == media %} hide{% endunless %}"
+                                                {% if media.media_type == 'video' or media.media_type == 'external_video' %} data-product-media-type-video data-enable-video-looping="true" {% endif %}
+                                                {% if media.media_type == 'model' %} data-product-media-type-model{% endif %}
+                                                {% if media.media_type == 'external_video' %} data-video-id="{{ media.external_id }}"{% endif %}
+                                                data-product-single-media-wrapper
+                                                data-media-id="{{ section.id }}-{{ media.id }}" tabindex="1"
+                                                >
+                                                    <div data-promedia= {{ media.id }} class="product-single__media" style="padding-top: 100%">
+                                                        {{ media | model_viewer_tag: image_size: image_size, reveal: 'interaction', toggleable: true, data-model-id: media.id }}
+                                                    </div>
+                                                    <button
+                                                    aria-label="{{ 'products.product.view_in_space_label' | t }}"
+                                                    class="product-single__view-in-space"
+                                                    data-shopify-xr
+                                                    data-shopify-model3d-id="{{ media.id }}"
+                                                    data-shopify-title="{{ product.title | escape }}"
+                                                    data-shopify-xr-hidden
+                                                    >
+                                                    {% include 'icon-3d-badge-full-color' %}<span class='product-single__view-in-space-text'>{{ 'products.product.view_in_space' | t }}</span>
+                                                    </button>
+                                                </div>
+                                                
+                                                    
+                                        {% endcase %}
+                                    {%- endfor -%} 
+                                </div>
+                        
+                                <div id="groupProImage" class="p-relative" {% unless featured_media.media_type == "image" %}style=" display: none" {% endunless %}>
+                                    <img id="ProductPhotoImg"
+                                        class="img-responsive{% if settings.ajax_cart_method == "fly" %} imgFlyCart{% endif %}"
+                                        alt="{{ featured_media.alt | escape }}"
+                                        src="{{ featured_media | img_url: proImageSize }}"
+                                        data-zoom-enable="{{ section.settings.product_zoom_enable }}"
+                                        data-zoom-image="{{ featured_media | img_url: 'master' }}"
+                                        data-zoom-scroll="{{ section.settings.product_scroll_zoom }}"
+                                        data-zoom-type="{{ section.settings.product_zoom_type }}"
+                                        data-zoom-width="{{ section.settings.product_zoom_width }}"
+                                        data-zoom-height="{{ section.settings.product_zoom_height }}"
+                                        data-zoom-lens="{{ section.settings.product_lens_size }}"
+                                        data-lens-shape="{{ section.settings.product_lens_type }}"
+                                    />
+                                    {%- if product.media.size > 1 -%}
+                                        <button id="velaViewImage" class="btn hidden-xs hidden-sm">
+                                            <i class="icons">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1056 1024"><path d="M702 383l275-273l-1 155q0 9 7 16.5t16 7.5h17q10-1 16.5-6.5t7.5-14.5V37l-.5-.5l-.5-.5l2-12q0-10-6-16q-7-7-16-7l-12 1h-1L777 1q-5 0-9.5 2T760 8t-5 7.5t-2 9.5v16q1 11 9 17.5t18 6.5h151L657 338q-10 9-10 22.5t10 22.5q17 18 39 5q3-3 6-5zM355 641L80 914l1-155q0-9-7-16.5T58 735H40q-4 1-8.5 2.5t-8 4t-5 6.5t-2.5 8v231l.5.5l.5.5l-2 12q0 5 1.5 9t4.5 7q7 7 16 7l12-1h1l230 1q10 0 17-7t7-17v-16q-1-11-9-17.5t-18-6.5H126l274-273q5-5 7.5-10.5t2.5-12t-2.5-12.5t-7.5-10q-6-6-14-8.5t-16.5 0T355 641zm685 346V756q-1-9-7.5-14.5T1016 735h-17q-9 0-16 7t-7 17l1 155l-275-273q-6-6-14.5-8.5t-16.5 0t-14 8.5q-10 9-10 22.5t10 22.5l274 273H780q-7 0-12.5 2.5T758 970t-5 13v16q0 7 3.5 12.5t8.5 8.5t12 3l229-1h1l12 1q9 0 16-7q6-6 6-16l-2-12h1v-1zM126 65h151q10 0 18-6.5t9-17.5V25q0-10-7-17t-17-7L50 2h-1L37 1q-9 0-16 7q-3 3-4.5 7T15 24l2 12h-.5l-.5 1v231q1 9 7.5 14.5T40 289h18q6 0 11.5-3.5t8.5-9t3-11.5l-1-155l275 273q9 10 22.5 10t23-9.5t9.5-23t-10-22.5z"/></svg>
+                                            </i>
+                                        </button>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                            {%- if product.images.size > 1 -%}
+                            <div id="productThumbs" class="proThumbnails thumbnails-wrapper">
+                                <div class="owl-thumblist">
+                                    <div class="owl-carousel product-single__thumbnails product-single__thumbnails-{{ section.id }}" data-item = "4">
+                                        {%- for media in product.media -%}
+                                                <div class="thumbItem product-single__thumbnails-item">
+                                                    <a  href="{{ media.preview_image | img_url: 'master' }}" 
+                                                        class="product-single__thumbnail product-single__thumbnail--{{ section.id }} {% if forloop.first %}active-thumb{% endif %}" 
+                                                        data-thumbnail-id="{{ section.id }}-{{ media.id }}"
+                                                        data-imageid="{{ media.id }}" 
+                                                        data-stype="{{ media.media_type }}"
+                                                        data-image="{{ media.preview_image | img_url: proImageSize }}" 
+                                                        data-zoom-image="{{ media.preview_image | img_url: 'master' }}">
+                                                            <img class="img-responsive" src="{{ media.preview_image | img_url: '150x' }}" alt="{{ media.alt| escape }}">
+                                                        {%- if media.media_type == 'video' -%}
+                                                            <div class="product-single__thumbnail-badge icon-movie">
+                                                                {% include 'icon-movie-player' %}
+                                                            </div>
+                                                        {%- endif -%}
+                                                        {%- if  media.media_type =='external_video' -%}
+                                                            <div class="product-single__thumbnail-badge">
+                                                                {% include 'icon-video-badge-full-color' %}
+                                                            </div>
+                                                        {%- endif -%}
+                                                        {%- if media.media_type == 'model' -%}
+                                                            <div class="product-single__thumbnail-badge">
+                                                                {% include 'icon-3d-badge-full-color' %}
+                                                            </div>
+                                                        {%- endif -%}
+                                                    </a>
+                                                </div>
+                                        {%- endfor -%}
+                                    </div>
+                                </div>
+                            </div>
+                            {%- endif -%}
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <div class="proBoxInfo">
+                                {%- if section.settings.product_type_enable -%}
+                                    <p class="productType">{{ product.type }}</p>
+                                {%- endif -%}
+                                <h1 itemprop="name">{{ product.title }}</h1>
+                                {%- if settings.product_reviews_enable -%}
+                                    <div class="proReviews">
+                                        <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                                    </div>
+                                {%- endif -%}
+                                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                    <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+                                    <div class="proPrice flexRow flexAlignCenter">
+                                        <span id="ProductPrice" class="priceProduct" itemprop="price">
+                                            {{ current_variant.price | money }}
+                                        </span>
+                                        {%- if product.compare_at_price > product.price -%}
+                                            <span id="ComparePrice" class="priceProduct priceCompare">
+                                                {{ current_variant.compare_at_price | money }}
+                                            </span>
+                                        {%- endif -%}
+                                    </div>
+                                    <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+                                    {%- if section.settings.product_available_enable -%}
+                                        {%- if product.available -%}
+                                            <p class="proAttr productAvailability instock"><label>{{ 'products.product.availability' | t }}:</label>{{'products.product.available' | t }}</p>
+                                        {%- else -%}
+                                            <p class="proAttr productAvailability outstock"><label>{{ 'products.product.availability' | t }}:</label>{{'products.product.unavailable' | t }}</p>
+                                        {%- endif -%}
+                                    {%- endif -%}
+                                    {%- if section.settings.product_vendor_enable -%}
+                                        <p class="proAttr productVendor"><label>{{ 'products.product.vendor' | t }}:</label>{{ product.vendor }}</p>
+                                    {%- endif -%}
+                                    {% if section.settings.product_sku_enable %}
+                                        <p class="proAttr productSKU"><label>{{ 'products.product.sku' | t }}:</label>{{ product.selected_or_first_available_variant.sku }}</p>
+                                    {% endif %}
+                                    {%- if section.settings.product_short_description == 'yes' -%}
+                                        {%- if shortDescription != blank -%}
+                                            <div class="proDescription rte" itemprop="description">
+                                                {{ shortDescription }}
+                                            </div>
+                                        {%- endif -%}
+                                    {%- elsif section.settings.product_short_description == 'full' -%}
+                                        {%- if product.description != blank -%}
+                                            <div class="proDescription rte" itemprop="description">
+                                                {{ fullDescription }}
+                                            </div>
+                                        {%- endif -%}
+                                    {%- endif -%}
+                                    {%- include 'vela-product-countdown' -%}
+                                    {% form 'product', product, id: "oldID", class: "formAddToCart" %}
+                                        {%- assign variantCount = product.variants | size -%}
+                                        <div class="proVariants {% if product.has_only_default_variant %}hidden{% endif %}">
+                                            <select name="id" id="productSelect">
+                                                {% for variant in product.variants %}
+                                                    {%- if variant.available -%}
+                                                        <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+                                                    {%- else -%}
+                                                        <option disabled="disabled">
+                                                            {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                                                        </option>
+                                                    {%- endif -%}
+                                                {% endfor %}
+                                            </select>
+                                            {%- if settings.product_swatch -%}                                   
+                                                    {% for option in product.options %}
+                                                        {% include 'vela-swatch' with option %}
+                                                    {% endfor %}
+                                            {%- endif -%}
+                                        </div>
+                                        <div class="velaGroup clearfix">
+                                            <div class="proQuantity">
+                                                <label for="Quantity" class="qtySelector">{{ 'products.product.quantity' | t }}</label>
+                                                <input type="number" id="Quantity" name="quantity" value="1" min="1" class="qtySelector">
+                                            </div>
+                                            <div class="proButton">
+                                                <button type="submit" name="add" id="AddToCart" class="btn btnAddToCart">
+                                                    <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        {%- if section.settings.buyit_check_enable -%}
+                                            <div class="velaBuyNow mb20 clearfix">
+                                                {{ form | payment_button }}
+                                            </div>
+                                        {%- endif -%}
+                                        {% if additional_checkout_buttons and section.settings.dynamic_check_enable %}
+                                            <div class="clearfix">
+                                                <div class="additional-checkout-buttons">
+                                                    {{ content_for_additional_checkout_buttons }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endform  %}
+                                    {%- if section.settings.product_collection_enable -%}
+                                    {%- assign limitedCate = section.settings.product_coll_limit | plus:0 -%}
+                                        <div class="proPageCategories">
+                                            {%- if section.settings.product_collection_title != blank -%}
+                                                <div class="cateTitle">{{ section.settings.product_collection_title }}</div>
+                                            {%- endif -%}
+                                            {% for collection in product.collections limit:limitedCate %}
+                                                {%- if forloop.last -%}
+                                                    <a href="{{ collection.url }}" title="{{ collection.title | escape }}">{{ collection.title }}</a>
+                                                {%- else -%}
+                                                    <a href="{{ collection.url }}" title="{{ collection.title | escape }}">{{ collection.title }}</a>, 
+                                                {%- endif -%}
+                                            {% endfor %}
+                                        </div>
+                                    {%- endif -%}
+                                    {%- if section.settings.product_tags_enable -%}
+                                        <div class="proDetailTagMore">
+                                            {%- assign limitedTag = section.settings.product_tags_limit -%}
+                                            {%- if section.settings.product_tags_title != blank -%}
+                                                <div class="proPageTags">
+                                                    <div class="tagTitle">{{ section.settings.product_tags_title }}</div>
+                                                    {% for tag in product.tags limit:limitedTag %}
+                                                        {%- if forloop.last -%}
+                                                            <span>{{ tag }}</span>
+                                                        {%- else -%}
+                                                            <span>{{ tag }}, </span>
+                                                        {%- endif -%}
+                                                    {% endfor %}
+                                                </div>
+                                            {%- endif -%}
+                                        </div>
+                                    {%- endif -%}
+                                    {% include 'vela-product-sharing' %}
+                                    <section class="proDetailInfo">
+                        {%- if section.settings.product_tab_type == 'protab' -%}
+                            <ul class="nav velaProductNavTabs nav-tabs">
+                                {%- if section.settings.product_tab1_enable -%}
+                                    <li>
+                                        <a href="#proTabs1" data-toggle="tab">{{ section.settings.product_tab1_title }}</a>
+                                    </li>
+                                {%- endif -%}
+                                {%- if section.settings.product_tab2_enable -%}
+                                    <li>
+                                        <a href="#proTabs2" data-toggle="tab">{{ section.settings.product_tab2_title }}</a>
+                                    </li>
+                                {%- endif -%}
+                                {%- if section.settings.product_tab3_enable -%}
+                                    <li>
+                                        <a href="#proTabs3" data-toggle="tab">{{ section.settings.product_tab3_title }}</a>
+                                    </li>
+                                {%- endif -%}
+                                {%- if section.settings.product_tab4_enable -%}
+                                    <li>
+                                        <a href="#proTabs4" data-toggle="tab">{{ section.settings.product_tab4_title }}</a>
+                                    </li>
+                                {%- endif -%}
+                            </ul>
+                            <div class="tab-content">
+                                {%- if section.settings.product_tab1_enable -%}
+                                    <div class="tab-pane" id="proTabs1">
+                                        <div class="rte">{{ fullDescription }}</div>
+                                    </div>
+                                {%- endif -%}
+                                {%- if section.settings.product_tab2_enable -%}
+                                    <div class="tab-pane" id="proTabs2">
+                                        <div class="rte">{{ section.settings.product_tab2_content }}</div>
+                                    </div>
+                                {%- endif -%}
+                                {%- if section.settings.product_tab3_enable -%}
+                                    <div class="tab-pane" id="proTabs3">
+                                        <div class="rte">{{ section.settings.product_tab3_content }}</div>
+                                    </div>
+                                {%- endif -%}
+                                {%- if section.settings.product_tab4_enable -%}
+                                    <div class="tab-pane" id="proTabs4">
+                                        {%- if settings.product_reviews_enable -%}
+                                            <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+                                        {%- endif -%}
+                                    </div>
+                                {%- endif -%}
+                            </div>
+                        {%- elsif section.settings.product_tab_type == 'propanel' -%}
+                            <div class="panel-group" id="vealAccordion">
+                                {%- if section.settings.product_tab1_enable -%}
+                                    <div class="panel velaPanel panel-default">
+                                        <div class="panel-heading" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#vealAccordion" href="#proCollapseOne">{{ section.settings.product_tab1_title }}</a>
+                                            </h4>
+                                        </div>
+                                        <div id="proCollapseOne" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="rte">{{ fullDescription }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {%- endif -%}
+                                {%- if section.settings.product_tab2_enable -%}
+                                    <div class="panel velaPanel panel-default">
+                                        <div class="panel-heading" id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#vealAccordion" href="#proCollapseTwo">{{ section.settings.product_tab2_title }}</a>
+                                            </h4>
+                                        </div>
+                                        <div id="proCollapseTwo" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="rte">{{ section.settings.product_tab2_content }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {%- endif -%}
+                                {%- if section.settings.product_tab3_enable -%}
+                                    <div class="panel velaPanel panel-default">
+                                        <div class="panel-heading" id="headingThree">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#vealAccordion" href="#proCollapseThree">{{ section.settings.product_tab3_title }}</a>
+                                            </h4>
+                                        </div>
+                                        <div id="proCollapseThree" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="rte">{{ section.settings.product_tab3_content }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {%- endif -%}
+                                {%- if section.settings.product_tab4_enable -%}
+                                    <div class="panel velaPanel panel-default">
+                                        <div class="panel-heading" id="headingFour">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#vealAccordion" href="#proCollapseFour">{{ section.settings.product_tab4_title }}</a>
+                                            </h4>
+                                        </div>
+                                        <div id="proCollapseFour" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                {% if settings.product_reviews_enable %}
+                                                    <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {%- endif -%}
+                            </div>
+                        {%- else -%}
+                            <div class="reviewOnly">
+                                {%- if settings.product_reviews_enable -%}
+                                    <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+                                {%- endif -%}
+                            </div>
+                        {%- endif -%}
+                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% include 'vela-product-related' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% unless product == empty %}
+  <script type="application/json" id="ProductJson-{{ section.id }}">
+    {{ product | json }}
+  </script>
+  <script type="application/json" id="ModelJson-{{ section.id }}">
+    {{ product.media | where: 'media_type', 'model' | json }}
+  </script>
+{% endunless %}
+<script>
+    var selectCallback = function(variant, selector) {
+        vela.productPage({
+            money_format: '{{ shop.money_format }}',
+            variant: variant,
+            selector: selector
+        });
+    };
+    $(window).load(function() {
+        new Shopify.OptionSelectors('productSelect', {
+            product: {{ product | json }},
+            onVariantSelected: selectCallback,
+            enableHistoryState: true
+        });
+        {% if product.available and product.options.size > 1 %}
+            if (!window.swatch_show_unvailable) {
+                Shopify.linkOptionSelectors({{ product | json }});
+            } else if (window.swatch_enable) {
+            	Shopify.linkOptionSelectors({{ product | json }});
+            }
+        {% endif %}
+        {% if product.options.size == 1 and product.options.first != 'Title' %}
+            $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+        {% endif %}
+        {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+            $('.selector-wrapper').hide();
+            $('.swatch').hide();
+        {% endif %}
+        $('.velaProductNavTabs li:first, .proDetailInfo .tab-content .tab-pane:first').addClass('active');
+        $('.proDetailInfo .velaPanel:first .panel-collapse').addClass('in');
+    });
+</script>
+{% schema %}
+    {
+        "name": "Vela Product Page",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_available_enable",
+                "label": "Show product available",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_type_enable",
+                "label": "Show product type",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_vendor_enable",
+                "label": "Show product vendor",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_sku_enable",
+                "label": "Show product SKU",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_countdown_enable",
+                "label": "Show Countdown",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Image size",
+                "default": "480x480",
+                "info": "Image size is required."
+            },
+            {
+                "type": "header",
+                "content": "Product Zoom"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_zoom_enable",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_scroll_zoom",
+                "label": "Scroll zoom",
+                "info": "Allow zoom on mousewheel, true to activate",
+                "default": true
+            },
+            {
+                "type": "select",
+                "id": "product_zoom_type",
+                "label": "Zoom type",
+                "default": "window",
+                "options": [
+                    {
+                        "value": "window",
+                        "label": "Window"
+                    },
+                    {
+                        "value": "inner",
+                        "label": "Inner"
+                    },
+                    {
+                        "value": "lens",
+                        "label": "Lens"
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "id": "product_zoom_width",
+                "label": "Zoom window width",
+                "info": "Use with zoom type Window",
+                "default": "500"
+            },
+            {
+                "type": "text",
+                "id": "product_zoom_height",
+                "label": "Zoom window height",
+                "info": "Use with zoom type Window",
+                "default": "600"
+            },
+            {
+                "type": "text",
+                "id": "product_lens_size",
+                "label": "Lens size",
+                "info": "Use with zoom type Lens",
+                "default": "200"
+            },
+            {
+                "type": "select",
+                "id": "product_lens_type",
+                "label": "Lens type",
+                "info": "Use with zoom type Lens",
+                "default": "square",
+                "options": [
+                    {
+                        "value": "square",
+                        "label": "Square"
+                    },
+                    {
+                        "value": "round",
+                        "label": "Round"
+                    }
+                ]
+            },
+            {
+                "type": "header",
+                "content": "Product Collections"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_collection_enable",
+                "label": "Show product collections",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_collection_title",
+                "label": "Box categoies title"
+            },
+            {
+                "type": "range",
+                "id": "product_coll_limit",
+                "min": 2,
+                "max": 10,
+                "step": 1,
+                "unit": "pcs",
+                "label": "Limit",
+                "default": 6
+            },
+            {
+                "type": "header",
+                "content": "Product Box Tags"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tags_enable",
+                "label": "Show box",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_tags_title",
+                "label": "Box tags title"
+            },
+            {
+                "type": "range",
+                "id": "product_tags_limit",
+                "min": 2,
+                "max": 10,
+                "step": 1,
+                "unit": "pcs",
+                "label": "Limit",
+                "default": 6
+            },
+            {
+                "type": "header",
+                "content": "Product Short Description"
+            },
+            {
+                "type": "radio",
+                "id": "product_short_description",
+                "label": "Choose type",
+                "options": [
+                    {
+                        "value": "no",
+                        "label": "Don't show"
+                    },
+                    {
+                        "value": "yes",
+                        "label": "Show short description"
+                    },
+                    {
+                        "value": "full",
+                        "label": "Show full description"
+                    }
+                ],
+                "default": "yes",
+                "info": "Create [Short description](https://velatheme.com/guide/velatheme-v2/metafields.html)"
+            },
+            {
+                "type": "header",
+                "content": "Product More Info"
+            },
+            {
+                "type": "radio",
+                "id": "product_tab_type",
+                "label": "Choose type",
+                "options": [
+                    {
+                        "value": "disable",
+                        "label": "Don't Show"
+                    },
+                    {
+                        "value": "protab",
+                        "label": "Tab More Info"
+                    },
+                    {
+                        "value": "propanel",
+                        "label": "Panel More Info"
+                    }
+                ],
+                "default": "protab"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab1_enable",
+                "label": "1st Enable tab",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_tab1_title",
+                "label": "1st Heading tab",
+                "default": "Details"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab2_enable",
+                "label": "2nd Enable tab"
+            },
+            {
+                "type": "text",
+                "id": "product_tab2_title",
+                "label": "2nd Heading tab"
+            },
+            {
+                "type": "richtext",
+                "id": "product_tab2_content",
+                "label": "2nd Tab content"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab3_enable",
+                "label": "3rd Enable tab"
+            },
+            {
+                "type": "text",
+                "id": "product_tab3_title",
+                "label": "3rd Heading tab"
+            },
+            {
+                "type": "html",
+                "id": "product_tab3_content",
+                "label": "3rd Tab content"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab4_enable",
+                "label": "4th Enable tab",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_tab4_title",
+                "label": "4th Title tab",
+                "default": "Reviews"
+            },
+			{
+                "type": "header",
+                "content": "Dynamic checkout buttons"
+            },
+            {
+                "type": "checkbox",
+                "id": "dynamic_check_enable",
+                "label": "Enable Dynamic Checkout Button",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "buyit_check_enable",
+                "label": "Enable Buy It Now Button",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Product Social Sharing"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_enable",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_social_title",
+                "label": "Heading"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_facebook_enable",
+                "label": "Show facebook sharing",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_twitter_enable",
+                "label": "Show twitter sharing",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_linkedin_enable",
+                "label": "Show linkedin sharing"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_pinterest_enable",
+                "label": "Show pinterest sharing"
+            },
+            {
+                "type": "header",
+                "content": "Product Related"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_related_enable",
+                "label": "Enable"
+            },
+            {
+                "type": "text",
+                "id": "product_related_title",
+                "placeholder": "Title for Block",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "product_related_limit",
+                "placeholder": "Number. Ex: 8",
+                "label": "Limit"
+            }
+        ]
+    }
+{% endschema %}

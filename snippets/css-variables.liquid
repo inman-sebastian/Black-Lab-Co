@@ -1,0 +1,81 @@
+
+{% style %}
+
+  :root {
+    --vela-color-primary:            {{ settings.vela_color_primary }};
+    --vela-color-secondary:          {{ settings.vela_color_secondary }};
+    --vela-border-color:             {{ settings.vela_color_borders }};
+    --vela-body-bg:                  {{ settings.vela_color_background }};
+    
+    --vela-text-color-primary:       {{ settings.text_color_primary }};
+    --vela-text-color-secondary:     {{ settings.text_color_secondary }};
+    --vela-text-color-banner:        {{ settings.text_color_banner }};
+    
+    --vela-border-main:              1px solid var(--vela-border-color);
+    --vela-gutter-width:             30px;
+    
+    --vela-font-family:              {{ settings.vela_fontfamily }};
+    --vela-font-family-secondary:    {{ settings.vela_fontfamily_secondary }};
+    --vela-font-icon:                "FontAwesome";
+    
+    --vela-topbar-bgcolor:           {{ settings.vela_topbar_bgcolor }};
+    --vela-topbar-textcolor:         {{ settings.vela_topbar_textcolor }};
+    
+    --vela-header-bgcolor:           {{ settings.vela_header_bgcolor }};
+    --vela-header-textcolor:         {{ settings.vela_header_textcolor }};
+    --vela-footer-bgcolor:           {{ settings.vela_footer_bgcolor }};
+    --vela-footer-titlecolor:        {{ settings.vela_footer_titlecolor }};
+    --vela-footer-textcolor:         {{ settings.vela_footer_textcolor }};
+    
+    --vela-breadcrumb-bgcolor:           #f7f7f7;
+    --vela-breadcrumb-headingcolor:      {{ settings.text_color_secondary }};
+    --vela-breadcrumb-linkcolor:         {{ settings.text_color_secondary }};
+    --vela-breadcrumb-textcolor:         {{ settings.vela_color_primary }};
+    
+    --vela-font-size:                {{ settings.vela_fontsize }}px;
+    --vela-heading-color:		  var(--vela-text-color-secondary);
+    --vela-heading-size:		  {{ settings.vela_headingsize }}px;
+
+    --title_bg:  url({{'title_bg.png' | asset_url }});
+    --title_bg_small:  url({{'title_bg_small.png' | asset_url }});
+    --title_bg_white:  url({{'title_bg_white.png' | asset_url }});
+    --title_bg_ssmal:  url({{'title_bg_ssmal.png' | asset_url }});
+    --item_deal:  url({{'item_deal.png' | asset_url }});
+    --icon_loading: url({{'loading.gif' | asset_url }});
+    --icon_close: url({{'velaClose.png' | asset_url }});
+
+    --button_one_txtcolor: {{ settings.button_one_txtcolor }};
+    --button_one_bgcolor : {{ settings.button_one_bgcolor }};
+    --button_one_bordercolor: {{ settings.button_one_bordercolor }};
+    --button_one_bgcolor_hover: {{ settings.button_one_bgcolor_hover }};
+    --button_one_bordercolor_hover : {{ settings.button_one_bordercolor_hover }};
+    --button_one_txtcolor_hover: {{ settings.button_one_txtcolor_hover }};
+
+    
+    --btnpro_txtcolor: {{ settings.btnpro_txtcolor }};
+    --btnpro_bgcolor: {{ settings.btnpro_bgcolor }};
+    --btnpro_bordercolor: {{ settings.btnpro_bordercolor }};
+    --btnpro_bgcolor_hover: {{ settings.btnpro_bgcolor_hover }};
+    --btnpro_bordercolor_hover: {{ settings.btnpro_bordercolor_hover }};
+    --btnpro_txtcolor_hover: {{ settings.btnpro_txtcolor_hover }};
+
+
+    --addtocart_txtcolor: {{ settings.addtocart_txtcolor }};
+    --addtocart_bgcolor: {{ settings.addtocart_bgcolor }};
+    --addtocart_bordercolor: {{ settings.addtocart_bordercolor }};
+    --addtocart_txtcolor_hover: {{ settings.addtocart_txtcolor_hover }};
+    --addtocart_bgcolor_hover: {{ settings.addtocart_bgcolor_hover }};
+    --addtocart_bordercolor_hover: {{ settings.addtocart_bordercolor_hover }};
+
+
+    --velamenu-bgcolor:              {{ settings.velamenu_bgcolor }};
+    --velamenu-linkcolor:            {{ settings.velamenu_linkcolor }};
+    --velamenu-linkcolor-hover:      {{ settings.velamenu_linkcolor_hover }};
+    --velamenu-fontsize:             {{ settings.velamenu_fontsize }}px;
+    --velasubmenu-bgcolor:           {{ settings.velamenu_dropdown_bgcolor }};
+    --velasubmenu-linkcolor:         {{ settings.velamenu_dropdown_linkcolor }};
+    --velasubmenu-linkcolor-hover:   {{ settings.velamenu_dropdown_linkcolor_hover }};
+    --velasubmenu-fontsize:          {{ settings.velamenu_dropdown_fontsize }}px;
+    
+
+{% endstyle %}

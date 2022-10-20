@@ -1,0 +1,120 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {% capture bgColor %}
+        background-color: {{ section.settings.color_bg }};
+    {% endcapture %}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {% capture paddingblock %}
+        padding: {{section.settings.padding_block}};
+    {% endcapture %}
+{%- endif -%}
+{%- if section.settings.bgimage != blank -%}
+    {% capture bgimage %}
+        background-image: url({{ section.settings.bgimage | img_url:'master' }});
+    {% endcapture %}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+<div class="velaFlashSale overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{bgimage}} {{ paddingblock }} {{ marginblock }}">
+  	<div class="container{% if section.settings.full %}-full{% endif %}">
+        <div class="velaFlashSaleInner text-center {% if section.settings.bgimage != blank %}hasbgImage{% endif %}">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaHomeTitle bg-image-white text-center ">{{ section.settings.title }}</h3>
+            {%- endif -%}                	                                                                 
+            {% assign countdownTime = section.settings.countdown_timeend %}
+            <div class="velaCountdown text-center" data-countdown="{{ countdownTime }}"></div>
+            {%- if section.settings.btntext != blank -%}
+                <a href="{{ section.settings.btnurl }}" class="btn bg_white" title="{{ section.settings.btntext }}"> {{ section.settings.btntext }}</a>
+            {%- endif -%}
+        </div>
+	</div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Flash sale",
+        "class": "velaFramework",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full",
+                "label": "Full width?",
+                "default": true
+            },
+             {
+		        "type": "image_picker",
+		        "id": "bgimage",
+		        "label": "Background Image"
+		    },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "default": "0 0 30px",
+                "placeholder": "0px 0px",
+                "info": "ex: 0px 0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "Vela Flash sale"
+            },
+		    {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "btntext",
+                "label": "Button text"
+            },
+            {
+                "type": "url",
+                "id": "btnurl",
+                "label": "Link"
+            },
+		    {
+		        "type": "text",
+		        "id": "countdown_timeend",
+		        "label": "Time End",
+		        "placeholder": "YYYY\/MM\/DD"
+		    },
+		    {
+		        "type": "paragraph",
+		        "content": "Format: 'Year\/Month\/Day'"
+		    },
+		    {
+		        "type": "paragraph",
+		        "content": "Example: '2019\/01\/30'"
+		    }
+        ],
+		"presets": [
+            {
+                "name": "Vela flash Sale",
+                "category": "4. Vela Image",
+                "settings": {
+                    "countdown_timeend": "2019/12/30"
+                }
+            }
+        ]
+    }
+{% endschema %}

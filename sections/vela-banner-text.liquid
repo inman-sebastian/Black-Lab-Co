@@ -1,0 +1,148 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {%- capture bgColor -%}
+        background-color: {{ section.settings.color_bg }};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {%- capture paddingblock -%}
+        padding: {{section.settings.padding_block}};
+    {%- endcapture -%}
+{%- endif -%}
+{%- if section.settings.margin_block != blank -%}
+    {%- capture marginblock -%}
+        margin: {{section.settings.margin_block}};
+    {%- endcapture -%}
+{%- endif -%}
+<div class="velaBannerText overflow-hidden {% unless section.settings.color_bg != 'rgba(0,0,0,0)' %}vela-section{% endunless%}" style="{{ bgColor}} {{ paddingblock }} {{ marginblock }}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="rowFlex rowFlexMargin">
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="velaBannerImage">
+                    {%- assign banner_image = section.settings.banner -%}
+                    {%- if section.settings.banner_size != blank -%}
+                        {% capture banner_size %}{{ section.settings.banner_size }}{% endcapture %}
+                        {%- assign wimage = section.settings.banner_size | split: "x" | first -%}
+                        {%- assign himage = section.settings.banner_size | split: "x" | last -%}
+                    {%- else -%}
+                        {%- assign image_size = "master" -%}
+                        {%- assign wimage = "690" -%}
+                        {%- assign himage = "900" -%}
+                    {%- endif -%}
+                    {%- if banner_image != blank -%}
+                        {% include 'image-global' with image: banner_image, max_width: wimage, max_height: himage %}
+                    {%- else -%}
+                        <img class="img-responsive img-full-mobile" alt="{{ shop.name }}" src="https://via.placeholder.com/{{ bannersize }}" />
+                    {%- endif -%}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="bannerInner">
+                    <div class="velaHeading">
+                        <h3 class="velaTitle">{{ section.settings.title }}</h3>
+                        <p class="velaSubTitle">{{ section.settings.subtitle }}</p>
+                    </div>
+                    {%- if section.blocks.size > 0 -%}
+                        {% for block in section.blocks %}
+                            <div class="box">
+                                <h4 class="velaTitleSmall">{{ block.settings.title }}</h4>
+                                <div class="boxConter">
+                                    {{ block.settings.content }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Banner&Text",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px",
+                "info": "if background color is blank, it will be remove on the mobile"
+            },
+            {
+                "type": "text",
+                "id": "margin_block",
+                "label": "Margin",
+                "default": "0 0 30px",
+                "placeholder": "0px 0px",
+                "info": "ex: 0px 0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "image_picker",
+                "id": "banner",
+                "label": "Banner"
+            },
+            {
+                "type": "text",
+                "id": "banner_size",
+                "label": "Size",
+                "default": "690x900"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubHeading"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Item Text",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Heading",
+                        "default": "Organic cream"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "content",
+                        "label": "HTML",
+                        "default": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas."
+                    }
+                ]
+
+            }
+        ],
+        "presets": [
+            {
+                "name": "Banner&Text",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

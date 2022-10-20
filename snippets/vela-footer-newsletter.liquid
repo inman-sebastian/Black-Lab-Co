@@ -1,0 +1,35 @@
+<div class="velaFooter footerNewsletter">
+    {%- if section.settings.newsletter_title != blank -%}
+        <h3 class="velaFooterTitle">
+            <span>{{ section.settings.newsletter_title }}</span>
+        </h3>
+    {%- endif -%}
+    <div class="velaContent">
+        {%- if section.settings.newsletter_desc != blank -%}
+            <div class="footerNewsletterDesc">
+                {{ section.settings.newsletter_desc }}
+            </div>
+        {%- endif -%}
+        {%- if section.settings.newsletter_mailchimp -%}
+            {%- assign form_action = section.settings.newsletter_form_action -%}
+            <form action="{{ form_action }}" method="post" name="mc-embedded-subscribe-form" target="_blank" class="footerFormNewsletter clearfix">
+                <div class="form-group">
+                    <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="EMAIL" class="form-control" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" required>
+                    <button class="btn btnNewsletter" type="submit">
+                        <span>{{ 'general.newsletter_form.submit' | t }}</span>
+                    </button>
+                </div>
+            </form>
+        {%- else -%}
+            {% form 'customer' %}
+                <div class="form-group">
+                    <input class="form-control" type="email" name="contact[email]" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" required>
+                    <button class="btn btnNewsletter" type="submit">
+                        <span>{{ 'general.newsletter_form.submit' | t }}</span>
+                    </button>
+                    <input type="hidden" name="action" value="0">
+                </div>
+            {% endform %}
+        {%- endif -%}
+    </div>
+</div>

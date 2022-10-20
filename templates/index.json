@@ -1,307 +1,293 @@
 {
-    "sections":{
-        "1551027504217":{
-            "type":"vela-slideshow",
-            "blocks":{
-                "1551027504217-0":{
-                    "type":"image",
-                    "settings":{
-                        "content_color":"rgba(0,0,0,0)",
-                        "position_content":true,
-                        "image":"shopify:\/\/shop_images\/slide21.jpg",
-                        "link":"shopify:\/\/collections\/beauty",
-                        "alignment":"text-left align-top",
-                        "text-alignment":"center",
-                        "slides_effect":"default",
-                        "subheading":"",
-                        "subheading_color":"#333e48",
-                        "title":"",
-                        "title_color":"#ffffff",
-                        "title2":"",
-                        "title2_color":"#ffffff",
-                        "desc":"",
-                        "desc_color":"#ffffff",
-                        "btn_text":"",
-                        "btn_link":"shopify:\/\/collections\/make-up",
-                        "btn_padding":"",
-                        "btn_text_color":"#ffffff",
-                        "btn_border_color":"#333e48",
-                        "btn_bg_color":"#333e48"
-                    }
-                },
-                "1551027504217-1":{
-                    "type":"image",
-                    "settings":{
-                        "content_color":"rgba(0,0,0,0)",
-                        "position_content":true,
-                        "image":"shopify:\/\/shop_images\/slide22.jpg",
-                        "link":"shopify:\/\/collections\/make-up",
-                        "alignment":"text-left align-top",
-                        "text-alignment":"center",
-                        "slides_effect":"bottomtop",
-                        "subheading":"",
-                        "subheading_color":"#333e48",
-                        "title":"",
-                        "title_color":"#ffffff",
-                        "title2":"",
-                        "title2_color":"#ffffff",
-                        "desc":"",
-                        "desc_color":"#ffffff",
-                        "btn_text":"",
-                        "btn_link":"",
-                        "btn_padding":"",
-                        "btn_text_color":"#ffffff",
-                        "btn_border_color":"#333e48",
-                        "btn_bg_color":"#333e48"
-                    }
-                },
-                "1551027735220":{
-                    "type":"image",
-                    "settings":{
-                        "content_color":"rgba(0,0,0,0)",
-                        "position_content":true,
-                        "image":"shopify:\/\/shop_images\/slide23.jpg",
-                        "link":"shopify:\/\/collections\/spa",
-                        "alignment":"text-left align-top",
-                        "text-alignment":"center",
-                        "slides_effect":"leftright",
-                        "subheading":"",
-                        "subheading_color":"#333e48",
-                        "title":"",
-                        "title_color":"#ffffff",
-                        "title2":"",
-                        "title2_color":"#ffffff",
-                        "desc":"",
-                        "desc_color":"#ffffff",
-                        "btn_text":"",
-                        "btn_link":"",
-                        "btn_padding":"",
-                        "btn_text_color":"#ffffff",
-                        "btn_border_color":"#b01e21",
-                        "btn_bg_color":"#b01e21"
-                    }
-                }
-            },
-            "block_order":[
-                "1551027504217-0",
-                "1551027504217-1",
-                "1551027735220"
-            ],
-            "settings":{
-                "mobile_mode":false,
-                "full_with":true,
-                "color_bg":"rgba(0,0,0,0)",
-                "padding_block":"",
-                "margin_block":"0 0 60px",
-                "navigation":true,
-                "pagination":true,
-                "autoplay":true,
-                "autoplay_speed":"8000",
-                "image_size":"1920x820"
-            }
+  "sections": {
+    "1551027504217": {
+      "type": "vela-slideshow",
+      "blocks": {
+        "1551027504217-0": {
+          "type": "image",
+          "settings": {
+            "content_color": "rgba(0,0,0,0)",
+            "position_content": true,
+            "link": "shopify:\/\/collections\/beauty",
+            "alignment": "text-left align-top",
+            "text-alignment": "center",
+            "slides_effect": "default",
+            "subheading": "",
+            "subheading_color": "#333e48",
+            "title": "",
+            "title_color": "#ffffff",
+            "title2": "",
+            "title2_color": "#ffffff",
+            "desc": "",
+            "desc_color": "#ffffff",
+            "btn_text": "",
+            "btn_link": "shopify:\/\/collections\/make-up",
+            "btn_padding": "",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#333e48",
+            "btn_bg_color": "#333e48"
+          }
         },
-        "1560774041433":{
-            "type":"vela-collections",
-            "blocks":{
-                "1560774047866":{
-                    "type":"item",
-                    "settings":{
-                        "title":"Beauty",
-                        "image":"shopify:\/\/shop_images\/collection1.jpg",
-                        "link":"shopify:\/\/collections\/beauty",
-                        "bg_style":"default"
-                    }
-                },
-                "1560774559446":{
-                    "type":"item",
-                    "settings":{
-                        "title":"Spa",
-                        "image":"shopify:\/\/shop_images\/collection2.jpg",
-                        "link":"shopify:\/\/collections\/spa",
-                        "bg_style":"special"
-                    }
-                },
-                "1560774622261":{
-                    "type":"item",
-                    "settings":{
-                        "title":"Make Up",
-                        "image":"shopify:\/\/shop_images\/collection3.jpg",
-                        "link":"shopify:\/\/collections\/make-up",
-                        "bg_style":"default"
-                    }
-                }
-            },
-            "block_order":[
-                "1560774047866",
-                "1560774559446",
-                "1560774622261"
-            ],
-            "settings":{
-                "full_with":false,
-                "color_bg":"rgba(0,0,0,0)",
-                "padding_block":"60px 0",
-                "margin_block":"0 0 60px",
-                "title":"",
-                "subtitle":""
-            }
+        "1551027504217-1": {
+          "type": "image",
+          "settings": {
+            "content_color": "rgba(0,0,0,0)",
+            "position_content": true,
+            "link": "shopify:\/\/collections\/make-up",
+            "alignment": "text-left align-top",
+            "text-alignment": "center",
+            "slides_effect": "bottomtop",
+            "subheading": "",
+            "subheading_color": "#333e48",
+            "title": "",
+            "title_color": "#ffffff",
+            "title2": "",
+            "title2_color": "#ffffff",
+            "desc": "",
+            "desc_color": "#ffffff",
+            "btn_text": "",
+            "btn_link": "",
+            "btn_padding": "",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#333e48",
+            "btn_bg_color": "#333e48"
+          }
         },
-        "1557072031835":{
-            "type":"vela-productlist",
-            "settings":{
-                "full_with":false,
-                "color_bg":"#fafafa",
-                "padding_block":"60px 0",
-                "margin_block":"0 0 60px",
-                "title":"Product Our",
-                "collection_handle":"frontpage",
-                "image_size":"370x370",
-                "limit":"10",
-                "navigation":false,
-                "autoplay":false,
-                "autoplay_timeout":"10000",
-                "column1":4,
-                "column2":4,
-                "column3":2,
-                "column4":2,
-                "column5":1,
-                "row":"2"
-            }
-        },
-        "1560445419701":{
-            "type":"vela-feature-text",
-            "blocks":{
-                "1560445426237":{
-                    "type":"item",
-                    "settings":{
-                        "featureposition":"left",
-                        "featuretitle":"Organic Cream",
-                        "featuredesc":"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum.",
-                        "featureicon":"shopify:\/\/shop_images\/feature1.jpg",
-                        "featurebutton":"view more",
-                        "featurelink":"shopify:\/\/collections\/beauty"
-                    }
-                },
-                "1560445486100":{
-                    "type":"item",
-                    "settings":{
-                        "featureposition":"right",
-                        "featuretitle":"Natural Extracts",
-                        "featuredesc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                        "featureicon":"shopify:\/\/shop_images\/feature2.jpg",
-                        "featurebutton":"view more",
-                        "featurelink":"shopify:\/\/collections\/make-up"
-                    }
-                },
-                "1560445523155":{
-                    "type":"item",
-                    "settings":{
-                        "featureposition":"left",
-                        "featuretitle":"Quality Assurance",
-                        "featuredesc":"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas.",
-                        "featureicon":"shopify:\/\/shop_images\/feature3.jpg",
-                        "featurebutton":"view more",
-                        "featurelink":"shopify:\/\/collections\/bb-creams"
-                    }
-                }
-            },
-            "block_order":[
-                "1560445426237",
-                "1560445486100",
-                "1560445523155"
-            ],
-            "settings":{
-                "enable":true,
-                "full":false,
-                "color_bg":"rgba(0,0,0,0)",
-                "padding_block":"60px 0",
-                "margin_block":"0 0 60px"
-            }
-        },
-        "1561197583836":{
-            "type":"vela-contact",
-            "settings":{
-                "full_with":false,
-                "color_bg":"#fadbd4",
-                "padding_block":"60px 0",
-                "margin_block":"0 0 60px",
-                "title":"Contact From"
-            }
-        },
-        "1592281606711":{
-            "type":"vela-gallery-image",
-            "blocks":{
-                "1592282335413":{
-                    "type":"item",
-                    "settings":{
-                        "image":"shopify:\/\/shop_images\/g2.jpg",
-                        "link":"shopify:\/\/collections\/bb-creams",
-                        "size":"250x250"
-                    }
-                },
-                "1592282369279":{
-                    "type":"item",
-                    "settings":{
-                        "image":"shopify:\/\/shop_images\/g3.jpg",
-                        "link":"shopify:\/\/collections\/beauty",
-                        "size":"250x250"
-                    }
-                },
-                "1592282394509":{
-                    "type":"item",
-                    "settings":{
-                        "image":"shopify:\/\/shop_images\/g4.jpg",
-                        "link":"shopify:\/\/products\/whitening-cream",
-                        "size":"250x250"
-                    }
-                },
-                "1592282414351":{
-                    "type":"item",
-                    "settings":{
-                        "image":"shopify:\/\/shop_images\/g1.jpg",
-                        "link":"shopify:\/\/collections\/beauty",
-                        "size":"250x250"
-                    }
-                },
-                "1592282437079":{
-                    "type":"item",
-                    "settings":{
-                        "image":"shopify:\/\/shop_images\/g5.jpg",
-                        "link":"shopify:\/\/collections\/frontpage",
-                        "size":"250x250"
-                    }
-                }
-            },
-            "block_order":[
-                "1592282335413",
-                "1592282369279",
-                "1592282394509",
-                "1592282414351",
-                "1592282437079"
-            ],
-            "settings":{
-                "full_with":false,
-                "noGutter":false,
-                "color_bg":"rgba(0,0,0,0)",
-                "padding_block":"50px 0 40px",
-                "margin_block":"0 0 30px",
-                "title":"Follow instagram",
-                "subtitle":"@velatheme",
-                "effect":"effectFour",
-                "popup_image":true,
-                "column1":5,
-                "column2":3,
-                "column3":2,
-                "column4":2,
-                "column5":1
-            }
+        "1551027735220": {
+          "type": "image",
+          "settings": {
+            "content_color": "rgba(0,0,0,0)",
+            "position_content": true,
+            "link": "shopify:\/\/collections\/spa",
+            "alignment": "text-left align-top",
+            "text-alignment": "center",
+            "slides_effect": "leftright",
+            "subheading": "",
+            "subheading_color": "#333e48",
+            "title": "",
+            "title_color": "#ffffff",
+            "title2": "",
+            "title2_color": "#ffffff",
+            "desc": "",
+            "desc_color": "#ffffff",
+            "btn_text": "",
+            "btn_link": "",
+            "btn_padding": "",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#b01e21",
+            "btn_bg_color": "#b01e21"
+          }
         }
+      },
+      "block_order": [
+        "1551027504217-0",
+        "1551027504217-1",
+        "1551027735220"
+      ],
+      "settings": {
+        "mobile_mode": false,
+        "full_with": true,
+        "color_bg": "rgba(0,0,0,0)",
+        "padding_block": "",
+        "margin_block": "0 0 60px",
+        "navigation": true,
+        "pagination": true,
+        "autoplay": true,
+        "autoplay_speed": "8000",
+        "image_size": "1920x820"
+      }
     },
-    "order":[
-        "1551027504217",
-        "1560774041433",
-        "1557072031835",
-        "1560445419701",
-        "1561197583836",
-        "1592281606711"
-    ]
+    "1560774041433": {
+      "type": "vela-collections",
+      "blocks": {
+        "1560774047866": {
+          "type": "item",
+          "settings": {
+            "title": "Beauty",
+            "link": "shopify:\/\/collections\/beauty",
+            "bg_style": "default"
+          }
+        },
+        "1560774559446": {
+          "type": "item",
+          "settings": {
+            "title": "Spa",
+            "link": "shopify:\/\/collections\/spa",
+            "bg_style": "default"
+          }
+        },
+        "1560774622261": {
+          "type": "item",
+          "settings": {
+            "title": "Make Up",
+            "link": "shopify:\/\/collections\/make-up",
+            "bg_style": "default"
+          }
+        }
+      },
+      "block_order": [
+        "1560774047866",
+        "1560774559446",
+        "1560774622261"
+      ],
+      "settings": {
+        "full_with": false,
+        "color_bg": "rgba(0,0,0,0)",
+        "padding_block": "60px 0",
+        "margin_block": "0 0 60px",
+        "title": "",
+        "subtitle": ""
+      }
+    },
+    "1557072031835": {
+      "type": "vela-productlist",
+      "settings": {
+        "full_with": false,
+        "color_bg": "#fafafa",
+        "padding_block": "60px 0",
+        "margin_block": "0 0 60px",
+        "title": "Product Our",
+        "collection_handle": "frontpage",
+        "image_size": "370x370",
+        "limit": "10",
+        "navigation": false,
+        "autoplay": false,
+        "autoplay_timeout": "10000",
+        "column1": 4,
+        "column2": 4,
+        "column3": 2,
+        "column4": 2,
+        "column5": 1,
+        "row": "2"
+      }
+    },
+    "1560445419701": {
+      "type": "vela-feature-text",
+      "blocks": {
+        "1560445426237": {
+          "type": "item",
+          "settings": {
+            "featureposition": "left",
+            "featuretitle": "Organic Cream",
+            "featuredesc": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum.",
+            "featurebutton": "view more",
+            "featurelink": "shopify:\/\/collections\/beauty"
+          }
+        },
+        "1560445486100": {
+          "type": "item",
+          "settings": {
+            "featureposition": "right",
+            "featuretitle": "Natural Extracts",
+            "featuredesc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "featurebutton": "view more",
+            "featurelink": "shopify:\/\/collections\/make-up"
+          }
+        },
+        "1560445523155": {
+          "type": "item",
+          "settings": {
+            "featureposition": "left",
+            "featuretitle": "Quality Assurance",
+            "featuredesc": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas.",
+            "featurebutton": "view more",
+            "featurelink": "shopify:\/\/collections\/bb-creams"
+          }
+        }
+      },
+      "block_order": [
+        "1560445426237",
+        "1560445486100",
+        "1560445523155"
+      ],
+      "settings": {
+        "enable": true,
+        "full": false,
+        "color_bg": "rgba(0,0,0,0)",
+        "padding_block": "60px 0",
+        "margin_block": "0 0 60px"
+      }
+    },
+    "1561197583836": {
+      "type": "vela-contact",
+      "settings": {
+        "full_with": false,
+        "color_bg": "#151515",
+        "padding_block": "60px 0",
+        "margin_block": "0 0 60px",
+        "title": "Contact From"
+      }
+    },
+    "1592281606711": {
+      "type": "vela-gallery-image",
+      "blocks": {
+        "1592282335413": {
+          "type": "item",
+          "settings": {
+            "link": "shopify:\/\/collections\/bb-creams",
+            "size": "250x250"
+          }
+        },
+        "1592282369279": {
+          "type": "item",
+          "settings": {
+            "link": "shopify:\/\/collections\/beauty",
+            "size": "250x250"
+          }
+        },
+        "1592282394509": {
+          "type": "item",
+          "settings": {
+            "link": "shopify:\/\/products\/whitening-cream",
+            "size": "250x250"
+          }
+        },
+        "1592282414351": {
+          "type": "item",
+          "settings": {
+            "link": "shopify:\/\/collections\/beauty",
+            "size": "250x250"
+          }
+        },
+        "1592282437079": {
+          "type": "item",
+          "settings": {
+            "link": "shopify:\/\/collections\/frontpage",
+            "size": "250x250"
+          }
+        }
+      },
+      "block_order": [
+        "1592282335413",
+        "1592282369279",
+        "1592282394509",
+        "1592282414351",
+        "1592282437079"
+      ],
+      "settings": {
+        "full_with": false,
+        "noGutter": false,
+        "color_bg": "rgba(0,0,0,0)",
+        "padding_block": "50px 0 40px",
+        "margin_block": "0 0 30px",
+        "title": "Follow us on Instagram",
+        "subtitle": "@blacklabsoap",
+        "effect": "effectTwo",
+        "popup_image": true,
+        "column1": 5,
+        "column2": 3,
+        "column3": 2,
+        "column4": 2,
+        "column5": 1
+      }
+    }
+  },
+  "order": [
+    "1551027504217",
+    "1560774041433",
+    "1557072031835",
+    "1560445419701",
+    "1561197583836",
+    "1592281606711"
+  ]
 }

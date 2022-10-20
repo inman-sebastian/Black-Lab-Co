@@ -74,6 +74,7 @@
           "type": "item",
           "settings": {
             "title": "Scrubs",
+            "image": "shopify:\/\/shop_images\/sugar-scrubs-collection-image.jpg",
             "link": "shopify:\/\/collections\/sugar-scrubs",
             "bg_style": "default",
             "bg_primary": "#6e7695",

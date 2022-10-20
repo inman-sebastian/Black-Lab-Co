@@ -67,7 +67,7 @@
           "type": "categories",
           "settings": {
             "sidebar_categories_title": "Categories",
-            "sidebar_categories_menu": ""
+            "sidebar_categories_menu": "filter-categories"
           }
         },
         "e2385776-d167-4e27-b0ce-d780eb368701": {

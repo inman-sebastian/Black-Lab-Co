@@ -78,9 +78,10 @@
         },
         "9ba1a688-94bc-4fd1-9954-4dadc3c3fb9c": {
           "type": "productlist",
+          "disabled": true,
           "settings": {
             "products_title": "Best Sellers",
-            "collection_handle": "bb-creams",
+            "collection_handle": "featured-products",
             "limit": 4
           }
         },

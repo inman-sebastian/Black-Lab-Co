@@ -25,7 +25,7 @@
         "product_sku_enable": false,
         "product_countdown_enable": true,
         "image_size": "800x",
-        "product_zoom_enable": true,
+        "product_zoom_enable": false,
         "product_scroll_zoom": true,
         "product_zoom_type": "window",
         "product_zoom_width": "400",

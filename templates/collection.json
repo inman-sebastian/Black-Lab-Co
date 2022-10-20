@@ -7,44 +7,28 @@
           "type": "image",
           "settings": {
             "collection_handle": "candles",
-            "heading": ""
+            "heading": "Candles"
           }
         },
-        "d930ab00-2fb2-4f25-afee-b5bfce059eca": {
+        "b1be7839-1167-4e53-be09-a07b28ea3eb7": {
           "type": "image",
           "settings": {
-            "collection_handle": "beauty",
-            "heading": ""
+            "collection_handle": "soap",
+            "heading": "Soaps"
           }
         },
-        "84f6b2fd-104a-4b28-b9ab-0931316f7384": {
+        "190058c5-4e77-4936-825c-6b5cdeb5a883": {
           "type": "image",
           "settings": {
-            "collection_handle": "spa",
-            "heading": ""
-          }
-        },
-        "3d8bc7d3-1842-4fc6-8799-dbc2b3001728": {
-          "type": "image",
-          "settings": {
-            "collection_handle": "make-up",
-            "heading": ""
-          }
-        },
-        "276a25bd-268c-4a24-8460-bd07b25fde46": {
-          "type": "image",
-          "settings": {
-            "collection_handle": "skin-care",
-            "heading": ""
+            "collection_handle": "sugar-scrubs",
+            "heading": "Sugar Scrubs"
           }
         }
       },
       "block_order": [
         "a2de1197-92a8-41db-9200-dbd990efe63a",
-        "d930ab00-2fb2-4f25-afee-b5bfce059eca",
-        "84f6b2fd-104a-4b28-b9ab-0931316f7384",
-        "3d8bc7d3-1842-4fc6-8799-dbc2b3001728",
-        "276a25bd-268c-4a24-8460-bd07b25fde46"
+        "b1be7839-1167-4e53-be09-a07b28ea3eb7",
+        "190058c5-4e77-4936-825c-6b5cdeb5a883"
       ],
       "settings": {
         "padding_block": "",

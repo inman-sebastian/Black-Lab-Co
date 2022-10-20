@@ -130,45 +130,6 @@
     "sections": {
       "vela-header": {
         "type": "vela-header",
-        "blocks": {
-          "1561264660462": {
-            "type": "text",
-            "settings": {
-              "velamenu_item": "Shop",
-              "velamenu_menu_enable": false,
-              "velamenu_menu_col": "",
-              "velamenu_menu_menucol": "",
-              "velamenu_product_enable": false,
-              "velamenu_product_col": "",
-              "velamenu_product_title": "",
-              "velamenu_product_collection": "",
-              "velamenu_html_enable": false,
-              "velamenu_html_col": "",
-              "velamenu_html_title": "",
-              "velamenu_html_content": "",
-              "velamenu_banner_enable": false,
-              "velamenu_banner_col": "",
-              "velamenu_banner_link": "",
-              "velamenu_collection_enable": true,
-              "velamenu_collection_col": "col-sm-12",
-              "velamenu_collection_title": "",
-              "velamenu_collectionitem_col": "25%",
-              "velamenu_list_collection1": "bb-creams",
-              "velamenu_list_collection2": "beauty",
-              "velamenu_list_collection3": "make-up",
-              "velamenu_list_collection4": "spa",
-              "velamenu_list_collection5": "",
-              "velamenu_list_collection6": "",
-              "velamenu_list_collection7": "",
-              "velamenu_list_collection8": "",
-              "velamenu_list_collection9": "",
-              "velamenu_list_collection10": ""
-            }
-          }
-        },
-        "block_order": [
-          "1561264660462"
-        ],
         "settings": {
           "bannertop_enabel": false,
           "bannertop_link": "shopify:\/\/collections",

@@ -50,7 +50,7 @@
         "product_tab3_content": "<div class=\"velaSizeChart text-center\"><img class=\"img-responsive\" src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/1192\/3200\/files\/sizechart1.jpg?2248826045834309824\" alt=\"Size Chart\"><\/div>",
         "product_tab4_enable": true,
         "product_tab4_title": "Reviews",
-        "dynamic_check_enable": false,
+        "dynamic_check_enable": true,
         "buyit_check_enable": true,
         "product_social_enable": true,
         "product_social_title": "Share:",

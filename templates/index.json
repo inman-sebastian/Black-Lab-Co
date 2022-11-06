@@ -168,12 +168,13 @@
     },
     "1561197583836": {
       "type": "vela-contact",
+      "disabled": true,
       "settings": {
         "full_with": false,
         "color_bg": "#151515",
         "padding_block": "60px 0",
         "margin_block": "0 0 60px",
-        "title": "Contact From"
+        "title": "Contact Form"
       }
     },
     "1592281606711": {

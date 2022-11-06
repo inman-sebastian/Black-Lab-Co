@@ -79,7 +79,7 @@
     "cart_notes_enable": true,
     "googlemap_enable": true,
     "googlemap_key": "AIzaSyDqstP8RWMwkuJYsaWQ29dZFim3506MteA",
-    "vela_newslettermodal_enable": true,
+    "vela_newslettermodal_enable": false,
     "vela_newslettermodal_cookie": "60",
     "vela_newslettermodal_title": "Get Our Email Letter",
     "vela_newslettermodal_description": "Subscribe to the Complex mailing list to receive updates on new arrivals, special offers and other discount information.",

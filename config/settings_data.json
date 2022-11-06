@@ -155,6 +155,7 @@
         "type": "vela-footer",
         "settings": {
           "contactinfo_enable": true,
+          "contactinfo_logo": "shopify:\/\/shop_images\/black-lab-co-logo.png",
           "logofooter_size": "132x66",
           "contactinfo_desc": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut.",
           "social_enable": true,
